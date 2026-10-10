@@ -96,8 +96,10 @@
       "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
     ],
     "ui_location": "Control center / Library",
-    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
-    "test_reference": [],
+    "limitations": "A repository-level test is authored for Home-only Next through a recording platform; real WallpaperManager writes and visible OEM behavior remain unverified.",
+    "test_reference": [
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten"
+    ],
     "permissions": [
       "SET_WALLPAPER"
     ],
@@ -173,8 +175,10 @@
       "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "A repository-level test is authored for a persisted 15-minute interval across database reopen. WorkManager timing, UI interaction, and device scheduling remain unverified.",
+    "test_reference": [
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten"
+    ],
     "permissions": [],
     "api_constraints": [],
     "verification_status": "DEVICE_PENDING"
@@ -329,11 +333,15 @@
       "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "A repository-level test is authored for individual local-file import, protected copy, collection membership, and reopen. It does not exercise Android’s SAF picker; device acceptance remains pending.",
+    "test_reference": [
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten"
+    ],
     "permissions": [],
     "api_constraints": [],
     "verification_status": "DEVICE_PENDING"
@@ -347,11 +355,16 @@
       "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ImportTraversalBudget.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "DocumentsContract tree traversal now counts files and folders against 5,000 entries and depth 16, with a visible truncation notice. Pure budget-test coverage is separate from the still-unverified actual SAF provider/folder journey.",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#filesAndDirectoriesShareOneEntryLimit"
+    ],
     "permissions": [],
     "api_constraints": [],
     "verification_status": "DEVICE_PENDING"
@@ -437,11 +450,14 @@
       "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "A repository-level test is authored for collection creation, imported membership, and persistence after database reopen. This is not an end-to-end Compose/SAF device test.",
+    "test_reference": [
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten"
+    ],
     "permissions": [],
     "api_constraints": [],
     "verification_status": "DEVICE_PENDING"
@@ -530,8 +546,10 @@
       "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "A repository-level test is authored for Home history surviving database reopen and continuing after a subsequent Next. UI and Android wallpaper acceptance remain pending.",
+    "test_reference": [
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten"
+    ],
     "permissions": [],
     "api_constraints": [],
     "verification_status": "DEVICE_PENDING"
@@ -926,8 +944,10 @@
       "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "A repository-level test is authored for shuffle queue/recent-state persistence across database reopen. It uses a recording platform; Android runtime acceptance remains pending.",
+    "test_reference": [
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten"
+    ],
     "permissions": [],
     "api_constraints": [],
     "verification_status": "DEVICE_PENDING"

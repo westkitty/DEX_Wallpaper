@@ -1,13 +1,15 @@
 # Durable operational state
 
 Date: 2026-10-10 (UTC). Authorized repository: https://github.com/westkitty/DEX_Wallpaper.
-Session-fixed branch: `arena/62a85de1-dex-wallpaper`. Main remains `db4ef366986c0b79a7c0ed71c8a50fd82c51ad02`; no PR/merge/force-push.
+Session-fixed branch: `arena/43998994-dex-wallpaper`. This session preserves delivered HEAD `33c3ed0374341ba7a44e550a9859cfc79d717de0` from the prior `arena/62a85de1-dex-wallpaper`; main remains `db4ef366986c0b79a7c0ed71c8a50fd82c51ad02`. No PR/merge/force-push.
 
 ## Last independently verified delivery
 
-`64906f780d3802c03cd18ca6ee1b3b91159ac1a8` was normally pushed and compared independently with `git ls-remote`.
-Thirteen verified session commits at the prior delivery checkpoint: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`, `33c9a2a`, `ee24a43`, `64906f7`.
-The following documentation-only audit cannot record its own SHA before commit; its latest delivery is available from git/remote history. No application/test source is changed by the audit.
+Application checkpoint `64906f780d3802c03cd18ca6ee1b3b91159ac1a8` was normally pushed and compared independently with `git ls-remote`. The delivered branch then advanced to documentation HEAD `33c3ed0374341ba7a44e550a9859cfc79d717de0`; remote `git ls-remote` confirmed `arena/62a85de1-dex-wallpaper` at that commit before this session continued.
+
+The last 33c3 Android CI run is **38091772969, PASS**: 96 JVM tests with 0 failures/errors, lintDebug, assembleDebug, assembleDebugAndroidTest, and all three artifact uploads passed. Actual check annotations report app APK SHA-256 `14436db301841dde21888e990e8cc6433c0e6b91f93a3d20d17c2453e2485b47` and instrumentation APK SHA-256 `501122f9082570722f67584f608a45fa46ba6ba0c61d20d42199fde7e96412a1`. App artifact `11684582139`; test artifact `11684083177`. These verify the delivered baseline only, not this session's changes.
+
+Thirteen prior application/session commits before the docs handoff: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`, `33c9a2a`, `ee24a43`, `64906f7`.
 
 ## Actual execution evidence
 
@@ -50,6 +52,14 @@ No physical Galaxy Tab S9 Ultra/DeX/S Pen/TalkBack, wallpaper visual isolation, 
 ## Instrumentation compile / actual acceptance separation
 
 Standard CI at ee24a43 actually assembled/uploaded the instrumentation APK independently of unavailable emulator boot, in addition to app/JVM/lint evidence and all eight Python validator regressions. This is test compilation only, not runtime. All 15 native methods and prior failures are retained. Device boot was unavailable in observed runner attempts; no unchanged retry is queued. A Gradle 8.11.1 out-of-date notice is non-blocking, not a reason to claim the toolchain current.
+
+## Current Arena continuation work
+
+This session uses the assigned `arena/43998994-dex-wallpaper` branch and fast-forwarded its README-only starting checkout to the existing delivered `33c3ed0` implementation before edits. No repository or application was recreated. The current source changes harden the highest-priority library journey: collection selection is persisted before import; SAF folder scanning uses a `DocumentsContract` cursor and bounds all files/folders (not only recognized images) to 5,000 entries / depth 16 with an explicit user-facing truncation result; Compose-owned preview/thumbnail bitmaps are recycled when their UI owner leaves; a repository-level Home-only shuffle/interval/reopen journey is authored against a recording platform. Four pure traversal-budget JVM methods and one repository instrumentation method were added. The instrumented journey is deliberately not an actual SAF picker, WallpaperManager, OEM, or visible-pixel acceptance result.
+
+Local checks after these edits: the 276-row inventory validator PASS; source-policy check PASS; all 8 Python validator tests PASS; all 8 Android XML resources/manifests parsed; `git diff --check` PASS. No Java/JDK, Gradle, Android SDK, adb, or Kotlin compiler exists in this Arena sandbox, so the new Kotlin/JVM suite, lint, APKs, and instrumentation APK have not been locally run. The corresponding GitHub Actions result, not this local check list, is authoritative for Kotlin compilation and test execution. The inventory still has all 276 rows; no implementation status or verification status was promoted.
+
+The previous device check `38089299077` was independently inspected via GitHub check annotations: it failed with “Timeout waiting for emulator to boot,” before test execution, and uploaded no report files. `gh run view --log-failed` could not retrieve the runner log (results-receiver EOF); no additional cause is inferred. No manual/unchanged emulator retry is planned.
 
 ## Highest-value next work
 

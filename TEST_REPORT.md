@@ -136,4 +136,20 @@ Actual annotations reconfirm **96 JVM tests, 0 failures/errors**, lintDebug, ass
 - Instrumentation APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278/artifacts/11684416069 ; SHA-256 `db334a05823e2f0a9b7160881cdd0ccb851de0dae39e8ef156829ba92f576365`.
 - Reports artifact `11684650804`. **15 compiled native methods, 0 known runtime passes**, no physical Samsung acceptance.
 
-The later requested takeover-prompt documentation commit does not change Android source/test code. Its CI result is separate and must be inspected; no result is inferred here. See `docs/HANDOFF_PROMPT.md` for the unfinished mission and `docs/DEVICE_ACCEPTANCE.md` for safe actual acceptance.
+## Delivered handoff HEAD independently rebuilt
+
+**PASS** — Android CI run `38091772969` at delivered HEAD `33c3ed0374341ba7a44e550a9859cfc79d717de0`. GitHub check `114329481827` confirms **96 JVM tests, 0 failures/errors**, lintDebug, assembleDebug, assembleDebugAndroidTest, feature/source checks, wrapper regeneration, and all three uploads PASS. This HEAD changes no Android source from the 64906f7 native checkpoint; this verifies the delivered baseline only.
+
+- App artifact `11684582139`, actual APK SHA-256 `14436db301841dde21888e990e8cc6433c0e6b91f93a3d20d17c2453e2485b47`.
+- Instrumentation APK artifact `11684083177`, SHA-256 `501122f9082570722f67584f608a45fa46ba6ba0c61d20d42199fde7e96412a1`.
+- Reports artifact `11684152784`. The Gradle 8.11.1 out-of-date message is non-blocking.
+
+## Arena continuation changes — local Android verification unavailable
+
+This session continues on the assigned `arena/43998994-dex-wallpaper` branch from delivered HEAD `33c3ed0`. The import path now persists/validates the selected destination collection before writing membership; document-tree traversal reads a bounded cursor and counts every file/folder against 5,000 entries / depth 16; a reached limit is explicitly reported instead of silently truncating; Compose-owned thumbnails and artwork previews release their bitmaps when disposed. The generated 276-row inventory now references authored coverage for the affected import/collection/interval/Next/history/shuffle-state rows, without changing any status.
+
+Added **4 JVM test methods** for the pure traversal budget and **1 repository instrumentation method** for import → collection → Home-only shuffle/interval → database reopen/Next, using a recording fake wallpaper platform. That instrumented test is not an actual Android picker/WallpaperManager/OEM/visible-screen test. No native runtime acceptance is claimed.
+
+Locally executed after these edits: inventory validation PASS, source-policy PASS, **8 Python tests PASS**, all 8 Android XML files parse, and `git diff --check` PASS. This sandbox has no JDK/Java, Gradle, Android SDK, adb, or Kotlin compiler, so the new Kotlin test methods, app/test APK compilation, and instrumentation runtime have **not** run locally. Use this commit's actual GitHub Actions result as Android compilation/execution evidence; local checks do not establish it. Baseline run `38091772969` does not contain these changes. Inventory remains **4 / 140 / 61 / 2 / 2 / 67 = 276**.
+
+The prior actual device failure `38089299077` was inspected via check annotations: “Timeout waiting for emulator to boot,” before test execution; no report files were uploaded. Its detailed runner log endpoint returned EOF. The unavailable log is not treated as app evidence, and no further unchanged emulator attempt is made. See `docs/HANDOFF_PROMPT.md` for scope and `docs/DEVICE_ACCEPTANCE.md` for safe real-device acceptance.

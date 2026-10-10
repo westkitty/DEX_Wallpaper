@@ -3,11 +3,13 @@ package com.westkitty.dexwallpaper.data
 import android.content.Context
 import android.net.Uri
 import android.graphics.BitmapFactory
+import android.provider.DocumentsContract
 import androidx.documentfile.provider.DocumentFile
 import androidx.room.withTransaction
 import com.westkitty.dexwallpaper.wallpaper.BitmapPipeline
 import com.westkitty.dexwallpaper.core.CachePolicy
 import com.westkitty.dexwallpaper.core.CacheEntry
+import com.westkitty.dexwallpaper.core.ImportTraversalBudget
 import kotlinx.coroutines.flow.first
 import java.io.File
 import java.security.MessageDigest
@@ -17,15 +19,24 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 
-data class ImportProgress(val processed: Int = 0, val imported: Int = 0, val duplicates: Int = 0, val rejected: Int = 0, val message: String = "")
+data class ImportProgress(
+    val processed: Int = 0,
+    val imported: Int = 0,
+    val duplicates: Int = 0,
+    val rejected: Int = 0,
+    val message: String = "",
+    val scannedEntries: Int = 0,
+    val truncated: Boolean = false,
+)
 class AssetImporter(private val context: Context, private val db: DexDatabase, private val pipeline: BitmapPipeline) {
     val originals = File(context.filesDir, "originals").apply { mkdirs() }
     val thumbnails = File(context.cacheDir, "thumbnails").apply { mkdirs() }
     fun file(asset: AssetEntity) = File(originals, asset.relativePath)
 
     suspend fun importUris(uris: List<Uri>, collection: String, progress: (ImportProgress) -> Unit): ImportProgress = withContext(Dispatchers.IO) {
-        var state = ImportProgress()
-        for (uri in uris.take(5000)) {
+        val wasCapped = uris.size > ImportTraversalBudget.DEFAULT_MAXIMUM_ENTRIES
+        var state = ImportProgress(truncated = wasCapped)
+        for (uri in uris.take(ImportTraversalBudget.DEFAULT_MAXIMUM_ENTRIES)) {
             currentCoroutineContext().ensureActive()
             try {
                 val result = importOne(uri, collection)
@@ -39,22 +50,61 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
         state
     }
     suspend fun scanTree(uri: Uri, collection: String, includeHidden: Boolean, progress: (ImportProgress) -> Unit): ImportProgress = withContext(Dispatchers.IO) {
-        val root = requireNotNull(DocumentFile.fromTreeUri(context, uri)) { "Folder provider unavailable" }
+        require(uri.scheme == "content") { "Choose a folder from Android's document picker." }
+        val rootId = DocumentsContract.getTreeDocumentId(uri)
+        require(rootId.isNotBlank()) { "The selected folder has no document identity." }
         val uris = mutableListOf<Uri>()
-        suspend fun walk(node: DocumentFile, depth: Int) {
-            currentCoroutineContext().ensureActive()
-            if (depth > 16 || uris.size >= 5000) return
-            node.listFiles().forEach { child ->
-                if (!includeHidden && (child.name ?: "").startsWith('.')) return@forEach
-                if (child.isDirectory) walk(child, depth + 1)
-                else if (child.isFile && ((child.type ?: "").startsWith("image/") || (child.name ?: "").substringAfterLast('.').lowercase() in setOf("jpg","jpeg","png","webp","heic","heif","bmp","gif"))) {
-                    if (uris.size < 5000) uris += child.uri
+        val budget = ImportTraversalBudget()
+        val imageExtensions = setOf("jpg", "jpeg", "png", "webp", "heic", "heif", "bmp", "gif")
+
+        suspend fun walk(documentId: String, depth: Int) {
+            if (budget.entryLimitReached) return
+            val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(uri, documentId)
+            val cursor = context.contentResolver.query(
+                childrenUri,
+                arrayOf(
+                    DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                    DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                    DocumentsContract.Document.COLUMN_MIME_TYPE,
+                ),
+                null,
+                null,
+                null,
+            ) ?: throw java.io.IOException("Folder provider could not enumerate this authorized folder.")
+            cursor.use { children ->
+                val idColumn = children.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
+                val nameColumn = children.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                val typeColumn = children.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
+                while (children.moveToNext()) {
+                    currentCoroutineContext().ensureActive()
+                    if (!budget.visit(depth + 1)) {
+                        if (budget.entryLimitReached) break
+                        continue // A too-deep branch is skipped; permitted siblings can still be scanned.
+                    }
+                    if (budget.entriesVisited % 128 == 0) {
+                        progress(ImportProgress(scannedEntries = budget.entriesVisited, message = "Scanning authorized folder…", truncated = budget.truncated))
+                    }
+                    val childId = children.getString(idColumn) ?: continue
+                    val name = children.getString(nameColumn).orEmpty()
+                    if (!includeHidden && name.startsWith('.')) continue
+                    val mimeType = children.getString(typeColumn).orEmpty()
+                    if (mimeType == DocumentsContract.Document.MIME_TYPE_DIR) {
+                        walk(childId, depth + 1)
+                    } else if (mimeType.startsWith("image/") || name.substringAfterLast('.', "").lowercase() in imageExtensions) {
+                        uris += DocumentsContract.buildDocumentUriUsingTree(uri, childId)
+                    }
+                    if (budget.entryLimitReached) break
                 }
             }
         }
+
         progress(ImportProgress(message = "Scanning authorized folder…"))
-        walk(root, 0)
-        importUris(uris, collection, progress)
+        walk(rootId, 0)
+        val imported = importUris(uris, collection) { update ->
+            progress(update.copy(scannedEntries = budget.entriesVisited, truncated = update.truncated || budget.truncated))
+        }
+        imported.copy(scannedEntries = budget.entriesVisited, truncated = imported.truncated || budget.truncated)
+            .also(progress)
     }
     private suspend fun importOne(uri: Uri, collection: String): Boolean {
         val id = UUID.randomUUID().toString()

@@ -2,6 +2,8 @@
 
 This checklist is **outstanding work**, not test evidence. At the `ee24a43` checkpoint, 96 JVM tests pass and all 15 instrumentation methods compile. No known native runtime result passes. Ubuntu failed before APK install; accelerated macOS timed out before boot. Neither failure proves an app defect or acceptance. Preserve any new actual error/result and update TEST_REPORT and the individual matrix entries only after execution.
 
+`LocalRotationJourneyTest` is a later repository-level test authored against a recording wallpaper platform. Even if its Android test APK compiles or that fake-platform method passes, it is **not** system-picker, `WallpaperManager`, visible-pixel, OEM, or physical-device acceptance. Consult that commit's actual Actions result for compilation/execution; do not count it as a Samsung journey pass.
+
 ## Safe test setup
 
 Use a disposable emulator or dedicated Android test device. **WallpaperIsolationTest intentionally seeds both Home and Lock wallpapers.** Do not run the entire instrumentation suite on a personal device without explicit consent and a separate wallpaper backup. Never upload private photos, credentials, databases, raw provider responses or unsanitized `dumpsys` output to this public repository.

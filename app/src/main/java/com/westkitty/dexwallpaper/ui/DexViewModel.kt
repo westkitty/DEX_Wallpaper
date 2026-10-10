@@ -82,8 +82,44 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         val target = state.value.destination
         viewModelScope.launch { graph.repository.updateScreen(target, transform); graph.scheduler.reconcile() }
     }
-    fun collection(id: String) { updateScreen { it.copy(collectionId = id, pending = "", cycle = 0) } }
-    fun newCollection(name: String) { runOperation("Creating collection…") { val id = graph.repository.createCollection(name); collection(id); "Collection created." } }
+    fun collection(id: String) {
+        val target = state.value.destination
+        replaceScreenState(state.value.screen.copy(collectionId = id, pending = "", cycle = 0))
+        viewModelScope.launch {
+            try {
+                replaceScreenState(persistCollectionSelection(target, id))
+                graph.scheduler.reconcile()
+            } catch (e: CancellationException) { throw e }
+              catch (e: Exception) {
+                graph.repository.dao.screen(target.name)?.let(::replaceScreenState)
+                notify(e.message?.take(180) ?: "Collection selection could not be saved.")
+            }
+        }
+    }
+    private fun replaceScreenState(screen: ScreenEntity) {
+        mutable.update { current -> current.copy(screens = current.screens.filterNot { it.destination == screen.destination } + screen) }
+    }
+    private suspend fun persistCollectionSelection(target: Destination, collectionId: String): ScreenEntity {
+        graph.repository.initialize()
+        require(graph.repository.dao.allCollections().any { it.id == collectionId }) {
+            "Selected collection is no longer available. Choose an existing collection and try again."
+        }
+        val current = graph.repository.dao.screen(target.name) ?: ScreenEntity(target.name)
+        if (current.collectionId != collectionId) {
+            graph.repository.updateScreen(target) { it.copy(collectionId = collectionId, pending = "", cycle = 0) }
+        }
+        return graph.repository.dao.screen(target.name) ?: current.copy(collectionId = collectionId, pending = "", cycle = 0)
+    }
+    fun newCollection(name: String) {
+        val target = state.value.destination
+        runOperation("Creating collection…") {
+            val id = graph.repository.createCollection(name)
+            val screen = persistCollectionSelection(target, id)
+            replaceScreenState(screen)
+            graph.scheduler.reconcile()
+            "Collection created and selected for ${target.label.lowercase()}."
+        }
+    }
     fun select(id: String, editor: Boolean = false) {
         saved["selectedId"] = id
         viewModelScope.launch {
@@ -106,26 +142,42 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun exclude(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(excluded = !it.excluded)) } } }
     fun tags(id: String, value: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(tags = value.take(400))) } } }
     fun importUris(uris: List<Uri>) {
+        val target = state.value.destination
         val collection = state.value.screen.collectionId
         runOperation("Importing protected originals…") {
-            val result = graph.importer.importUris(uris, collection) { p -> mutable.update { it.copy(progress = "${p.processed} processed · ${p.imported} imported · ${p.duplicates} duplicates · ${p.rejected} rejected") } }
+            replaceScreenState(persistCollectionSelection(target, collection))
+            val result = graph.importer.importUris(uris, collection) { p ->
+                mutable.update { it.copy(progress = "${p.processed} processed · ${p.imported} imported · ${p.duplicates} duplicates · ${p.rejected} rejected") }
+            }
             graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
-            "Imported ${result.imported}; linked ${result.duplicates} duplicates; rejected ${result.rejected}."
+            val limitNote = if (result.truncated) " Scan stopped at the 5,000-item limit; choose a smaller selection for the rest." else ""
+            "Imported ${result.imported}; linked ${result.duplicates} duplicates; rejected ${result.rejected}.$limitNote"
         }
     }
     fun importFolder(uri: Uri, includeHidden: Boolean = false) {
+        val target = state.value.destination
         val collection = state.value.screen.collectionId
         runOperation("Scanning authorized folder…") {
+            replaceScreenState(persistCollectionSelection(target, collection))
+            val result = graph.importer.scanTree(uri, collection, includeHidden) { update ->
+                mutable.update { it.copy(progress = "${update.message} · ${update.scannedEntries} entries scanned · ${update.imported} new · ${update.rejected} rejected") }
+            }
             val c = graph.repository.dao.allCollections().first { it.id == collection }
             graph.repository.dao.putCollection(c.copy(sourceTree = uri.toString()))
-            val p = graph.importer.scanTree(uri, collection, includeHidden) { p -> mutable.update { it.copy(progress = "${p.message} · ${p.imported} new · ${p.rejected} rejected") } }
             graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
-            "Folder synchronized: ${p.imported} new, ${p.duplicates} existing/recovered, ${p.rejected} rejected."
+            val limitNote = if (result.truncated) " Scan was bounded to 5,000 file/folder entries and depth 16; choose smaller subfolders to import the rest." else ""
+            "Folder synchronized: ${result.imported} new, ${result.duplicates} existing/recovered, ${result.rejected} rejected.$limitNote"
         }
     }
     fun rescan(collection: CollectionEntity, includeHidden: Boolean = false) {
         if (collection.sourceTree.isBlank()) { notify("Choose a folder for this collection first."); return }
-        runOperation("Synchronizing folder…") { val p = graph.importer.scanTree(Uri.parse(collection.sourceTree), collection.id, includeHidden) { p -> mutable.update { it.copy(progress = p.message) } }; "Synchronized: ${p.imported} new, ${p.rejected} rejected." }
+        runOperation("Synchronizing folder…") {
+            val result = graph.importer.scanTree(Uri.parse(collection.sourceTree), collection.id, includeHidden) { update ->
+                mutable.update { it.copy(progress = "${update.message} · ${update.scannedEntries} entries scanned") }
+            }
+            val limitNote = if (result.truncated) " Scan stopped at the 5,000-entry or depth-16 bound." else ""
+            "Synchronized: ${result.imported} new, ${result.duplicates} existing/recovered, ${result.rejected} rejected.$limitNote"
+        }
     }
     fun validateAssets() { runOperation("Checking library files…") { "${graph.importer.validateAssets()} missing files quarantined. Originals are never deleted." } }
     fun setFlag(key: String, value: Boolean) { viewModelScope.launch { graph.preferences.flag(key, value) } }
