@@ -216,22 +216,19 @@
     "verification_status": "DEVICE_PENDING"
   },
   "023": {
-    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "implementation_status": "DONE_VERIFIED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "Pure selection behavior verified by passing JVM tests at 76c1f42 / CI 38083970257. Android persistence/UI and Samsung acceptance are tracked separately.",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/ShuffleGuardTest.kt#shuffleWithoutReplacement",
+      "TEST_REPORT.md#First passing native build"
+    ],
     "permissions": [],
     "api_constraints": [],
-    "verification_status": "DEVICE_PENDING"
+    "verification_status": "UNIT_PASS"
   },
   "027": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
@@ -1098,22 +1095,19 @@
     "verification_status": "DEVICE_PENDING"
   },
   "241": {
-    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "implementation_status": "DONE_VERIFIED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "Pure selection behavior verified by passing JVM tests at 76c1f42 / CI 38083970257. Android persistence/UI and Samsung acceptance are tracked separately.",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/ShuffleGuardTest.kt#fairnessAcrossCycleBoundary",
+      "TEST_REPORT.md#First passing native build"
+    ],
     "permissions": [],
     "api_constraints": [],
-    "verification_status": "DEVICE_PENDING"
+    "verification_status": "UNIT_PASS"
   },
   "242": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
@@ -1707,34 +1701,34 @@
     "verification_status": "NOT_RUN"
   },
   "211": {
-    "implementation_status": "PARTIAL",
+    "implementation_status": "IMPLEMENTED_UNTESTED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Library / Sources / Health",
+    "limitations": "Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+"
+    ],
+    "verification_status": "DEVICE_PENDING",
+    "dependencies": []
   },
   "212": {
-    "implementation_status": "PARTIAL",
+    "implementation_status": "IMPLEMENTED_UNTESTED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Library / Sources / Health",
+    "limitations": "Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+"
+    ],
+    "verification_status": "DEVICE_PENDING",
+    "dependencies": []
   },
   "216": {
     "implementation_status": "PARTIAL",
@@ -1887,34 +1881,37 @@
     "verification_status": "NOT_RUN"
   },
   "247": {
-    "implementation_status": "PARTIAL",
+    "implementation_status": "IMPLEMENTED_UNTESTED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Library / Sources / Health",
+    "limitations": "Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+"
+    ],
+    "verification_status": "DEVICE_PENDING",
+    "dependencies": []
   },
   "249": {
-    "implementation_status": "PARTIAL",
+    "implementation_status": "IMPLEMENTED_UNTESTED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupCodec.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/DiagnosticsRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/CachePolicy.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Health / Editor",
+    "limitations": "Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+"
+    ],
+    "verification_status": "DEVICE_PENDING",
+    "dependencies": []
   },
   "253": {
     "implementation_status": "PARTIAL",
@@ -2125,5 +2122,526 @@
     "permissions": [],
     "api_constraints": [],
     "verification_status": "NOT_RUN"
+  },
+  "142": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "143": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "144": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "145": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "146": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "147": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "148": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "149": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "150": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/CreativeRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Generative canvas",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending."
+  },
+  "162": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "163": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "164": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "166": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "169": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "175": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "176": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "177": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "273": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "274": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Scene composer",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+  },
+  "228": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupCodec.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/DiagnosticsRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/CachePolicy.kt"
+    ],
+    "ui_location": "Health / Editor",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending."
+  },
+  "262": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupCodec.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/DiagnosticsRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/CachePolicy.kt"
+    ],
+    "ui_location": "Health / Editor",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending."
+  },
+  "266": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupCodec.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/DiagnosticsRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/CachePolicy.kt"
+    ],
+    "ui_location": "Health / Editor",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending."
+  },
+  "229": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Health / Scene composer",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Metadata backup omits history/old scene revisions/remote credentials; additive 1\u21922 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing."
+  },
+  "267": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Health / Scene composer",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Metadata backup omits history/old scene revisions/remote credentials; additive 1\u21922 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing."
+  },
+  "268": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Health / Scene composer",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Metadata backup omits history/old scene revisions/remote credentials; additive 1\u21922 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing."
+  },
+  "275": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+    ],
+    "ui_location": "Health / Scene composer",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Metadata backup omits history/old scene revisions/remote credentials; additive 1\u21922 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing."
+  },
+  "213": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt"
+    ],
+    "ui_location": "Library / Sources / Health",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed."
+  },
+  "153": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt"
+    ],
+    "ui_location": "Scene composer / Generative canvas",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint."
+  },
+  "157": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt"
+    ],
+    "ui_location": "Scene composer / Generative canvas",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint."
+  },
+  "194": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/creative/ProceduralArtEngine.kt"
+    ],
+    "ui_location": "Scene composer / Generative canvas",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+"
+    ],
+    "dependencies": [],
+    "limitations": "Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint."
   }
 }

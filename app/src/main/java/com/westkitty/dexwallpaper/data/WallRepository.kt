@@ -22,6 +22,7 @@ class WallRepository(private val context: Context, val db: DexDatabase, val impo
     val pipeline: BitmapPipeline, private val controller: WallpaperDestinationController, val preferences: Preferences) {
     private val writeMutex = Mutex()
     val dao = db.library()
+    suspend fun <T> exclusive(action: suspend () -> T): T = writeMutex.withLock { action() }
     suspend fun initialize() {
         db.withTransaction {
             if (dao.allCollections().none { it.id == "default" }) dao.putCollection(CollectionEntity("default", "Personal library"))

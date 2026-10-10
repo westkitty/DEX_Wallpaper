@@ -2,6 +2,8 @@ package com.westkitty.dexwallpaper.data
 
 import android.content.Context
 import androidx.room.*
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.flow.Flow
 import com.westkitty.dexwallpaper.core.*
 
@@ -50,6 +52,11 @@ data class RuleEntity(@PrimaryKey val id: String, val name: String, val collecti
         if (charging < 0) null else charging == 1, if (darkTheme < 0) null else darkTheme == 1, minimumBattery, maximumLux)
 }
 
+@Entity(tableName = "scenes")
+data class SceneEntity(@PrimaryKey val id: String, val name: String, val manifest: String, val updatedAt: Long, val revision: Int = 1)
+@Entity(tableName = "scene_revisions", indices = [Index("sceneId")])
+data class SceneRevisionEntity(@PrimaryKey val id: String, val sceneId: String, val manifest: String, val createdAt: Long, val revision: Int)
+
 @Dao
 interface LibraryDao {
     @Query("SELECT * FROM assets ORDER BY importedAt DESC") fun observeAssets(): Flow<List<AssetEntity>>
@@ -80,12 +87,26 @@ interface LibraryDao {
     @Query("SELECT * FROM rules ORDER BY priority DESC, id") suspend fun allRules(): List<RuleEntity>
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun putRule(rule: RuleEntity)
     @Query("DELETE FROM rules WHERE id = :id") suspend fun deleteRule(id: String)
+    @Query("SELECT * FROM scenes ORDER BY updatedAt DESC") fun observeScenes(): Flow<List<SceneEntity>>
+    @Query("SELECT * FROM scenes ORDER BY updatedAt DESC") suspend fun allScenes(): List<SceneEntity>
+    @Query("SELECT * FROM scenes WHERE id = :id") suspend fun scene(id: String): SceneEntity?
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun putScene(scene: SceneEntity)
+    @Insert suspend fun addRevision(revision: SceneRevisionEntity)
+    @Query("SELECT * FROM scene_revisions WHERE sceneId = :id ORDER BY createdAt DESC LIMIT 20") suspend fun revisions(id: String): List<SceneRevisionEntity>
+    @Query("DELETE FROM scene_revisions WHERE sceneId = :sceneId AND id NOT IN (SELECT id FROM scene_revisions WHERE sceneId = :sceneId ORDER BY createdAt DESC LIMIT 20)") suspend fun trimRevisions(sceneId: String)
 }
 
-@Database(entities = [AssetEntity::class, CollectionEntity::class, Membership::class, EditEntity::class, ScreenEntity::class, ReceiptEntity::class, RuleEntity::class], version = 1, exportSchema = true)
+@Database(entities = [AssetEntity::class, CollectionEntity::class, Membership::class, EditEntity::class, ScreenEntity::class, ReceiptEntity::class, RuleEntity::class, SceneEntity::class, SceneRevisionEntity::class], version = 2, exportSchema = true)
 abstract class DexDatabase : RoomDatabase() {
     abstract fun library(): LibraryDao
     companion object {
-        fun open(context: Context) = Room.databaseBuilder(context, DexDatabase::class.java, "living-wall.db").build()
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS `scenes` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `manifest` TEXT NOT NULL, `updatedAt` INTEGER NOT NULL, `revision` INTEGER NOT NULL, PRIMARY KEY(`id`))")
+                db.execSQL("CREATE TABLE IF NOT EXISTS `scene_revisions` (`id` TEXT NOT NULL, `sceneId` TEXT NOT NULL, `manifest` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `revision` INTEGER NOT NULL, PRIMARY KEY(`id`))")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_scene_revisions_sceneId` ON `scene_revisions` (`sceneId`)")
+            }
+        }
+        fun open(context: Context) = Room.databaseBuilder(context, DexDatabase::class.java, "living-wall.db").addMigrations(MIGRATION_1_2).build()
     }
 }

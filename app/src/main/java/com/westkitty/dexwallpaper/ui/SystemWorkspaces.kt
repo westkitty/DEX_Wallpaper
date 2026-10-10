@@ -108,10 +108,12 @@ import java.time.format.DateTimeFormatter
     }
 }
 
-@Composable fun HealthWorkspace(vm: DexViewModel, state: UiState) {
+@Composable fun HealthWorkspace(vm: DexViewModel, state: UiState, backup: (Boolean) -> Unit, restore: () -> Unit, diagnostics: () -> Unit) {
     val context = LocalContext.current
     val capabilities = remember { CompatibilityRegistry(context).inspect() }
     var refresh by remember { mutableIntStateOf(0) }
+    var originals by rememberSaveable { mutableStateOf(false) }
+    var confirmRestore by remember { mutableStateOf(false) }
     val sizes by produceState<List<Pair<String, Long>>>(emptyList(), refresh, state.assets.size) {
         value = withContext(Dispatchers.IO) {
             fun bytes(file: java.io.File): Long = if (file.isDirectory) file.walkTopDown().filter { it.isFile }.sumOf { it.length() } else file.length()
@@ -128,13 +130,27 @@ import java.time.format.DateTimeFormatter
             OutlinedButton(onClick = { vm.validateAssets(); refresh++ }, enabled = !state.busy) { Text("Check missing files") }
             OutlinedButton(onClick = { vm.graph.scope.launch { vm.graph.importer.thumbnails.listFiles()?.forEach { it.delete() }; vm.notify("Thumbnail cache cleared; originals kept."); refresh++ } }) { Text("Clear thumbnails") }
         }
-        Text("Missing originals are quarantined, not deleted. Re-authorize or re-import their source to recover. Export diagnostics and backup are added in later checkpoints.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("Missing originals are quarantined, not deleted. Re-import the same source to recover matching hashes without changing identity.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        DataLine("Thumbnail cache limit", "${state.preferences.cacheMb} MB; originals are never evicted")
+        Slider(state.preferences.cacheMb.toFloat(), { vm.setNumber("cacheMb", it.toInt()) }, valueRange = 16f..512f)
+        HorizontalDivider()
+        Eyebrow("Backup / recovery")
+        FlagRow("Include original artwork", originals, "Backups may contain private images. Choose a trusted destination. Credentials and device-specific URI grants are always excluded.") { originals = it }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { backup(originals) }, enabled = !state.busy) { Text("Export backup") }
+            OutlinedButton(onClick = { confirmRestore = true }, enabled = !state.busy) { Text("Restore backup") }
+        }
+        OutlinedButton(diagnostics, enabled = !state.busy) { Text("Export sanitized diagnostics") }
+        Text("Restore merges metadata by verified hashes. Rotation and rules are paused; it never applies a wallpaper automatically. Original/source images, grants, and private data are not included in diagnostic exports.", style = MaterialTheme.typography.bodySmall)
         HorizontalDivider()
         Eyebrow("Device compatibility")
         capabilities.forEach { c -> DataLine(c.name, "${c.state.name.replace('_',' ')}\n${c.explanation}") }
         Eyebrow("Build status")
         Text("Device behavior requires Android verification. Compilation and unit-test evidence is recorded separately in TEST_REPORT.md; this screen never invents a successful device check.")
     }
+    if (confirmRestore) AlertDialog(onDismissRequest = { confirmRestore = false }, title = { Text("Restore visual environment?") },
+        text = { Text("This merges artwork metadata and replaces matching collection/settings records. Rotation and rules are paused for destination review. Original source files are not deleted. Export a backup of current settings first if needed.") },
+        confirmButton = { TextButton(onClick = { confirmRestore = false; restore() }) { Text("Choose backup") } }, dismissButton = { TextButton(onClick = { confirmRestore = false }) { Text("Cancel") } })
 }
 @Composable fun SettingsWorkspace(vm: DexViewModel, state: UiState) {
     Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {

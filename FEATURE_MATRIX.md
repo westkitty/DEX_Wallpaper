@@ -6,12 +6,12 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 
 ## Totals
 
-- **DONE_VERIFIED**: 0
-- **IMPLEMENTED_UNTESTED**: 74
-- **PARTIAL**: 49
+- **DONE_VERIFIED**: 2
+- **IMPLEMENTED_UNTESTED**: 99
+- **PARTIAL**: 52
 - **BLOCKED_PLATFORM**: 3
 - **BLOCKED_EXTERNAL**: 2
-- **NOT_IMPLEMENTED**: 148
+- **NOT_IMPLEMENTED**: 118
 - **TOTAL**: 276
 
 ## Individual requirements
@@ -40,7 +40,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 020 | Scheduled night mode | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 021 | Random wallpaper selection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 022 | Sequential wallpaper selection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 023 | Shuffle without repetition | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
+| 023 | Shuffle without repetition | DONE_VERIFIED | UNIT_PASS | Control / Library / Rotation / Editor / Rules — Pure selection behavior verified by passing JVM tests at 76c1f42 / CI 38083970257. Android persistence/UI and Samsung acceptance are tracked separately. |
 | 024 | Collection-specific schedules | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 025 | Time-of-day playlists | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 026 | Theme-dependent playlists | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
@@ -159,42 +159,42 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 139 | Real-time effect previews | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 140 | Wallpaper palette extraction | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 141 | Android dynamic wallpaper color integration | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 142 | Procedural wallpaper generation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 143 | Geometric patterns | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 144 | Extensible predefined pattern library | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 145 | Custom generated palettes | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 146 | Procedural textures | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 147 | Random pattern variations | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 148 | Offline on-device procedural generation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 149 | Resolution-aware generation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 150 | Saved procedural favorites | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 142 | Procedural wallpaper generation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 143 | Geometric patterns | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 144 | Extensible predefined pattern library | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 145 | Custom generated palettes | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 146 | Procedural textures | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 147 | Random pattern variations | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 148 | Offline on-device procedural generation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 149 | Resolution-aware generation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
+| 150 | Saved procedural favorites | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
 | 151 | Video wallpapers | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 152 | GIF wallpapers | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 153 | Animated 2D scenes | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 153 | Animated 2D scenes | PARTIAL | NOT_RUN | Scene composer / Generative canvas — Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint. |
 | 154 | Animated 3D scenes | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 155 | Animated wallpaper playlists | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 156 | Documented lawful Wallpaper Engine content import | BLOCKED_PLATFORM | NOT_RUN | System health / capability report — No Vulkan backend or proprietary Windows runtime. Direct boot intentionally excludes credential-encrypted artwork. Safe fallback only. |
-| 157 | Compatible portable wallpaper package import | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 157 | Compatible portable wallpaper package import | PARTIAL | NOT_RUN | Scene composer / Generative canvas — Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint. |
 | 158 | Mobile animation optimization | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 159 | Static motion-free alternatives | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 160 | Independent animation controls | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 161 | Visual wallpaper editor | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 162 | Layer-based composition | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 163 | Image overlays | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 164 | Custom typography | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 162 | Layer-based composition | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
+| 163 | Image overlays | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
+| 164 | Custom typography | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
 | 165 | Custom fonts | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 166 | Vector shapes | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 166 | Vector shapes | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
 | 167 | SVG artwork | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 168 | Gradients and shadows | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 169 | Layer blending | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 169 | Layer blending | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
 | 170 | 3D-style text transforms | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 171 | Curved/transformed text | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 172 | Interactive hotspots where supported | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 173 | App-launch actions and supported shortcuts | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 174 | Touch-triggered animation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 175 | Formula expressions | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 176 | Conditional logic | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 177 | Persistent variables | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 175 | Formula expressions | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
+| 176 | Conditional logic | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
+| 177 | Persistent variables | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
 | 178 | Event-driven workflows | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 179 | Dynamic clocks | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 180 | Date and calendar displays | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
@@ -211,7 +211,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 191 | Weather-driven artwork | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 192 | Wind-field visualization | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 193 | Particle themes | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 194 | Color-generated themes | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 194 | Color-generated themes | PARTIAL | NOT_RUN | Scene composer / Generative canvas — Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint. |
 | 195 | Tasker integration | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 196 | Android broadcast commands | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 197 | External intents | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
@@ -228,9 +228,9 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 208 | Automation-triggered preset loading | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 209 | Image caching | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 210 | Preprocessed next-wallpaper buffers | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 211 | Missing-file detection | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 212 | Missing-image recovery | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 213 | Image relinking | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 211 | Missing-file detection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Library / Sources / Health — Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed. |
+| 212 | Missing-image recovery | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Library / Sources / Health — Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed. |
+| 213 | Image relinking | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Library / Sources / Health — Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed. |
 | 214 | Persistent shuffle state | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 215 | Reboot recovery | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 216 | Battery Saver awareness | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
@@ -245,8 +245,8 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 225 | Encrypted remote credentials | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 226 | Internet-free offline core | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 227 | No advertisements or analytics | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 228 | Backup and restore | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 229 | Metadata-preserving backup | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 228 | Backup and restore | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Health / Editor — Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending. |
+| 229 | Metadata-preserving backup | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
 | 230 | Multilingual infrastructure | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 231 | Material You support | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 232 | Dark theme | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
@@ -258,15 +258,15 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 238 | Future schedule preview | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 239 | Rule conflict resolver | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 240 | Wallpaper decision receipt | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 241 | Fairness-aware shuffle | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
+| 241 | Fairness-aware shuffle | DONE_VERIFIED | UNIT_PASS | Control / Library / Rotation / Editor / Rules — Pure selection behavior verified by passing JVM tests at 76c1f42 / CI 38083970257. Android persistence/UI and Samsung acceptance are tracked separately. |
 | 242 | Rule dry-run mode | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 243 | Collection eligibility explainer | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 244 | Manual override window | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 245 | Exact duplicate detection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 246 | Near-duplicate detection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 247 | Corrupt-asset quarantine | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
+| 247 | Corrupt-asset quarantine | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Library / Sources / Health — Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed. |
 | 248 | Protected originals | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 249 | Editing sidecars | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
+| 249 | Editing sidecars | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Health / Editor — Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending. |
 | 250 | Orientation-specific focal points | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 251 | Composition safe-zone editor | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 252 | A/B wallpaper comparison | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
@@ -279,18 +279,18 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 259 | Multi-orientation preview lab | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 260 | Interactive gallery inspector | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 261 | Storage budget dashboard | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 262 | Configurable cache limits | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 262 | Configurable cache limits | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Health / Editor — Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending. |
 | 263 | Local performance profiler | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 264 | GPU context-loss recovery | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 265 | One-touch safe mode | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 266 | Sanitized diagnostic export | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 267 | Verified data migrations | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 268 | Profile import and export | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 266 | Sanitized diagnostic export | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Health / Editor — Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending. |
+| 267 | Verified data migrations | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
+| 268 | Profile import and export | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
 | 269 | Asset provenance records | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 270 | Remote source allowlists | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 271 | Provider rate-limit control | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 272 | Network budget rules | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 273 | Versioned scene manifests | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 274 | Safe formula evaluation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 275 | Scene history and revision comparison | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 273 | Versioned scene manifests | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
+| 274 | Safe formula evaluation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
+| 275 | Scene history and revision comparison | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
 | 276 | Adaptive render quality policy | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |

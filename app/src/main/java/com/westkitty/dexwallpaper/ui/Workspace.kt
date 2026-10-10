@@ -42,6 +42,12 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
             catch (_: SecurityException) { vm.notify("Folder provider refused persistent access. Import individual images instead.") }
         }
     }
+    var includeBackupOriginals by remember { mutableStateOf(false) }
+    val exportBackup = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri -> uri?.let { vm.exportBackup(it, includeBackupOriginals) } }
+    val restoreBackup = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let { vm.restoreBackup(it) } }
+    val diagnostics = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri -> uri?.let(vm::exportDiagnostics) }
+    val exportSidecar = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri -> uri?.let(vm::exportSidecar) }
+    val importSidecar = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(vm::importSidecar) }
     val snackbar = remember { SnackbarHostState() }
     LaunchedEffect(state.message) { state.message?.let { snackbar.showSnackbar(it); vm.clearMessage() } }
     BackHandler(state.page != Workspace.CONTROL) { vm.navigate(Workspace.CONTROL) }
@@ -107,15 +113,15 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
                                 Workspace.CONTROL -> ControlCenter(vm, state, wide)
                                 Workspace.LIBRARY -> LibraryWorkspace(vm, state)
                                 Workspace.ROTATION -> RotationLab(vm, state)
-                                Workspace.EDITOR -> EditorWorkspace(vm, state, wide)
+                                Workspace.EDITOR -> EditorWorkspace(vm, state, wide, { exportSidecar.launch("dex-editing-sidecar.json") }, { importSidecar.launch(arrayOf("application/json", "text/plain")) })
                                 Workspace.MOTION -> MotionWorkspace(vm, state, livePicker)
                                 Workspace.AUTOMATION -> AutomationWorkspace(vm, state)
                                 Workspace.SOURCES -> SourcesWorkspace(vm, state) { folder.launch(null) }
-                                Workspace.HEALTH -> HealthWorkspace(vm, state)
+                                Workspace.HEALTH -> HealthWorkspace(vm, state, { originals -> includeBackupOriginals = originals; exportBackup.launch("dex-wallpaper-backup.zip") }, { restoreBackup.launch(arrayOf("application/zip", "application/octet-stream")) }, { diagnostics.launch("dex-sanitized-diagnostics.json") })
                                 Workspace.SETTINGS -> SettingsWorkspace(vm, state)
                                 Workspace.DATA -> LiveDataWorkspace(vm, state)
-                                Workspace.GENERATIVE -> UnavailableWorkspace("Generative canvas", "On-device procedural compositions", "The generator is not implemented in this checkpoint. Imported artwork and the non-destructive editor remain available.") { vm.navigate(Workspace.EDITOR) }
-                                Workspace.SCENE -> UnavailableWorkspace("Scene composer", "Portable visual environments", "Layered scenes and scene manifests are not implemented in this checkpoint. No external package scripts are executed.") { vm.navigate(Workspace.LIBRARY) }
+                                Workspace.GENERATIVE -> GenerativeWorkspace(vm, state)
+                                Workspace.SCENE -> SceneWorkspace(vm, state)
                             }
                         }
                     }
@@ -141,13 +147,5 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
         }
         HorizontalDivider()
         DataLine("Core", "Local • private • offline")
-    }
-}
-@Composable private fun UnavailableWorkspace(title: String, subtitle: String, reason: String, action: () -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
-        SectionTitle(title, subtitle)
-        Eyebrow("Not implemented")
-        Text(reason)
-        OutlinedButton(action) { Text("Open working tools") }
     }
 }

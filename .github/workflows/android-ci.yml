@@ -28,6 +28,8 @@ jobs:
         run: echo '2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046  gradle/wrapper/gradle-wrapper.jar' | sha256sum --check
       - name: Unit tests, lint, and debug APK
         run: python3 tools/run_android_checks.py build
+      - name: Regenerate official Gradle wrapper
+        run: ./gradlew --no-daemon wrapper --gradle-version 8.11.1 --distribution-type bin --gradle-distribution-sha256-sum f397b287023acdba1e9f6fc5ea72d22dd63669d59ed4a289a29b1a76eee151c6
       - name: Upload APK
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # upload-artifact v7.0.2
         with:
@@ -42,3 +44,6 @@ jobs:
           path: |
             app/build/reports/
             app/schemas/
+            gradle/wrapper/
+            gradlew
+            gradlew.bat

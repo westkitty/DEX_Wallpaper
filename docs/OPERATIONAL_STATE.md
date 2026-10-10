@@ -21,3 +21,9 @@ No physical/emulated journey acceptance yet. Home-only requires a verifiable sep
 ## Relevant checks and next priorities
 
 Run inventory/source policies locally, inspect CI earliest actual failure, repair then recheck build/lint/tests. Improve bounded thumbnails and recovery, add procedural generation and bounded versioned scenes/formulas with previews; then backup/export, widgets/tile/shortcuts, optional trusted remote transport, shader lifecycle and renderer diagnostics. Preserve a working core and reconcile all 276 statuses at each release-quality handoff.
+
+## Creative / recovery working-tree update
+
+Latest independently verified pushed head before this checkpoint: `76c1f4288de4b71dbb115cd4c8849d6703c70efb`. Foundation CI had an API-27 wallpaper-color lint failure; a guard fix is pushed and running. Current extension adds real procedural and scene editor workspaces (no placeholder-only navigation), bounded formulas/manifests, Room v2/additive 1→2 migration, static scene library export/revisions, safe ZIP backup/restore, editing sidecars, cache budget and same-hash recovery. JVM and emulator tests are added but not yet executed for this extension. Keep both CI and actual device acceptance states separate.
+
+Foundation verified build: PASS at `76c1f4288de4b71dbb115cd4c8849d6703c70efb`, run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38083970257 ; 35 JVM tests, lint, real APK. Extensions and emulator evidence remain pending their own runs. This is the first known-good Android checkpoint.

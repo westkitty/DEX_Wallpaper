@@ -34,3 +34,17 @@ Local Python validator regression tests: **8 passed** (`python3 -m unittest disc
 ## Foundation compiler/lint checkpoint
 
 https://github.com/westkitty/DEX_Wallpaper/actions/runs/38083566334 — **FAIL** at `lintDebug`: `WallpaperColors.fromBitmap` requires API 27, but minSdk is 26. The corrected hosted-SDK setup and Kotlin compilation reached Android lint. Repair: explicitly guard color extraction/notification at API 27 and report that capability accurately. No lint suppression or feature deletion. Full test-count evidence is pending a successful verification run.
+
+## Creative / recovery checkpoint (pending CI execution)
+
+Added actual offline procedural pixels, shared-library generation, versioned layers, safe numeric formulas, time-scrubbed scene rendering, revision persistence, bounded metadata/original-image ZIP backup, sidecars, sanitized diagnostic export, bounded thumbnails and same-hash missing-image recovery. Added 21 further JVM test methods (formula/scene/cache/backup), and instrumented generation/scene/recovery/backup/Home–Lock identity/Activity recreation tests.
+
+A separate API 35 emulator workflow is configured on implementation pushes and manual dispatch. It never requests sandbox root or uses Docker; it selects existing KVM access or software acceleration. The workflow emits exact test counts to check annotations. Until GitHub reports executed results, these tests are **NOT RUN**. Samsung visual wallpaper isolation remains a distinct physical-device acceptance item.
+
+## First passing native build
+
+**PASS** — https://github.com/westkitty/DEX_Wallpaper/actions/runs/38083970257 at `76c1f4288de4b71dbb115cd4c8849d6703c70efb`.
+
+GitHub check annotation confirms **35 JVM tests, 0 failures/errors**, `lintDebug` and `assembleDebug` succeeded. Actual APK SHA-256: `19ab9ea678add1f56abce0a5cdd83fdf20e86895b2b30a5e71d2a91c3bc4340a`.
+
+Uploaded debug APK artifact: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38083970257/artifacts/11681253974 (`dex-wallpaper-debug`, 18,264,582 archive bytes; GitHub reports unexpired). Verification reports artifact: `11681184031`. This verifies the foundation commit, not uncommitted extensions or Samsung device behavior.

@@ -171,7 +171,7 @@ import kotlinx.coroutines.withContext
     }
 }
 
-@Composable fun EditorWorkspace(vm: DexViewModel, state: UiState, wide: Boolean) {
+@Composable fun EditorWorkspace(vm: DexViewModel, state: UiState, wide: Boolean, exportSidecar: () -> Unit, importSidecar: () -> Unit) {
     var portrait by rememberSaveable { mutableStateOf(false) }
     var compare by rememberSaveable { mutableStateOf(false) }
     val asset = state.selected
@@ -214,7 +214,11 @@ import kotlinx.coroutines.withContext
         EditSlider("Top icon-safe zone", state.edit.safeTop, 0f..0.45f) { vm.updateEdit(state.edit.copy(safeTop = it)) }
         EditSlider("Bottom icon-safe zone", state.edit.safeBottom, 0f..0.45f) { vm.updateEdit(state.edit.copy(safeBottom = it)) }
         Text("Safe zones are calibrated manually. DEX cannot read Samsung launcher icon positions.", style = MaterialTheme.typography.bodySmall)
-        Button(onClick = { vm.apply(asset.id) }, enabled = !state.busy) { Text("Apply to ${state.destination.label.lowercase()}") }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { vm.apply(asset.id) }, enabled = !state.busy) { Text("Apply to ${state.destination.label.lowercase()}") }
+            OutlinedButton(exportSidecar, enabled = !state.busy) { Text("Export sidecar") }
+            OutlinedButton(importSidecar, enabled = !state.busy) { Text("Import sidecar") }
+        }
     }
 }
 @OptIn(ExperimentalLayoutApi::class)

@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory
 import androidx.documentfile.provider.DocumentFile
 import androidx.room.withTransaction
 import com.westkitty.dexwallpaper.wallpaper.BitmapPipeline
+import com.westkitty.dexwallpaper.core.CachePolicy
+import com.westkitty.dexwallpaper.core.CacheEntry
+import kotlinx.coroutines.flow.first
 import java.io.File
 import java.security.MessageDigest
 import java.util.UUID
@@ -79,6 +82,12 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
             val hash = digest.digest().joinToString("") { "%02x".format(it) }
             val existing = db.library().byHash(hash)
             if (existing != null) {
+                if (!file(existing).isFile || existing.quarantined) {
+                    val decoded = pipeline.decode(temp, 320, 320)
+                    try { writeThumbnail(decoded, File(thumbnails, "${existing.id}.jpg")) } finally { decoded.recycle() }
+                    java.nio.file.Files.move(temp.toPath(), file(existing).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE)
+                    db.library().updateAsset(existing.copy(quarantined = false, sourceUri = uri.toString()))
+                }
                 db.library().addMembership(Membership(collection, existing.id))
                 return false
             }
@@ -89,7 +98,7 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
             val phash: Long
             try {
                 phash = pipeline.perceptualHash(decoded)
-                File(thumbnails, "$id.jpg").outputStream().use { decoded.compress(android.graphics.Bitmap.CompressFormat.JPEG, 85, it) }
+                writeThumbnail(decoded, File(thumbnails, "$id.jpg"))
             } finally { decoded.recycle() }
             require(temp.renameTo(target)) { "Could not finalize imported image" }
             val name = if (uri.scheme == "file") File(requireNotNull(uri.path)).name else DocumentFile.fromSingleUri(context, uri)?.name ?: "Imported artwork"
@@ -108,7 +117,7 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
     suspend fun validateAssets(): Int = withContext(Dispatchers.IO) {
         var missing = 0
         db.library().allAssets().forEach { asset ->
-            val broken = !file(asset).isFile
+            val broken = if (!file(asset).isFile) true else try { pipeline.decode(file(asset), 160, 160).also { it.recycle() }; false } catch (_: Exception) { true }
             if (broken) missing++
             if (asset.quarantined != broken) db.library().updateAsset(asset.copy(quarantined = broken))
         }
@@ -118,9 +127,27 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
         val target = File(thumbnails, "${asset.id}.jpg")
         if (!target.isFile && file(asset).isFile) {
             val bitmap = pipeline.decode(file(asset), 320, 320)
-            try { target.outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG, 85, it) } }
+            try { writeThumbnail(bitmap, target) }
             finally { bitmap.recycle() }
         }
+        target.setLastModified(System.currentTimeMillis())
         target
+    }
+    private fun writeThumbnail(bitmap: android.graphics.Bitmap, file: File) {
+        val ratio = 512f / maxOf(bitmap.width, bitmap.height)
+        val small = if (ratio < 1f) android.graphics.Bitmap.createScaledBitmap(bitmap,
+            (bitmap.width * ratio).toInt().coerceAtLeast(1), (bitmap.height * ratio).toInt().coerceAtLeast(1), true) else bitmap
+        try {
+            val temp = File(file.parentFile, file.name + ".partial")
+            temp.outputStream().use { check(small.compress(android.graphics.Bitmap.CompressFormat.JPEG,85,it)) }
+            java.nio.file.Files.move(temp.toPath(), file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE)
+        } finally { if (small !== bitmap) small.recycle() }
+    }
+    suspend fun enforceCacheBudget(maximumMb: Int): Long = withContext(Dispatchers.IO) {
+        val files = thumbnails.listFiles()?.filter { it.isFile } ?: emptyList()
+        val evict = CachePolicy.evict(files.map { CacheEntry(it.name,it.length(),it.lastModified()) }, maximumMb.coerceIn(16,512)*1024L*1024)
+        var freed=0L
+        files.filter { it.name in evict }.forEach { f -> val size=f.length(); if(f.delete()) freed+=size }
+        freed
     }
 }
