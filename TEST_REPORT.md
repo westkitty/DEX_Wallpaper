@@ -97,13 +97,13 @@ Device run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38087668819 a
 
 Existing Ubuntu KVM access was unavailable without privileges; software emulation was used. Do not apply root/chmod/udev workarounds. The next diagnostic run uses the verified official `macos-15-intel` runner label, requests existing HVF acceleration, disables snapshots and reduces guest RAM to 2GB. Crash-buffer capture is added for native/system failures. All tests are retained. This is a materially different infrastructure attempt, not an unchanged infinite retry; emulator availability remains unverified until it boots/executes.
 
-## Verified optional source build and pending operation hardening
+## Historical optional source checkpoint (superseded below)
 
 **PASS** — https://github.com/westkitty/DEX_Wallpaper/actions/runs/38089299045 at `daf52c1b2a64b9cade47a3236a3cb25e4efa1079`.
 Actual annotations confirm **90 JVM tests, 0 failures/errors**, lintDebug, assembleDebug and wrapper task success. Fourteen source-policy/XML/numeric methods genuinely executed after the Dns repair. APK SHA-256 `e5616eb6f73536d2ef5c972ad337f645ab46513829903e2d65d80e022abf5db0`; artifact https://github.com/westkitty/DEX_Wallpaper/actions/runs/38089299045/artifacts/11683826676 ; reports `11683496817`.
-Provider requests, network switching and Keystore/device behavior remain unverified. Accelerated device run `38089299077` is in progress; no result inferred.
+Provider requests, network switching and Keystore/device behavior remain unverified. At this checkpoint accelerated device run `38089299077` was pending; its actual failure is recorded below.
 
-New hardening awaits its own run: capture/check unaffected wallpaper IDs/current DEX component after the live picker; refuse known Home-only ownership as a successful Both picker result; stop automatic writes after any attempted-but-unverified platform operation; return actual command failures to WorkManager/widgets/status; preserve the newest equal editor undo; apply the combined cache budget after local imports. Three further picker regression methods and three command-completion methods authored: **96 JVM methods total**, not yet all executed. One post-write verification regression expands instrumentation to **15 authored methods**, with no passing result claim. No test is disabled or removed.
+At that checkpoint new hardening awaited its own run: capture/check unaffected wallpaper IDs/current DEX component after the live picker; refuse known Home-only ownership as a successful Both picker result; stop automatic writes after any attempted-but-unverified platform operation; return actual command failures to WorkManager/widgets/status; preserve the newest equal editor undo; apply the combined cache budget after local imports. Three further picker regression methods and three command-completion methods authored: **96 JVM methods total**, subsequently all executed at 33c9a2a. One post-write verification regression expands instrumentation to **15 authored methods**, with no passing result claim. No test is disabled or removed.
 
 ## Hardening build PASS / accelerated emulator unavailable
 
@@ -112,4 +112,17 @@ Actual check annotations: **96 JVM tests, 0 failures/errors**, lintDebug and ass
 
 Accelerated device run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38089299077 at `daf52c1` — **FAIL**, timeout waiting for emulator boot, before instrumentation/harness execution. No report files/test results were produced. Existing macOS HVF was requested without privileged modifications; actual failure cause beyond boot timeout is unknown. Neither this nor Ubuntu system death is an application acceptance result. No unchanged/infinite emulator retry, test removal, root or Docker workaround.
 
-Next CI improvement explicitly assembles the real instrumentation APK in ordinary Android CI and checks that the file exists; absence of JVM XML/results cannot be mislabeled PASS. Python validator regressions also run remotely. This separates test-code compilation from unavailable device boot. Runtime tests remain outstanding, including physical Samsung/DeX, actual SAF picker journeys and visible Home–Lock isolation.
+The ee24a43 CI improvement explicitly assembles the real instrumentation APK in ordinary Android CI and checks that the file exists; absence of JVM XML/results cannot be mislabeled PASS. Python validator regressions also run remotely. This separates test-code compilation from unavailable device boot. Runtime tests remain outstanding, including physical Samsung/DeX, actual SAF picker journeys and visible Home–Lock isolation.
+
+## Instrumentation compilation independently verified
+
+**PASS** — https://github.com/westkitty/DEX_Wallpaper/actions/runs/38090533888 at `ee24a435b0b59e8173f62b1b95f545742c80dd41`, job/check `114325863215` (4m5s).
+Actual annotations confirm **96 JVM tests, 0 failures/errors**, lintDebug, assembleDebug and **assembleDebugAndroidTest** PASS. The eight Python validator regressions and source/inventory checks passed remotely. Wrapper verification/regeneration and all three artifact uploads succeeded.
+
+- App APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38090533888/artifacts/11684455076 ; SHA-256 `92fadd0fbc605a876e28faf456e938d0bf191952db76ac134363d748598b11f3`.
+- Instrumentation APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38090533888/artifacts/11684245354 ; SHA-256 `d613720072e1d5ab9c56ae48cc42c38050d39e47e7619bba4fa8205a78b03c30`.
+- Reports artifact `11684375144`.
+
+**15 native methods compiled; 0 known passed on a device.** Test APK existence/digest is compilation evidence only. The prior boot timeout/system-service failures are retained, not relabeled PASS. No physical Galaxy Tab S9 Ultra, actual picker/import/restart journey, visible unaffected-screen proof or power benchmark exists. Follow [DEVICE_ACCEPTANCE.md](docs/DEVICE_ACCEPTANCE.md) on a disposable test device; do not run wallpaper-modifying tests on a personal device without explicit consent. All 276 requirements/statuses remain unchanged (4/140/61/2/2/67).
+
+Non-blocking build notice: pinned Gradle 8.11.1 is marked out-of-date by setup-gradle. No untested toolchain upgrade was substituted for this passing checkpoint. APKs are debug-signed, not production releases.

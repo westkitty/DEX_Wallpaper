@@ -5,13 +5,14 @@ Session-fixed branch: `arena/62a85de1-dex-wallpaper`. Main remains `db4ef366986c
 
 ## Last independently verified delivery
 
-`33c9a2a5ab68aca5ccc4d0c48deff8898238136b` was normally pushed and compared independently with `git ls-remote`.
-Eleven prior session commits: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`, `33c9a2a`.
-The following repair cannot record its own SHA before commit; update this checkpoint after remote verification.
+`ee24a435b0b59e8173f62b1b95f545742c80dd41` was normally pushed and compared independently with `git ls-remote`.
+Twelve verified session commits at the native build checkpoint: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`, `33c9a2a`, `ee24a43`.
+The following documentation-only audit cannot record its own SHA before commit; its latest delivery is available from git/remote history. No application/test source is changed by the audit.
 
 ## Actual execution evidence
 
-- **Latest Android PASS at 33c9a2a**: run `38089991851`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. App artifact `11683352853`, SHA-256 `4aada029c4bd26d97a1c0db359dfe54d898fa969fd12e14636e0f0ecf98e1366`; reports `11683882481`.
+- **Latest Android PASS at ee24a43**: run `38090533888`, job/check `114325863215`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug/**assembleDebugAndroidTest**. Eight Python regressions/inventory/source/wrapper checks and three uploads PASS. App artifact `11684455076`, SHA-256 `92fadd0fbc605a876e28faf456e938d0bf191952db76ac134363d748598b11f3`; test APK `11684245354`, SHA-256 `d613720072e1d5ab9c56ae48cc42c38050d39e47e7619bba4fa8205a78b03c30`; reports `11684375144`. **15 native methods compiled, 0 known device passes**.
+- Prior Android PASS at 33c9a2a: run `38089991851`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. App artifact `11683352853`, SHA-256 `4aada029c4bd26d97a1c0db359dfe54d898fa969fd12e14636e0f0ecf98e1366`; reports `11683882481`.
 
 - Prior Android PASS at daf52c1: run `38089299045`; **90 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11683826676`, SHA-256 `e5616eb6f73536d2ef5c972ad337f645ab46513829903e2d65d80e022abf5db0`; reports `11683496817`. Accelerated device `38089299077` FAILED at emulator boot timeout; no test execution or result artifacts.
 - Prior Android PASS at ab0822c: run `38087668672`; **76 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11682024693`, SHA-256 `ca06f4bfe9d72440e5b173ded58d1255424cb56cd0c48725594b49d254752a9e`; reports `11683170074`. Device `38087668819` FAILED before APK install (package service missing / system death); 0 reported tests. Artifact `11683876719`.
@@ -33,7 +34,7 @@ Five pure live-isolation tests and equal-ID preflight regression PASS as part of
 
 Responsive 12 Compose workspaces; SAF individual/folder imports, protected originals/EXIF/thumbnails/collections; non-destructive persistent precision editor/undo; fair shuffle/history/filtering; centralized static Home/Lock/Both preflight and independent approximate schedules/rules/forecasts; five real offline generators; static bounded layer/formula scene editor/export/revisions; backup/recovery/sidecars/sanitized diagnostics/cache budgets; native Home-only widget/tile/shortcuts and opt-in scoped commands; real GLES effects/transitions/local renderer counters; six/custom DeskShift profiles and packaged legal reader.
 
-Next source checkpoint adds Room v3/configuration, Keystore credentials, manual trusted HTTPS/WebDAV/Nextcloud/RSS/flat numeric JSON transport and native source journeys. Its first build run `38088800616` FAILED on an actual OkHttp Dns lambda type mismatch; explicit Dns implementation is fixed and PASS at daf52c1. Its 14 new JVM methods really passed (90 total). v1→v3/reopen/collection-upsert and synthetic Keystore device tests remain unverified. Provider acceptance is still unavailable; no real credential was needed to implement safe setup.
+Delivered optional source checkpoint adds Room v3/configuration, Keystore credentials, manual trusted HTTPS/WebDAV/Nextcloud/RSS/flat numeric JSON transport and native source journeys. Its first build run `38088800616` FAILED on an actual OkHttp Dns lambda type mismatch; explicit Dns implementation is fixed and PASS at daf52c1. Its 14 new JVM methods really passed (90 total). v1→v3/reopen/collection-upsert and synthetic Keystore device tests remain unverified. Provider acceptance is still unavailable; no real credential was needed to implement safe setup.
 
 ## New hardening checkpoint (Android CI PASS, device pending)
 
@@ -47,8 +48,8 @@ No physical Galaxy Tab S9 Ultra/DeX/S Pen/TalkBack, wallpaper visual isolation, 
 
 ## Instrumentation compile / actual acceptance separation
 
-The next standard CI checkpoint assembles/upload-checks the actual instrumentation APK in addition to app/JVM/lint evidence and runs all Python validator regressions. This is only test compilation, not runtime. Keep all 15 authored instrumentation methods and prior failures; device boot is unavailable in observed runner attempts.
+Standard CI at ee24a43 actually assembled/uploaded the instrumentation APK independently of unavailable emulator boot, in addition to app/JVM/lint evidence and all eight Python validator regressions. This is test compilation only, not runtime. All 15 native methods and prior failures are retained. Device boot was unavailable in observed runner attempts; no unchanged retry is queued. A Gradle 8.11.1 out-of-date notice is non-blocking, not a reason to claim the toolchain current.
 
 ## Highest-value next work
 
-Check the instrumentation-compile checkpoint independently; preserve any real compiler failures. Device runner attempts did not produce app acceptance (software system death, accelerated boot timeout). Highest value is a stable Android test device / actual Galaxy Tab S9 Ultra: launch, real SAF individual/folder import, collection/shuffle/interval, Home-only preview/apply/next, restart, static/live mixed isolation, visibility/orientation/recovery. Verify unaffected visible pixels as well as IDs; do not run wallpaper-modifying instrumentation on a personal device without explicit consent. Provider/power/DeX/S Pen/TalkBack acceptance still needs execution. Never infer acceptance from a build.
+Instrumentation compilation is now verified; keep runtime acceptance separate. See [DEVICE_ACCEPTANCE.md](DEVICE_ACCEPTANCE.md). Device runner attempts did not produce app acceptance (software system death, accelerated boot timeout). Highest value is a stable Android test device / actual Galaxy Tab S9 Ultra: launch, real SAF individual/folder import, collection/shuffle/interval, Home-only preview/apply/next, restart, static/live mixed isolation, visibility/orientation/recovery. Verify unaffected visible pixels as well as IDs; do not run wallpaper-modifying instrumentation on a personal device without explicit consent. Provider/power/DeX/S Pen/TalkBack acceptance still needs execution. Never infer acceptance from a build.
