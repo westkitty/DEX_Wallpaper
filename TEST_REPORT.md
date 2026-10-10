@@ -48,3 +48,7 @@ A separate API 35 emulator workflow is configured on implementation pushes and m
 GitHub check annotation confirms **35 JVM tests, 0 failures/errors**, `lintDebug` and `assembleDebug` succeeded. Actual APK SHA-256: `19ab9ea678add1f56abce0a5cdd83fdf20e86895b2b30a5e71d2a91c3bc4340a`.
 
 Uploaded debug APK artifact: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38083970257/artifacts/11681253974 (`dex-wallpaper-debug`, 18,264,582 archive bytes; GitHub reports unexpired). Verification reports artifact: `11681184031`. This verifies the foundation commit, not uncommitted extensions or Samsung device behavior.
+
+## Creative compiler repair
+
+Run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38084305918 — **FAIL**, `compileDebugKotlin`, CreativeWorkspaces.kt line 31. `Composition` collided with Compose runtime's `Composition` factory through wildcard imports. Repair: explicit `ArtComposition` alias for the procedural domain model. Improve CI diagnostics to retain adjacent compiler signatures and report available JVM XML results independently of a later lint failure. No failing test or feature is removed.

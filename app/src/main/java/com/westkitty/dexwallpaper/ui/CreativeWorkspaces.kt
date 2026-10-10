@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import com.westkitty.dexwallpaper.core.*
 import com.westkitty.dexwallpaper.creative.*
+import com.westkitty.dexwallpaper.creative.Composition as ArtComposition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -28,7 +29,7 @@ import java.util.UUID
     val pattern=Pattern.valueOf(patternName)
     fun color(text: String) = try { Color.parseColor(text) } catch (_: IllegalArgumentException) { null }
     val composition=if(seed.toLongOrNull()!=null && listOf(primary,secondary,background).all { color(it)!=null })
-        Composition(seed.toLong(),pattern,color(background)!!,color(primary)!!,color(secondary)!!,density.toInt()) else null
+        ArtComposition(seed.toLong(),pattern,color(background)!!,color(primary)!!,color(secondary)!!,density.toInt()) else null
     val preview by produceState<android.graphics.Bitmap?>(null,composition,portrait) {
         value=composition?.let { c -> withContext(Dispatchers.Default) { vm.graph.creative.generator.render(c,if(portrait) 625 else 1000,if(portrait) 1000 else 625) } }
     }
