@@ -83,7 +83,7 @@ class BackupRestoreCoordinator(private val context: Context, private val wall: W
                 val sameHash=wall.dao.byHash(a.sha256)
                 val id=sameHash?.id ?: if(wall.dao.asset(a.id)==null) a.id else UUID.randomUUID().toString()
                 mapping[a.id]=id
-                val target=File(wall.importer.originals,sameHash?.relativePath ?: "$id.img")
+                val target=wall.importer.file(sameHash ?: a.copy(id=id,relativePath="$id.img"))
                 assetFiles[a.id]?.let { original -> java.nio.file.Files.move(original.toPath(),target.toPath(),java.nio.file.StandardCopyOption.REPLACE_EXISTING,java.nio.file.StandardCopyOption.ATOMIC_MOVE) }
                 prepared+=a.copy(id=id,relativePath=target.name,quarantined=!target.isFile,sourceUri=sameHash?.sourceUri ?: "")
             }
