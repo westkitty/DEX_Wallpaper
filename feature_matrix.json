@@ -709,18 +709,21 @@
         "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
-        "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt"
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/core/SafGrantPolicy.kt"
       ],
       "ui_location": "Control / Library / Rotation / Editor / Rules",
       "implementation_status": "IMPLEMENTED_UNTESTED",
-      "verification_status": "DEVICE_PENDING",
+      "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
       "test_reference": [
-        "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten"
+        "app/src/androidTest/java/com/westkitty/dexwallpaper/LocalRotationJourneyTest.kt#importedShuffleAndIntervalSurviveReopenWhileOnlyHomeIsWritten",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#retainsOnlyReadGrantsReferencedByFolderCollections",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#staleReadGrantCandidatesAreUniqueAndDeterministic"
       ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "A repository-level test is authored for individual local-file import, protected copy, collection membership, and reopen. It does not exercise Android’s SAF picker; device acceptance remains pending."
+      "limitations": "A repository-level test is authored for individual local-file import, protected copy, collection membership, and reopen. Individual SAF picks are copied without persistent document grants; the two pure grant-policy methods pass in Android CI. The actual SAF picker, private import and permission lifecycle still require device acceptance."
     },
     {
       "id": "038",
@@ -736,7 +739,8 @@
         "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/core/ImportTraversalBudget.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
-        "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt"
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/core/SafGrantPolicy.kt"
       ],
       "ui_location": "Control / Library / Rotation / Editor / Rules",
       "implementation_status": "IMPLEMENTED_UNTESTED",
@@ -745,12 +749,14 @@
         "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#filesAndDirectoriesShareOneEntryLimit",
         "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#exactEntryLimitIsNotReportedTruncatedWithoutAnOmittedEntry",
         "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#depthLimitSkipsDeepBranchButDoesNotExhaustEntryBudget",
-        "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#rejectsInvalidLimitsAndDepth"
+        "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#rejectsInvalidLimitsAndDepth",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#retainsOnlyReadGrantsReferencedByFolderCollections",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#staleReadGrantCandidatesAreUniqueAndDeterministic"
       ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "All four pure traversal-budget JVM methods pass in Android CI; actual DocumentsContract/SAF provider traversal, picker permissions, folder import, and device acceptance remain unverified."
+      "limitations": "Four pure traversal-budget and two pure SAF grant-policy JVM methods pass in Android CI. Actual DocumentsContract/SAF provider traversal, picker permission retention/revocation, folder import, and device acceptance remain unverified."
     },
     {
       "id": "039",
@@ -890,16 +896,22 @@
         "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-        "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/core/SafGrantPolicy.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt"
       ],
       "ui_location": "Control / Library / Rotation / Editor / Rules",
       "implementation_status": "IMPLEMENTED_UNTESTED",
-      "verification_status": "DEVICE_PENDING",
-      "test_reference": [],
+      "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
+      "test_reference": [
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#retainsOnlyReadGrantsReferencedByFolderCollections",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#staleReadGrantCandidatesAreUniqueAndDeterministic"
+      ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed."
+      "limitations": "Folder read access is retained only while a collection references the selected tree; failed/unreferenced grants and replaced trees are reconciled. The pure grant-policy JVM methods pass in Android CI; actual provider and device lifecycle acceptance remains pending."
     },
     {
       "id": "046",
@@ -4224,16 +4236,22 @@
         "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
         "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-        "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/core/SafGrantPolicy.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/Workspace.kt"
       ],
       "ui_location": "Control / Library / Rotation / Editor / Rules",
       "implementation_status": "IMPLEMENTED_UNTESTED",
-      "verification_status": "DEVICE_PENDING",
-      "test_reference": [],
+      "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
+      "test_reference": [
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#retainsOnlyReadGrantsReferencedByFolderCollections",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/SafGrantPolicyTest.kt#staleReadGrantCandidatesAreUniqueAndDeterministic"
+      ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed."
+      "limitations": "Individual document picks are copied without enduring URI grants. Folder read grants are retained only for collection-linked trees; stale grants are reconciled at startup and after imports, rescans, and restore. Pure policy methods pass in Android CI; actual SAF/provider and device acceptance remain unverified."
     },
     {
       "id": "223",

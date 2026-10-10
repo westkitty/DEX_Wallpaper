@@ -9,7 +9,7 @@
 
 `BIND_WALLPAPER` is a **service binding restriction**, not a user permission request. Only the OS may bind the exported wallpaper service. The launcher Activity is exported for supported Android entry. Recovery receiver is not exported.
 
-Storage access uses `ACTION_OPEN_DOCUMENT` / `ACTION_OPEN_DOCUMENT_TREE` grants only. Persistable read access is requested for folders; individual images are copied privately and work even if enduring permission is refused. No `MANAGE_EXTERNAL_STORAGE`, broad media/storage, location, health, calendar, exact-alarm, notification-listener, microphone, or camera permission is requested.
+Storage access uses `ACTION_OPEN_DOCUMENT` / `ACTION_OPEN_DOCUMENT_TREE` grants only. Individually selected documents are copied into app-private storage without taking persistent grants. Folder picks request read-only persistent access; the grant is retained only while a collection references that tree. Unreferenced read grants are reconciled at startup and after imports, rescans, and backup restore, including failed/replaced selections. Backups exclude URI grants and source-tree URIs. No `MANAGE_EXTERNAL_STORAGE`, broad media/storage, location, health, calendar, exact-alarm, notification-listener, microphone, or camera permission is requested.
 
 Advanced unsupported features are capability-gated, not permission-gated behind fake switches. Optional permissions must be documented here when actual consumers are implemented. No privilege is requested merely to make a feature matrix appear complete.
 

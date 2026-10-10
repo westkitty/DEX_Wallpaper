@@ -2,7 +2,7 @@
 
 No account, advertisements, analytics, user profiling, required backend or uploaded telemetry. The wallpaper core works without internet. Artwork, thumbnails, metadata, collections, edits, queues/history/rules/scenes and local renderer counters stay on device. Original source files are only read; protected private copies use Android credential-encrypted app storage. Uninstalling removes private copies.
 
-SAF authorizes only chosen files/trees. DEX does not enumerate unrelated storage or launcher icon positions, or access personal health, location, media notifications or calendars. Local battery/theme/network capabilities support explicitly configured behavior; no SSID or network identifier is collected.
+SAF authorizes only chosen files/trees. Individually selected documents are copied into app-private storage without persistent document grants. A read-only folder grant remains only while a collection links that tree; stale or replaced grants are reconciled on startup and after import/rescan/restore. Backups exclude both grants and source-tree URIs. DEX does not enumerate unrelated storage or launcher icon positions, or access personal health, location, media notifications or calendars. Local battery/theme/network capabilities support explicitly configured behavior; no SSID or network identifier is collected.
 
 ## Optional trusted connections
 
