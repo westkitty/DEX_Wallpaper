@@ -1,6 +1,6 @@
 # Copy/paste handoff prompt — unfinished DEX Wallpaper mission
 
-Start the next Arena chat with **westkitty/DEX_Wallpaper** and **arena/62a85de1-dex-wallpaper as its starting base**, not main. If Arena assigns a new session branch, work only on that assigned branch, preserving the existing implementation/history. Confirm that the baseline commit below is an ancestor before editing. This file records the last verified application checkpoint; subsequent documentation commits do not change its Android source.
+Continue **westkitty/DEX_Wallpaper** on the session-assigned branch **`arena/43998994-dex-wallpaper`**, not main. The latest source-bearing commit `28e0acc1f3d8b9e3f0dc2299398782ad3679cd30` was normally pushed, independently matched by `git ls-remote`, and passed Android CI run `38092686248`. Follow-up report/matrix evidence is recorded separately and does not alter those Android sources. If Arena explicitly assigns a different branch for a future session, that new assignment governs. Confirm the pushed implementation is in the assigned branch before editing; preserve all existing history.
 
 ---
 
@@ -8,27 +8,26 @@ Take over the unfinished implementation of **DEX Wallpaper / The Living Wall Sys
 
 ## 1. Establish the existing baseline before changes
 
-- Previous delivery branch: `arena/62a85de1-dex-wallpaper`.
-- Last independently remote-verified application/documentation checkpoint: **`64906f780d3802c03cd18ca6ee1b3b91159ac1a8`**. It contains the entire implementation, with 13 prior normally pushed commits. The handoff itself is a later documentation commit; inspect current remote history/status rather than assuming the checkpoint is still HEAD.
-- `main` remained **`db4ef366986c0b79a7c0ed71c8a50fd82c51ad02`** and does **not** contain this implementation. No PR was opened/merged, no force-push or history rewrite occurred. At most one PR is allowed; do not merge without separate authorization.
-- Inspect branch, status, local/remote history and concurrent edits. Preserve unrelated work. Do not switch/create/push an unassigned branch; the new Arena session's assigned branch takes precedence over the old branch name. Ensure the new session starts from the existing work, not the README-only main.
+- Current assigned branch: `arena/43998994-dex-wallpaper`. The existing implementation history was continued from delivered `33c3ed0374341ba7a44e550a9859cfc79d717de0`; the current source-bearing delivery is `28e0acc1f3d8b9e3f0dc2299398782ad3679cd30`. Follow-up documentation/matrix records capture its CI evidence without changing Android sources. Inspect branch/status and compare the actual remote SHA before editing.
+- `main` remains based at **`db4ef366986c0b79a7c0ed71c8a50fd82c51ad02`** and does **not** contain this implementation. No PR was opened/merged, no force-push or history rewrite occurred. At most one PR is allowed; do not merge without separate authorization.
+- Inspect branch, status, local/remote history and concurrent edits. Preserve unrelated work. Never switch/create/push to an unassigned branch; the current session branch is fixed by Arena. Ensure work continues from the existing implementation, not the README-only main.
 - Read **README.md, ARCHITECTURE.md, FEATURE_MATRIX.md, feature_matrix.json, TEST_REPORT.md, docs/OPERATIONAL_STATE.md, docs/DEVICE_ACCEPTANCE.md, PERMISSIONS.md, PERFORMANCE.md, PRIVACY.md, THIRD_PARTY_NOTICES.md, CONTRIBUTING.md**. The generated 276-row inventory is the exact remaining-work contract; this prompt is not a scope replacement.
 
 ## 2. Actual evidence — do not overclaim
 
-**Android CI at 64906f7 PASS:** https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278 ; job/check `114327520587`.
+**Latest Android CI PASS:** https://github.com/westkitty/DEX_Wallpaper/actions/runs/38092686248 at source commit `28e0acc1f3d8b9e3f0dc2299398782ad3679cd30`, check/job `114332178631`.
 
-- **96 JVM tests executed, 0 failures/errors**; 8 Python inventory-validator tests; inventory/source policy checks; lintDebug; assembleDebug; **assembleDebugAndroidTest**; official wrapper verification/regeneration; all three uploads PASS.
-- App APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278/artifacts/11684116776 . Actual APK SHA-256 **`42d418a40277609359d53bec3567a95509f072a5f7991690e405e8c6ef7cd145`**.
-- Test APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278/artifacts/11684416069 . SHA-256 **`db334a05823e2f0a9b7160881cdd0ccb851de0dae39e8ef156829ba92f576365`**.
-- Reports artifact `11684650804`. Hashes above identify APK files, not artifact ZIPs. Artifacts were not downloaded into the repository. Debug signing only, no production release authorized.
-- **15 authored instrumentation methods compile; 0 known passing device runtime results.** Compilation is NOT launch/import/isolation/acceptance evidence.
-- Latest device run **38089299077 FAILED** before emulator boot (macos-15-intel, existing HVF requested, boot timeout, no harness/results/artifacts). Previous Ubuntu **38087668819 FAILED before APK install**, missing package service/system-server death, 0 reported tests, preserved artifact `11683876719`. Actual cause beyond those observed failures is unknown; neither proves an app defect or success. Earlier device crashes remain in TEST_REPORT. Keep failures/tests.
-- Previous sandbox had no Java/Android SDK/adb. JDK/SDK download routes and full-log redirects were blocked; manual workflow dispatch returned 403. Push-triggered CI and check-annotation/artifact APIs worked. Inspect the new environment once, but do not repeat unchanged downloads/dispatches/emulator attempts indefinitely. No root/chmod/udev/Docker workaround. A Gradle 8.11.1 out-of-date notice is non-blocking, not proof of a current toolchain.
+- **100 JVM tests executed, 0 failures/errors**; lintDebug, assembleDebug, **assembleDebugAndroidTest**, inventory/source policy checks, Python tests and artifact uploads PASS.
+- App APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38092686248/artifacts/11684796718 . Actual APK SHA-256 **`6f64b50f88675f786b78bce9cf8b88a501bc6caf17d430c2eafb889c80f370a`**.
+- Test APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38092686248/artifacts/11685175722 . SHA-256 **`cdf094581c1b7fc73b22ebd96783402edec4e84dd71977c0ed25500d0b50c636`**.
+- Reports artifact `11684856283`. Hashes above identify APK files, not artifact ZIPs. Artifacts were not downloaded into the repository. Debug signing only, no production release authorized.
+- **16 authored instrumentation methods compile; 0 known passing device runtime results.** The repository journey uses a recording fake wallpaper platform. Test APK compilation is NOT launch/import/SAF/WallpaperManager/visible-pixel/OEM acceptance evidence.
+- Latest device run **38089299077 FAILED** before emulator boot (macos-15-intel, existing HVF requested, boot timeout, no harness/results/artifacts). Previous Ubuntu **38087668819 FAILED before APK install**, missing package service/system-server death, 0 reported tests, preserved artifact `11683876719`. No device workflow ran against the `28e0acc` implementation; actual cause beyond observed failures is unknown. Do not retry unchanged infrastructure.
+- Previous sandbox had no Java/Android SDK/adb. JDK/SDK download routes and full-log redirects were blocked; manual workflow dispatch returned 403. Push-triggered CI and check-annotation/artifact APIs worked. Inspect a new environment once, but do not repeat unchanged downloads/dispatches/emulator attempts indefinitely. No root/chmod/udev/Docker workaround. A Gradle 8.11.1 out-of-date notice is non-blocking, not proof of a current toolchain.
 
 ## 3. Full scope remains unfinished
 
-Exact inventory counts at the baseline:
+Current implementation-status counts (all 276 requirements retained):
 
 | Status | Count |
 |---|---:|
@@ -40,7 +39,7 @@ Exact inventory counts at the baseline:
 | NOT_IMPLEMENTED | 67 |
 | TOTAL | 276 |
 
-DONE_VERIFIED IDs are **023** shuffle without repetition, **241** fairness-aware shuffle, **273** versioned scene manifests, **274** safe formula evaluation, backed by distinct executed pure tests. No native integration is promoted from compilation. Re-audit each row against actual behavior/evidence; do not blanket-upgrade statuses or delete/renumber requirements.
+DONE_VERIFIED IDs remain **023** shuffle without repetition, **241** fairness-aware shuffle, **273** versioned scene manifests, **274** safe formula evaluation, backed by distinct executed pure tests. Row **038** has verification_status `JVM_POLICY_PASS_DEVICE_PENDING` because all four pure traversal-budget JVM tests passed; its implementation_status remains `IMPLEMENTED_UNTESTED` pending actual SAF/provider/device traversal. No native integration is promoted from compilation. Re-audit each row against actual behavior/evidence; do not blanket-upgrade statuses or delete/renumber requirements.
 
 Retain all groups: A001–036 destination/control/rotation; B037–074 import/library/sources; C075–102 crop/formats/non-destructive edits; D103–141 effects/transitions/GPU; E142–160 procedural/video/animated/lawful portable content; F161–194 programmable scenes/safe formulas/data; G195–208 native integrations/automation; H209–236 lifecycle/storage/offline/security/recovery/accessibility/legal; I237–244 rule/shuffle decisions; J245–252 integrity/duplicates/safe zones; K253–260 DeX/input/accessibility; L261–268 budgets/recovery/migrations/profiles; M269–276 source/scene/network safety and adaptive quality. Exact feature names are in `tools/feature_names.txt` and the matrix.
 
@@ -68,7 +67,7 @@ Base: `app/src/main/java/com/westkitty/dexwallpaper/`.
 - `worker/RotationScheduler.kt`, `integration/{AutomationController,DexWidgetProvider,NextWallpaperTile}.kt`, `core/AutomationCommand.kt`: persistent approximate rotations and Home-only native actions; real Outcome propagated to WorkManager/result/status, not unconditional success. Actual worker/widget/tile journeys pending.
 - `creative/`, `core/{SafeFormula,SceneManifest,ShuffleGuard,Chronoscape,FrameSense,CachePolicy,VisualProfile}.kt`: offline generators, static layer/formula scene editing/export/revisions, fair queue/rules/framing/cache/profile logic. Video/GIF/Vulkan and continuously layered live scenes remain incomplete.
 - `sources/SyncCoordinator.kt`, `security/CredentialVault.kt`, `core/{NetworkPolicy,XmlFeeds,NumericDataCodec}.kt`: optional manual HTTPS Image/WebDAV/Nextcloud/RSS/flat numeric JSON setup/sync/cache/provenance/numeric scene binding. Pure policies pass; real providers/Keystore/network switching/cancellation/budgets remain unverified. This is not a recursive account browser or continuously live weather/health/media client.
-- Tests: `app/src/test/` (96 JVM), `app/src/androidTest/` (15 native methods including isolation, real Bitmap post-write verification failure, migrations, Keystore, GLES and navigation).
+- Tests: `app/src/test/` (100 JVM methods executed successfully in run `38092686248`); `app/src/androidTest/` (16 authored methods compiled, none device-executed, including isolation, real Bitmap post-write verification failure, migrations, Keystore, GLES, navigation and the fake-platform library journey).
 - CI: `.github/workflows/android-ci.yml`, `.github/workflows/android-device-tests.yml`; evidence harnesses `tools/run_android_checks.py`, `tools/run_android_instrumentation.py`. App + instrumentation compilation is separate from unavailable boot/runtime.
 
 ## 6. Immediate priorities — implementation, not another plan

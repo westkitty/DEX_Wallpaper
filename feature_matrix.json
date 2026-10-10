@@ -740,14 +740,17 @@
       ],
       "ui_location": "Control / Library / Rotation / Editor / Rules",
       "implementation_status": "IMPLEMENTED_UNTESTED",
-      "verification_status": "DEVICE_PENDING",
+      "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
       "test_reference": [
-        "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#filesAndDirectoriesShareOneEntryLimit"
+        "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#filesAndDirectoriesShareOneEntryLimit",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#exactEntryLimitIsNotReportedTruncatedWithoutAnOmittedEntry",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#depthLimitSkipsDeepBranchButDoesNotExhaustEntryBudget",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/ImportTraversalBudgetTest.kt#rejectsInvalidLimitsAndDepth"
       ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "DocumentsContract tree traversal now counts files and folders against 5,000 entries and depth 16, with a visible truncation notice. Pure budget-test coverage is separate from the still-unverified actual SAF provider/folder journey."
+      "limitations": "All four pure traversal-budget JVM methods pass in Android CI; actual DocumentsContract/SAF provider traversal, picker permissions, folder import, and device acceptance remain unverified."
     },
     {
       "id": "039",
