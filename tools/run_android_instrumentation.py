@@ -27,9 +27,18 @@ if code:
         detail=crash.stdout[-5500:] or crash.stderr[-1000:]
         if detail:
             escaped=detail.replace('%','%25').replace('\n','%0A').replace('\r','%0D')
-            print(f'::error title=Instrumented process crash evidence::{escaped}')
+            print(f'::error title=AndroidRuntime failure evidence::{escaped}')
     except subprocess.TimeoutExpired:
         print('::error title=Instrumented crash capture::adb logcat timed out; no crash detail fabricated.')
+    try:
+        native=subprocess.run(['adb','logcat','-b','crash','-d'],capture_output=True,text=True,timeout=15)
+        (evidence/'crash-buffer.txt').write_text(native.stdout[-50000:] or native.stderr[-2000:])
+        detail=native.stdout[-4000:]
+        if detail:
+            escaped=detail.replace('%','%25').replace('\n','%0A').replace('\r','%0D')
+            print(f'::error title=Android crash buffer evidence::{escaped}')
+    except subprocess.TimeoutExpired:
+        print('::error title=Native crash capture::Crash-buffer timeout; no cause inferred.')
 message=message.replace('%','%25').replace('\n','%0A').replace('\r','%0D')
 (evidence/'summary.txt').write_text(f'Instrumentation exit={code}; reported tests={tests}; failures/errors={failures}.\n')
 print(f'::{"error" if code else "notice"} title=Android device verification::{message}')

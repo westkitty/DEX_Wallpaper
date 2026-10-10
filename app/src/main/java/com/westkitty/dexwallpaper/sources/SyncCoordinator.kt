@@ -45,7 +45,11 @@ class SyncCoordinator(private val context: Context,private val wall: WallReposit
             val client=OkHttpClient.Builder().followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false)
                 .connectTimeout(10,TimeUnit.SECONDS).readTimeout(15,TimeUnit.SECONDS).writeTimeout(15,TimeUnit.SECONDS).callTimeout(30,TimeUnit.SECONDS)
                 .socketFactory(selectedNetwork.socketFactory)
-                .dns { host -> selectedNetwork.getAllByName(host).toList().also { addresses -> if(addresses.isEmpty() || addresses.any { !NetworkPolicy.addressAllowed(it,source.allowPrivateNetwork) }) throw java.net.UnknownHostException("Trusted endpoint resolves to a prohibited address") } }.build()
+                .dns(object: Dns {
+                    override fun lookup(hostname: String): List<java.net.InetAddress> = selectedNetwork.getAllByName(hostname).toList().also { addresses ->
+                        if(addresses.isEmpty() || addresses.any { !NetworkPolicy.addressAllowed(it,source.allowPrivateNetwork) }) throw java.net.UnknownHostException("Trusted endpoint resolves to a prohibited address")
+                    }
+                }).build()
             var used=0L
             var lastRequestAt=0L
             var requestCount=0

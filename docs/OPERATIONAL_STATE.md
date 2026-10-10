@@ -5,13 +5,13 @@ Session-fixed branch: `arena/62a85de1-dex-wallpaper`. Main remains `db4ef366986c
 
 ## Last independently verified delivery
 
-`ab0822cac0797038d1be41a0461d44d7f66934b5` was normally pushed and compared independently with `git ls-remote`.
-Eight prior session commits: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`.
+`c3235710923b33394f5736be87fe3acfbe3437ce` was normally pushed and compared independently with `git ls-remote`.
+Nine prior session commits: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`.
 The following repair cannot record its own SHA before commit; update this checkpoint after remote verification.
 
 ## Actual execution evidence
 
-- **Latest Android PASS at ab0822c**: run `38087668672`; **76 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11682024693`, SHA-256 `ca06f4bfe9d72440e5b173ded58d1255424cb56cd0c48725594b49d254752a9e`; reports `11683170074`. Device `38087668819` IN PROGRESS last query.
+- **Latest Android PASS at ab0822c**: run `38087668672`; **76 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11682024693`, SHA-256 `ca06f4bfe9d72440e5b173ded58d1255424cb56cd0c48725594b49d254752a9e`; reports `11683170074`. Device `38087668819` FAILED before APK install (package service missing / system death); 0 reported tests. Artifact `11683876719`.
 
 - **Android PASS at f8c6e6b**: run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810 ; **70 JVM tests, 0 failures/errors**, lintDebug, assembleDebug.
 - Real debug APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810/artifacts/11682677562 ; SHA-256 `fe70972bcfbd97acda58dace9527f2a79f33cd47a21edffe13b41990b446c64d`. Reports `11682797175`.
@@ -30,13 +30,13 @@ Five pure live-isolation tests and equal-ID preflight regression PASS as part of
 
 Responsive 12 Compose workspaces; SAF individual/folder imports, protected originals/EXIF/thumbnails/collections; non-destructive persistent precision editor/undo; fair shuffle/history/filtering; centralized static Home/Lock/Both preflight and independent approximate schedules/rules/forecasts; five real offline generators; static bounded layer/formula scene editor/export/revisions; backup/recovery/sidecars/sanitized diagnostics/cache budgets; native Home-only widget/tile/shortcuts and opt-in scoped commands; real GLES effects/transitions/local renderer counters; six/custom DeskShift profiles and packaged legal reader.
 
-Next source checkpoint adds Room v3/configuration, Keystore credentials, manual trusted HTTPS/WebDAV/Nextcloud/RSS/flat numeric JSON transport and native source journeys. Its 14 new JVM tests (90 total authored), v1→v3/reopen/collection-upsert and synthetic Keystore device tests await execution. It is not covered by the above passing SHA. Provider acceptance is still unavailable; no real credential was needed to implement safe setup.
+Next source checkpoint adds Room v3/configuration, Keystore credentials, manual trusted HTTPS/WebDAV/Nextcloud/RSS/flat numeric JSON transport and native source journeys. Its build run `38088800616` FAILED on an actual OkHttp Dns lambda type mismatch; explicit Dns implementation is being pushed. Its 14 new JVM tests (90 total authored), v1→v3/reopen/collection-upsert and synthetic Keystore device tests await execution. It is not covered by the above passing SHA. Provider acceptance is still unavailable; no real credential was needed to implement safe setup.
 
 ## Inventory and material gaps
 
 All 276 requirements retained. Totals: DONE_VERIFIED 4; IMPLEMENTED_UNTESTED 140; PARTIAL 61; BLOCKED_PLATFORM 2; BLOCKED_EXTERNAL 2; NOT_IMPLEMENTED 67. Reconcile against generated JSON after source updates. Verified statuses are limited to distinctly executed core algorithms/schema, not compilation or unrun device tests.
 
-No physical Galaxy Tab S9 Ultra/DeX/S Pen/TalkBack, wallpaper visual isolation, power/GPU lifecycle, widget/tile or credentialed provider acceptance evidence. Video/GIF/Vulkan, continuous live layers/data and advanced scheduling/provider journeys remain incomplete. Shared/unverifiable static Lock state is intentionally refused for Home-only writes; it requires separate Lock setup. Device instrumentation crash remains unresolved.
+No physical Galaxy Tab S9 Ultra/DeX/S Pen/TalkBack, wallpaper visual isolation, power/GPU lifecycle, widget/tile or credentialed provider acceptance evidence. Video/GIF/Vulkan, continuous live layers/data and advanced scheduling/provider journeys remain incomplete. Shared/unverifiable static Lock state is intentionally refused for Home-only writes; it requires separate Lock setup. Earlier instrumentation crash remains unresolved; newest diagnostics show emulator system death before APK installation, not an app failure. An accelerated Intel macOS HVF diagnostic run is next, without root privileges. No test is skipped/deleted.
 
 ## Highest-value next work
 
