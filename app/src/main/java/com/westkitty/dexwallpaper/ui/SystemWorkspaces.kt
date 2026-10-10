@@ -115,21 +115,57 @@ import java.time.format.DateTimeFormatter
 
 @Composable fun SourcesWorkspace(vm: DexViewModel, state: UiState, chooseFolder: () -> Unit) {
     var hidden by rememberSaveable { mutableStateOf(false) }
-    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-        SectionTitle("Wallpaper Bridge", "Authorized folders / verified imports / offline originals")
-        Text("Choose a local or Syncthing-managed folder through Android's Storage Access Framework. DEX reads only the selected tree, copies images atomically, and identifies exact duplicates by SHA-256.")
+    var name by rememberSaveable { mutableStateOf("") }
+    var endpoint by rememberSaveable { mutableStateOf("") }
+    var kind by rememberSaveable { mutableStateOf("IMAGE") }
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") } // Never saved in Activity state, logs, or plaintext preferences.
+    var wifi by rememberSaveable { mutableStateOf(true) }
+    var metered by rememberSaveable { mutableStateOf(false) }
+    var privateNetwork by rememberSaveable { mutableStateOf(false) }
+    var budget by rememberSaveable { mutableStateOf("32") }
+    var remove by remember { mutableStateOf<com.westkitty.dexwallpaper.data.RemoteSourceEntity?>(null) }
+    var cachedData by remember { mutableStateOf("") }
+    val scope=rememberCoroutineScope()
+    Column(Modifier.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(18.dp)) {
+        SectionTitle("Wallpaper Bridge", "Authorized folders / trusted HTTPS sources / verified local originals")
+        Text("Local and Syncthing folders use Android SAF. DEX copies images atomically, hashes/deduplicates them, and keeps the core offline.")
         Button(chooseFolder) { Text("Authorize a source folder") }
-        FlagRow("Include hidden folders when rescanning", hidden, "Explicit opt-in. Restricted to your authorized folder; no broad filesystem access.") { hidden = it }
+        FlagRow("Include hidden folders when rescanning",hidden,"Explicit opt-in; restricted to your authorized tree.") { hidden=it }
         state.collections.forEach { c ->
-            DataLine(c.name, if (c.sourceTree.isBlank()) "Manual collection · no linked folder" else "Authorized folder · persistent read access requested")
-            if (c.sourceTree.isNotBlank()) OutlinedButton(onClick = { vm.rescan(c, hidden) }, enabled = !state.busy) { Text("Synchronize ${c.name}") }
+            DataLine(c.name,if(c.sourceTree.isBlank()) "Manual collection / no linked folder" else "Authorized folder / persistent read access requested")
+            if(c.sourceTree.isNotBlank()) OutlinedButton(onClick={vm.rescan(c,hidden)},enabled=!state.busy) { Text("Synchronize ${c.name}") }
         }
         HorizontalDivider()
-        Eyebrow("Transfer integrity")
-        Text("Protected copies / 80 MB per image / 5,000 files per scan / depth 16 / .partial staging / decode validation / exact duplicate linking")
-        Eyebrow("Network connectors / unavailable")
-        Text("Nextcloud, WebDAV, online artwork discovery, premium providers, and cross-device favorite synchronization are not connected in this build. No remote credentials or user data are transmitted.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Eyebrow("Optional trusted remote endpoint")
+        Text("No provider account is required by DEX. You supply a licensed source or your own server. HTTPS only; embedded credentials, query tokens, redirects and untrusted DNS addresses are rejected. Credentials use Android Keystore encryption.",style=MaterialTheme.typography.bodySmall)
+        FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) { listOf("IMAGE","WEBDAV","NEXTCLOUD","RSS","JSON").forEach { t -> FilterChip(kind==t,onClick={kind=t},label={Text(t.lowercase())}) } }
+        OutlinedTextField(name,{name=it.take(100)},label={Text("Source name")},singleLine=true,modifier=Modifier.fillMaxWidth())
+        OutlinedTextField(endpoint,{endpoint=it.take(2048)},label={Text("Trusted HTTPS endpoint")},singleLine=true,modifier=Modifier.fillMaxWidth())
+        if(kind=="WEBDAV" || kind=="NEXTCLOUD") Text("Directory URL must end with /. For Nextcloud use your authorized /remote.php/dav/files/username/ path and an app password. Depth 1 only.",style=MaterialTheme.typography.bodySmall)
+        OutlinedTextField(username,{username=it.take(500)},label={Text("Optional username")},singleLine=true,modifier=Modifier.fillMaxWidth())
+        OutlinedTextField(password,{password=it.take(2000)},label={Text("Optional password / app token")},visualTransformation=androidx.compose.ui.text.input.PasswordVisualTransformation(),singleLine=true,modifier=Modifier.fillMaxWidth())
+        FlagRow("Wi-Fi only",wifi,"Restrict synchronization to Wi-Fi.") { wifi=it }
+        FlagRow("Allow metered networks",metered,"Off by default. Per-sync byte budget still applies.") { metered=it }
+        FlagRow("Authorize private LAN endpoints",privateNetwork,"Allows private addresses for your trusted HTTPS server. Never localhost, loopback, multicast, or link-local; TLS validation remains enabled.") { privateNetwork=it }
+        OutlinedTextField(budget,{budget=it.filter(Char::isDigit).take(2)},label={Text("Per-sync transfer budget / MB (1–80)")},singleLine=true)
+        Button(onClick={vm.addSource(name,endpoint,kind,username,password,wifi,metered,privateNetwork,budget.toIntOrNull() ?: 32);password="";username=""},enabled=!state.busy && NetworkPolicy.endpoint(endpoint,privateNetwork) is Outcome.Ok) { Text("Save explicitly trusted source") }
+        state.sources.forEach { source ->
+            FlagRow("${source.name} / ${source.kind.lowercase()}",source.enabled,"${source.status}\nLast success: ${formatTime(source.lastSuccess)} • ${source.budgetMb} MB budget • encrypted credential ${if(vm.graph.vault.has(source.id)) "configured" else "not configured"}") { vm.toggleSource(source) }
+            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick={vm.syncSource(source.id)},enabled=source.enabled && !state.busy) { Text("Synchronize") }
+                if(source.kind=="RSS" || source.kind=="JSON") OutlinedButton(onClick={scope.launch { try { val data=vm.graph.sync.readData(source.id);cachedData=data.take(16000)+if(data.length>16000) "\n… Bounded preview; cached data remains intact." else "" } catch(e: Exception) { vm.notify(e.message ?: "No local cache") } }}) { Text("Inspect cached data") }
+                TextButton(onClick={remove=source},enabled=!state.busy) { Text("Remove connection") }
+            }
+            if(source.kind=="JSON" && state.scenes.isNotEmpty()) {
+                Text("Copy cached numeric fields into a saved scene revision:",style=MaterialTheme.typography.bodySmall)
+                FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) { state.scenes.forEach { scene -> TextButton(onClick={vm.bindData(source.id,scene.id)},enabled=!state.busy) { Text(scene.name) } } }
+            }
+        }
+        Text("Remote synchronization is manual and bounded, with at most 3 attempts per request, 250 ms minimum request pacing, exponential backoff, and 100 new WebDAV images per sync. Known remote URLs are skipped; repeat sync for later entries. Aliases of already-local artwork may be fetched again because its original provenance is preserved. No background feed polling, analytics, or mandatory backend. Data snapshots are cached, not invented as live weather/health/media.",color=MaterialTheme.colorScheme.onSurfaceVariant)
     }
+    remove?.let { source -> AlertDialog(onDismissRequest={remove=null},title={Text("Remove ${source.name}?")},text={Text("Deletes connection configuration and its encrypted credential. Imported artwork and collections are kept. Re-authentication will be needed to reconnect.")},confirmButton={TextButton(onClick={vm.deleteSource(source);remove=null}) { Text("Remove") }},dismissButton={TextButton(onClick={remove=null}) { Text("Cancel") }}) }
+    if(cachedData.isNotBlank()) AlertDialog(onDismissRequest={cachedData=""},title={Text("Actual cached source data")},text={Text(cachedData,Modifier.heightIn(max=420.dp).verticalScroll(rememberScrollState()),style=MaterialTheme.typography.bodySmall)},confirmButton={TextButton(onClick={cachedData=""}) { Text("Close") }})
 }
 
 @Composable fun HealthWorkspace(vm: DexViewModel, state: UiState, backup: (Boolean) -> Unit, restore: () -> Unit, diagnostics: () -> Unit) {
@@ -156,7 +192,7 @@ import java.time.format.DateTimeFormatter
             OutlinedButton(onClick = { vm.graph.scope.launch { vm.graph.importer.thumbnails.listFiles()?.forEach { it.delete() }; vm.notify("Thumbnail cache cleared; originals kept."); refresh++ } }) { Text("Clear thumbnails") }
         }
         Text("Missing originals are quarantined, not deleted. Re-import the same source to recover matching hashes without changing identity.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        DataLine("Thumbnail cache limit", "${state.preferences.cacheMb} MB; originals are never evicted")
+        DataLine("Combined thumbnail / remote cache limit", "${state.preferences.cacheMb} MB; originals are never evicted")
         Slider(state.preferences.cacheMb.toFloat(), { vm.setNumber("cacheMb", it.toInt()) }, valueRange = 16f..512f)
         HorizontalDivider()
         Eyebrow("Backup / recovery")
@@ -251,8 +287,14 @@ import java.time.format.DateTimeFormatter
         DataLine("Battery", "$battery%${if (charging) " · charging" else ""}${if (power.isPowerSaveMode) " · Battery Saver" else ""}")
         DataLine("Network", if (network == null) "Offline" else if (network.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) "Wi-Fi" else "Connected / other transport")
         DataLine("Process memory snapshot", "${(memory.totalMemory() - memory.freeMemory()) / 1048576} MB Java heap used (not total device RAM)")
-        FlagRow("Clock on live wallpaper", state.preferences.clockOverlay, "Minute-aligned event updates only while visible. Requires selecting the live service.") { vm.setFlag("clockOverlay", it) }
-        FlagRow("Battery on live wallpaper",state.preferences.batteryOverlay,"Minute-boundary local battery snapshot on the Canvas live engine.") { vm.setFlag("batteryOverlay",it) }
-        Text("Calendar, weather, media, health, geographic data, and CPU usage are unavailable until their authorized integrations are implemented. DEX does not invent live data or request their permissions.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        FlagRow("Clock on live wallpaper", state.preferences.clockOverlay, "Live draft; commit in Motion studio. Installed clock frames update only while visible.") { vm.setFlag("clockOverlay", it) }
+        FlagRow("Battery on live wallpaper",state.preferences.batteryOverlay,"Live draft; commit in Motion studio. Minute-boundary local Canvas snapshot.") { vm.setFlag("batteryOverlay",it) }
+        val dataSources=state.sources.filter { it.kind=="RSS" || it.kind=="JSON" }
+        if(dataSources.isNotEmpty()) {
+            Eyebrow("Authorized source snapshots")
+            dataSources.forEach { source -> DataLine(source.name,"${source.status} / ${formatTime(source.lastSuccess)}") }
+            OutlinedButton(onClick={vm.navigate(Workspace.SOURCES)}) { Text("Sync / inspect / bind actual data") }
+        }
+        Text("Weather-like numeric sources and RSS can be explicitly configured, cached, and copied into scene variables. Dedicated weather/calendar/media/Health Connect/location providers and continuous live refresh are not implemented. No synthetic data is displayed.", color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

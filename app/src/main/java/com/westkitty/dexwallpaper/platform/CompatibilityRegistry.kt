@@ -29,7 +29,7 @@ class CompatibilityRegistry(private val context: Context) {
             Capability("Health Connect", CapabilityState.UNSUPPORTED, "No health access is requested or simulated."),
             Capability("Background location", CapabilityState.UNSUPPORTED, "No location permission. Time, charging, battery, and theme rules work offline."),
             Capability("Media / calendar", CapabilityState.UNSUPPORTED, "Notification listener and calendar access are not implemented; no personal data is requested."),
-            Capability("WebDAV / Nextcloud", CapabilityState.UNSUPPORTED, "Remote transport is not connected in this foundation; authorized local and Syncthing folders work without a server."),
+            Capability("WebDAV / Nextcloud", CapabilityState.SUPPORTED_WITH_SETUP, "Configure a trusted HTTPS WebDAV folder/app credential explicitly. Bounded Depth-1 PROPFIND, verified imports, network budgets; not publicly live-verified."),
             Capability("Wallpaper Engine packages", CapabilityState.UNSUPPORTED, "Proprietary Windows binaries and scripts are not executed. No untrusted libraries are loaded."),
             Capability("SVG / video / GIF animation", CapabilityState.UNSUPPORTED, "Static formats accepted by Android BitmapFactory are supported. Animated files are imported as their first frame only.")
         )

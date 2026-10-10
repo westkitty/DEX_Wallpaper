@@ -7,11 +7,11 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 ## Totals
 
 - **DONE_VERIFIED**: 4
-- **IMPLEMENTED_UNTESTED**: 133
-- **PARTIAL**: 57
+- **IMPLEMENTED_UNTESTED**: 140
+- **PARTIAL**: 61
 - **BLOCKED_PLATFORM**: 2
 - **BLOCKED_EXTERNAL**: 2
-- **NOT_IMPLEMENTED**: 78
+- **NOT_IMPLEMENTED**: 67
 - **TOTAL**: 276
 
 ## Individual requirements
@@ -24,7 +24,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 004 | Independent screen collections | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 005 | Synchronized screen collections | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 006 | Static wallpaper mode | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control center / Library — Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection. |
-| 007 | Live wallpaper mode | PARTIAL | NOT_RUN | Relevant native workspace — Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. New isolation tests authored; current repair awaits Android execution. |
+| 007 | Live wallpaper mode | PARTIAL | NOT_RUN | Relevant native workspace — Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified. |
 | 008 | Manual wallpaper selection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control center / Library — Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection. |
 | 009 | Automatic timed rotation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 010 | Custom rotation intervals | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
@@ -77,7 +77,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 057 | Wallpaper history | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 058 | Search history | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 059 | Saved online searches | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 060 | Wallpaper downloads | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 060 | Wallpaper downloads | IMPLEMENTED_UNTESTED | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Authorized direct HTTPS image download into protected shared-library copies; no discovery/search service. Provider/device execution pending. |
 | 061 | Online wallpaper discovery | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 062 | Curated artwork collections | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 063 | Daily featured artwork | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
@@ -87,10 +87,10 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 067 | Cross-device favorites synchronization | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 068 | Muzei-compatible artwork sources | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 069 | Custom artwork-source plugins | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 070 | Nextcloud integration | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 071 | WebDAV integration | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 072 | Remote-image caching | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 073 | Wi-Fi-only downloads | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 070 | Nextcloud integration | PARTIAL | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Explicit Nextcloud WebDAV/app-password endpoint using bounded Depth-1 PROPFIND. No account browser/OAuth, recursion, background sync or real-server acceptance. |
+| 071 | WebDAV integration | IMPLEMENTED_UNTESTED | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Trusted HTTPS Depth-1 WebDAV listing/import, up to 100 bounded new URLs per manual sync. No redirects/path escape. Real credentials/provider/device not executed. |
+| 072 | Remote-image caching | IMPLEMENTED_UNTESTED | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Verified image response/private import plus atomic disposable image/data cache and combined thumbnail/remote budget. Offline cache validation; actual network/offline/device journey pending. |
+| 073 | Wi-Fi-only downloads | IMPLEMENTED_UNTESTED | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Manual transfers bind sockets/DNS to the selected network; Wi-Fi/metered policy rechecked before requests and during body reads. Network changes abort. Device switching behavior pending. |
 | 074 | Online-search caching | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 075 | Interactive cropping | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 076 | Pinch-to-zoom editing | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
@@ -205,8 +205,8 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 185 | Music and artwork information | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 186 | Music-reactive visualization | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 187 | Authorized Health Connect data | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 188 | HTTP data retrieval | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 189 | RSS/XML parsing | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 188 | HTTP data retrieval | PARTIAL | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Real trusted HTTPS image/feed/flat numeric JSON retrieval and explicit cached-data/scene binding. No arbitrary code, nested JSON, query credentials, auto polling, dedicated weather/calendar/health provider or continuous live data. |
+| 189 | RSS/XML parsing | IMPLEMENTED_UNTESTED | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Bounded RSS/Atom/DAV SAX parsing; rejects entity/DOCTYPE/oversized/deep content; actual cached feed inspector. Parser unit tests authored; provider and Android parser execution pending. |
 | 190 | Location/map visualizations | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 191 | Weather-driven artwork | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 192 | Wind-field visualization | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
@@ -242,7 +242,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 222 | Scoped storage access | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 223 | Local artwork storage | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 224 | Offline operation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 225 | Encrypted remote credentials | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 225 | Encrypted remote credentials | IMPLEMENTED_UNTESTED | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Android Keystore AES-256-GCM encrypted app-private credentials; never in Room, URLs, profiles, manual/system backup or sanitized exports. Synthetic Keystore roundtrip test authored, not executed. |
 | 226 | Internet-free offline core | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 227 | No advertisements or analytics | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 228 | Backup and restore | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Health / Editor — Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending. |
@@ -287,9 +287,9 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 267 | Verified data migrations | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
 | 268 | Profile import and export | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / DeskShift — Bounded JSON custom profile import/export plus six presets; no secrets/artwork/implicit destinations. Unit/device verification pending. |
 | 269 | Asset provenance records | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 270 | Remote source allowlists | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 271 | Provider rate-limit control | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 272 | Network budget rules | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 270 | Remote source allowlists | IMPLEMENTED_UNTESTED | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — HTTPS exact-origin/path namespace, no redirects, literal/DNS loopback/link-local/private safeguards (LAN opt-in), TLS defaults and bounded headers/body. Policy unit tests authored; transport/device evidence pending. |
+| 271 | Provider rate-limit control | PARTIAL | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Three attempts, exponential/HTTP Retry-After backoff, 250ms minimum request spacing, 303-request sync ceiling. Provider windows over 60s stop instead of retrying early. No provider-specific daily quota/account policies. |
+| 272 | Network budget rules | PARTIAL | JVM_PENDING_DEVICE_PENDING | Sync & sources / Live data / Scene composer — Per-sync 1–80MB successful-response body budget and Wi-Fi/unmetered gates. Headers/TLS bytes are not metered; no cumulative daily/monthly/account quota. |
 | 273 | Versioned scene manifests | DONE_VERIFIED | UNIT_PASS | Scene composer — Specific pure versioned-manifest / bounded-evaluator behavior verified in passing 56-test CI at 8afef31. Android scene editing/renderer acceptance remains independently pending. |
 | 274 | Safe formula evaluation | DONE_VERIFIED | UNIT_PASS | Scene composer — Specific pure versioned-manifest / bounded-evaluator behavior verified in passing 56-test CI at 8afef31. Android scene editing/renderer acceptance remains independently pending. |
 | 275 | Scene history and revision comparison | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |

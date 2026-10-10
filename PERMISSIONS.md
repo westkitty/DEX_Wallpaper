@@ -4,8 +4,8 @@
 |---|---|---|
 | `SET_WALLPAPER` | Normal permission for explicit static Home/Lock/Both writes | Fail closed on device policy or unsupported destination; previews/library remain usable |
 | `RECEIVE_BOOT_COMPLETED` | Reconcile persisted approximate schedules after unlock/reboot or app update | WorkManager retains unique work; no direct-boot file access |
-| `INTERNET` | Reserved for explicit optional source transport; unused by the initial offline core | All basic import/edit/rotate operations are offline |
-| `ACCESS_NETWORK_STATE` | Local connectivity status / future network budgets | Offline status; no SSID/user-network identifiers collected |
+| `INTERNET` | Explicit user-triggered trusted HTTPS source synchronization only; never needed by offline core | All basic import/edit/rotate operations are offline |
+| `ACCESS_NETWORK_STATE` | Local connectivity status and active transfer Wi-Fi/metered/network budget enforcement | Offline status; no SSID/user-network identifiers collected |
 
 `BIND_WALLPAPER` is a **service binding restriction**, not a user permission request. Only the OS may bind the exported wallpaper service. The launcher Activity is exported for supported Android entry. Recovery receiver is not exported.
 

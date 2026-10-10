@@ -1334,7 +1334,7 @@
       "app/src/main/java/com/westkitty/dexwallpaper/data/Preferences.kt"
     ],
     "ui_location": "Relevant native workspace",
-    "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. New isolation tests authored; current repair awaits Android execution.",
+    "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified.",
     "test_reference": [
       "app/src/test/java/com/westkitty/dexwallpaper/core/LiveIsolationTest.kt",
       "app/src/androidTest/java/com/westkitty/dexwallpaper/GlRendererTest.kt"
@@ -3376,5 +3376,302 @@
     ],
     "dependencies": [],
     "limitations": "Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly."
+  },
+  "060": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Authorized direct HTTPS image download into protected shared-library copies; no discovery/search service. Provider/device execution pending."
+  },
+  "070": {
+    "implementation_status": "PARTIAL",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Explicit Nextcloud WebDAV/app-password endpoint using bounded Depth-1 PROPFIND. No account browser/OAuth, recursion, background sync or real-server acceptance."
+  },
+  "071": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Trusted HTTPS Depth-1 WebDAV listing/import, up to 100 bounded new URLs per manual sync. No redirects/path escape. Real credentials/provider/device not executed."
+  },
+  "072": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Verified image response/private import plus atomic disposable image/data cache and combined thumbnail/remote budget. Offline cache validation; actual network/offline/device journey pending."
+  },
+  "073": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Manual transfers bind sockets/DNS to the selected network; Wi-Fi/metered policy rechecked before requests and during body reads. Network changes abort. Device switching behavior pending."
+  },
+  "188": {
+    "implementation_status": "PARTIAL",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NumericDataCodec.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt",
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NumericDataCodecTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Real trusted HTTPS image/feed/flat numeric JSON retrieval and explicit cached-data/scene binding. No arbitrary code, nested JSON, query credentials, auto polling, dedicated weather/calendar/health provider or continuous live data."
+  },
+  "189": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/XmlFeeds.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/XmlFeedsTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Bounded RSS/Atom/DAV SAX parsing; rejects entity/DOCTYPE/oversized/deep content; actual cached feed inspector. Parser unit tests authored; provider and Android parser execution pending."
+  },
+  "225": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/security/CredentialVault.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/CredentialVaultTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Android Keystore AES-256-GCM encrypted app-private credentials; never in Room, URLs, profiles, manual/system backup or sanitized exports. Synthetic Keystore roundtrip test authored, not executed."
+  },
+  "270": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "HTTPS exact-origin/path namespace, no redirects, literal/DNS loopback/link-local/private safeguards (LAN opt-in), TLS defaults and bounded headers/body. Policy unit tests authored; transport/device evidence pending."
+  },
+  "271": {
+    "implementation_status": "PARTIAL",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Three attempts, exponential/HTTP Retry-After backoff, 250ms minimum request spacing, 303-request sync ceiling. Provider windows over 60s stop instead of retrying early. No provider-specific daily quota/account policies."
+  },
+  "272": {
+    "implementation_status": "PARTIAL",
+    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "Sync & sources / Live data / Scene composer",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/NetworkPolicyTest.kt"
+    ],
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "HTTPS trusted platform certificates; no self-signed bypass",
+      "Optional activation only; offline core unchanged"
+    ],
+    "dependencies": [
+      "User-authorized endpoint / artwork rights"
+    ],
+    "limitations": "Per-sync 1\u201380MB successful-response body budget and Wi-Fi/unmetered gates. Headers/TLS bytes are not metered; no cumulative daily/monthly/account quota."
   }
 }

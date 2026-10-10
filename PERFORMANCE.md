@@ -17,7 +17,7 @@ Hidden rendering: zero scheduled frames, no active decode job. Repeated change/o
 
 ## Actual evidence
 
-No Android device, SDK, emulator, GPU profiler, or JDK is available in the Arena sandbox. Device memory/frame-time/power measurements **have not run**. JVM tests for 10/100/1,000-asset queue bounds are committed, pending CI. The Live data workspace exposes a point-in-time Java heap measurement (not total RAM/CPU/GPU metrics). No invented benchmark or battery-saving percentage is reported.
+No Android device, SDK, emulator, GPU profiler, or JDK is available in the Arena sandbox. Device memory/frame-time/power measurements **have not run**. The ab0822c checkpoint passes 76 JVM tests including queue/policy bounds; these are not device throughput/power measurements. The Live data workspace exposes a point-in-time Java heap measurement (not total RAM/CPU/GPU metrics). No invented benchmark or battery-saving percentage is reported.
 
 ## Benchmark procedure
 
@@ -26,3 +26,7 @@ Use synthetic, locally generated images (10, 100, 1,000) and 30MP mixed-aspect p
 ## GLES extension (device verification pending)
 
 Actual ES2 shader preview/live pipeline with checked texture limits, at most two transition textures, program cleanup, display reference counting and one context-recovery attempt. Visibility/surface events release GPU/bitmap jobs. Adaptive frame caps consume Battery Saver, thermal and low-RAM status; reduced motion/safe mode have real rendering consumers. Measured frame/resource counters appear in Health; these are observations, not claimed benchmark wins. GPU pbuffer tests are committed but not executed at this checkpoint.
+
+## Source transport limits (not measured throughput)
+
+Manual synchronization only; at most 100 eligible WebDAV URLs, 303 total attempts, three attempts per request, ≥250ms request spacing. 10s connection / 15s read/write / 30s call timeout. Successful response bodies share a configurable 1–80MB sync budget; header/TLS/carrier overhead is not counted. XML ≤1MB / depth32 / 20,000 nodes; numeric JSON ≤64KB / 64 finite fields. Atomic caches and thumbnails share the configured disposable cache budget; originals/credentials/active stages are not evicted. Stage remnants older than one day are cleaned during pruning. No real server latency, network-switch, cancellation, memory or battery benchmark is claimed.

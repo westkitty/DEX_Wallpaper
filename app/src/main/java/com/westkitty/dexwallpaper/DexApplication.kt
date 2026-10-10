@@ -30,4 +30,6 @@ class AppGraph(val context: Context) {
     val backup = BackupRestoreCoordinator(context, repository)
     val automation = com.westkitty.dexwallpaper.integration.AutomationController(context)
     val profiles = ProfileRepository(context, repository)
+    val vault = com.westkitty.dexwallpaper.security.CredentialVault(context)
+    val sync = com.westkitty.dexwallpaper.sources.SyncCoordinator(context, repository, vault)
 }

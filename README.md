@@ -27,7 +27,7 @@ Live wallpaper uses the Android/OEM picker, which determines the final target; c
 
 The live renderer uses actual OpenGL ES 2 textures/effects/transitions, with per-engine contexts and an event-driven Canvas safe fallback. Clock/battery overlays use minute-boundary Canvas frames and bypass shaders. Video/GIF/Vulkan and continuously layered live scenes remain outstanding. Safe mode and reduced motion are explicitly system-wide accessibility/resource policies, not per-destination image selections.
 
-Latest verified native checkpoint: `f8c6e6b718c337e2dd69cfeaa85366a16595f1f5`: **70 JVM tests, lint, and debug APK PASS** ([run](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810)). [Actual debug APK artifact](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810/artifacts/11682677562). The next live-isolation checkpoint is not covered by that result. Instrumentation previously crashed; no passing device acceptance is claimed.
+Latest verified native checkpoint: `ab0822cac0797038d1be41a0461d44d7f66934b5`: **76 JVM tests, lint, and debug APK PASS** ([run](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38087668672)). [Actual debug APK artifact](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38087668672/artifacts/11682024693). This includes the five pure live-isolation regressions, not real engine/picker acceptance. The optional source extension awaits its own build. Instrumentation previously crashed; no passing device acceptance is claimed.
 
 ## Build
 
@@ -50,6 +50,10 @@ The wrapper is the authentic official Gradle v8.11.1 wrapper (SHA-256 checked in
 WorkManager rotation is **approximate**, at least 15 minutes, independently configured for Home and Lock, and deferred while screen-off or Battery Saver. Both is manual only. No exact-alarm permission or clock-polling foreground service. Chronoscape evaluates time/charging/theme/battery predicates with deterministic priorities; simulation never writes wallpaper.
 
 Folder scanning is explicit, bounded to 5,000 files and depth 16, with a hidden-folder opt-in. Image size limit: 80 MB each. SHA-256 deduplication, local perceptual similarity, protected originals, partial-transfer staging, and missing-file quarantine keep imports safe. A Syncthing folder can be authorized just like any other local folder.
+
+**Sync & sources** also provides explicit optional trusted HTTPS Image/WebDAV/Nextcloud/RSS/flat-numeric-JSON connections. Credentials are Keystore-encrypted, not included in backups. Choose the destination collection before saving a source. WebDAV/Nextcloud collection URLs must end with `/`; use an authorized server/app password and supply artwork rights. Transfers are manual, bounded and cancellable; no polling/backend/account is required. Sockets and DNS bind to the selected network; network changes abort. HTTPS redirects, embedded credentials/query tokens, path escapes and metadata/loopback hosts are refused. Private LAN requires opt-in and a platform-trusted certificate (no TLS bypass).
+
+Feed/data snapshots can be inspected offline; numeric fields can be explicitly copied into a saved scene revision. This is **not continuous live weather/health/media**. Budgets cover successful response bodies, not total carrier/TLS overhead; WebDAV is Depth-1/100 new URLs per sync, not a recursive cloud client. Source behavior has not been tested against an actual provider/device yet.
 
 Landscape uses a navigation sidebar and multi-pane control/editor layouts; narrow windows use a compact workspace menu. High contrast, density, keyboard navigation, and Material You are optional. Keyboard: Ctrl+Right/Left Next/Previous, Ctrl+L Library, Ctrl+E Edit, Ctrl+Enter Apply. Controls have text or accessibility labels; physical TalkBack/S Pen/DeX verification remains pending.
 

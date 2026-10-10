@@ -57,6 +57,11 @@ data class SceneEntity(@PrimaryKey val id: String, val name: String, val manifes
 @Entity(tableName = "scene_revisions", indices = [Index("sceneId")])
 data class SceneRevisionEntity(@PrimaryKey val id: String, val sceneId: String, val manifest: String, val createdAt: Long, val revision: Int)
 
+@Entity(tableName = "remote_sources")
+data class RemoteSourceEntity(@PrimaryKey val id: String, val name: String, val endpoint: String, val kind: String,
+    val collectionId: String = "default", val wifiOnly: Boolean = true, val allowMetered: Boolean = false, val budgetMb: Int = 32,
+    val allowPrivateNetwork: Boolean = false, val enabled: Boolean = true, val lastSuccess: Long = 0, val status: String = "Not synchronized")
+
 @Dao
 interface LibraryDao {
     @Query("SELECT * FROM assets ORDER BY importedAt DESC") fun observeAssets(): Flow<List<AssetEntity>>
@@ -67,7 +72,7 @@ interface LibraryDao {
     @Update suspend fun updateAsset(asset: AssetEntity)
     @Query("SELECT * FROM collections ORDER BY pinned DESC, name") fun observeCollections(): Flow<List<CollectionEntity>>
     @Query("SELECT * FROM collections ORDER BY name") suspend fun allCollections(): List<CollectionEntity>
-    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun putCollection(collection: CollectionEntity)
+    @Upsert suspend fun putCollection(collection: CollectionEntity)
     @Insert(onConflict = OnConflictStrategy.IGNORE) suspend fun addMembership(membership: Membership)
     @Query("DELETE FROM membership WHERE collectionId = :collection AND assetId = :asset") suspend fun removeMembership(collection: String, asset: String)
     @Query("SELECT a.* FROM assets a INNER JOIN membership m ON m.assetId = a.id WHERE m.collectionId = :collection ORDER BY a.name, a.id") suspend fun collectionAssets(collection: String): List<AssetEntity>
@@ -93,10 +98,15 @@ interface LibraryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun putScene(scene: SceneEntity)
     @Insert suspend fun addRevision(revision: SceneRevisionEntity)
     @Query("SELECT * FROM scene_revisions WHERE sceneId = :id ORDER BY createdAt DESC LIMIT 20") suspend fun revisions(id: String): List<SceneRevisionEntity>
+    @Query("SELECT * FROM remote_sources ORDER BY name") fun observeSources(): Flow<List<RemoteSourceEntity>>
+    @Query("SELECT * FROM remote_sources ORDER BY name") suspend fun allSources(): List<RemoteSourceEntity>
+    @Query("SELECT * FROM remote_sources WHERE id = :id") suspend fun source(id: String): RemoteSourceEntity?
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun putSource(source: RemoteSourceEntity)
+    @Query("DELETE FROM remote_sources WHERE id = :id") suspend fun deleteSource(id: String)
     @Query("DELETE FROM scene_revisions WHERE sceneId = :sceneId AND id NOT IN (SELECT id FROM scene_revisions WHERE sceneId = :sceneId ORDER BY createdAt DESC LIMIT 20)") suspend fun trimRevisions(sceneId: String)
 }
 
-@Database(entities = [AssetEntity::class, CollectionEntity::class, Membership::class, EditEntity::class, ScreenEntity::class, ReceiptEntity::class, RuleEntity::class, SceneEntity::class, SceneRevisionEntity::class], version = 2, exportSchema = true)
+@Database(entities = [AssetEntity::class, CollectionEntity::class, Membership::class, EditEntity::class, ScreenEntity::class, ReceiptEntity::class, RuleEntity::class, SceneEntity::class, SceneRevisionEntity::class, RemoteSourceEntity::class], version = 3, exportSchema = true)
 abstract class DexDatabase : RoomDatabase() {
     abstract fun library(): LibraryDao
     companion object {
@@ -107,6 +117,11 @@ abstract class DexDatabase : RoomDatabase() {
                 db.execSQL("CREATE INDEX IF NOT EXISTS `index_scene_revisions_sceneId` ON `scene_revisions` (`sceneId`)")
             }
         }
-        fun open(context: Context) = Room.databaseBuilder(context, DexDatabase::class.java, "living-wall.db").addMigrations(MIGRATION_1_2).build()
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS `remote_sources` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `endpoint` TEXT NOT NULL, `kind` TEXT NOT NULL, `collectionId` TEXT NOT NULL, `wifiOnly` INTEGER NOT NULL, `allowMetered` INTEGER NOT NULL, `budgetMb` INTEGER NOT NULL, `allowPrivateNetwork` INTEGER NOT NULL, `enabled` INTEGER NOT NULL, `lastSuccess` INTEGER NOT NULL, `status` TEXT NOT NULL, PRIMARY KEY(`id`))")
+            }
+        }
+        fun open(context: Context) = Room.databaseBuilder(context, DexDatabase::class.java, "living-wall.db").addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
     }
 }

@@ -1,9 +1,17 @@
 # Privacy
 
-No account, advertisements, telemetry, analytics, user profiling, or required backend. The wallpaper core works without internet. Imported artwork, thumbnails, metadata, collection membership, edits, queue/history/rules are local. Original source files are only read; private protected copies are stored under the app's credential-encrypted files directory. Uninstalling removes these private copies.
+No account, advertisements, analytics, user profiling, required backend or uploaded telemetry. The wallpaper core works without internet. Artwork, thumbnails, metadata, collections, edits, queues/history/rules/scenes and local renderer counters stay on device. Original source files are only read; protected private copies use Android credential-encrypted app storage. Uninstalling removes private copies.
 
-Android SAF authorizes only selected files/trees. DEX does not enumerate unrelated storage, launcher icon positions, personal health data, precise location, media notifications, or calendars. Battery/theme/network status is used locally. No SSID or network identifier is collected.
+SAF authorizes only chosen files/trees. DEX does not enumerate unrelated storage or launcher icon positions, or access personal health, location, media notifications or calendars. Local battery/theme/network capabilities support explicitly configured behavior; no SSID or network identifier is collected.
 
-Android system backup is disabled to avoid inadvertently uploading private artwork or future credentials. Manual backup is an outstanding requirement. No credentials are included in source, builds, or diagnostics. The initial foundation has no remote connectors; future explicit connectors must use Keystore encryption, trusted HTTPS endpoints, bounded requests, and sanitized exports.
+## Optional trusted connections
 
-The public repository and debug APK contain no user photos, signing keys, tokens, or personal databases. Generated benchmark data must not be committed. A debug APK is development-only and is not a production-signed release.
+Network requests happen only after the user saves an explicitly trusted HTTPS source and taps Synchronize. Image/WebDAV/Nextcloud/RSS/flat numeric JSON sources send the requested path and, when configured, Basic authorization only to the approved origin/path. The remote provider necessarily sees connection/request metadata; its own privacy/licensing rules apply. No redirects, embedded URL credentials/query tokens or TLS bypass. Private-LAN access is an explicit opt-in; loopback/link-local/metadata hosts stay forbidden. Network switches or policy/budget failures stop transfer. There is no feed polling, analytics endpoint or mandatory cloud service.
+
+Credentials are AES-256-GCM encrypted with an Android Keystore key; encrypted files remain app-private and never enter Room, profiles, manual backups or diagnostics. Password inputs are unsaved/masked and cleared after source submission. No claim of hardware-backed Keystore on every device. Removing a connection deletes its credential/cache/configuration, not imported artwork. Provider/device credential behavior is not yet verified.
+
+## Exports and backup
+
+Android system backup is disabled to prevent uploading private artwork/credentials. Manual ZIP backup is implemented but device acceptance pending: optional original artwork may be private; choose a trusted destination. Credentials, source connections and URI grants are excluded. Sidecars/profiles contain metadata rather than original pixels/credentials. Sanitized diagnostic export contains counts/build/resource observations, not artwork, names, paths, source URLs, grants or passwords. Never upload personal backups to the public repository.
+
+The repository/debug APK contains no user photos, signing keys, tokens or personal databases. Test fixtures are synthetic. Debug signing is development-only, not an authorized production release.

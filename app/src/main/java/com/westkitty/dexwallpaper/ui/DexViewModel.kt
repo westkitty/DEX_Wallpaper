@@ -22,7 +22,7 @@ enum class Workspace(val label: String, val shortLabel: String) {
 data class UiState(val page: Workspace = Workspace.CONTROL, val destination: Destination = Destination.HOME,
     val assets: List<AssetEntity> = emptyList(), val collections: List<CollectionEntity> = emptyList(),
     val memberships: List<Membership> = emptyList(), val screens: List<ScreenEntity> = emptyList(),
-    val history: List<ReceiptEntity> = emptyList(), val rules: List<RuleEntity> = emptyList(), val scenes: List<SceneEntity> = emptyList(),
+    val history: List<ReceiptEntity> = emptyList(), val rules: List<RuleEntity> = emptyList(), val scenes: List<SceneEntity> = emptyList(), val sources: List<RemoteSourceEntity> = emptyList(),
     val preferences: WorkspacePreferences = WorkspacePreferences(), val selectedId: String? = null,
     val busy: Boolean = false, val progress: String = "", val message: String? = null, val search: String = "",
     val edit: ImageEdit = ImageEdit(), val editRevision: Int = 0, val editDirty: Boolean = false) {
@@ -45,6 +45,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         viewModelScope.launch { dao.observeMemberships().collect { list -> mutable.update { it.copy(memberships = list) } } }
         viewModelScope.launch { dao.observeScreens().collect { list -> mutable.update { it.copy(screens = list) } } }
         viewModelScope.launch { dao.observeHistory().collect { list -> mutable.update { it.copy(history = list) } } }
+        viewModelScope.launch { dao.observeSources().collect { list -> mutable.update { it.copy(sources = list) } } }
         viewModelScope.launch { dao.observeScenes().collect { list -> mutable.update { it.copy(scenes = list) } } }
         viewModelScope.launch { dao.observeRules().collect { list -> mutable.update { it.copy(rules = list) } } }
         viewModelScope.launch { graph.preferences.flow.collect { p -> mutable.update { it.copy(preferences = p) } } }
@@ -130,7 +131,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun setFlag(key: String, value: Boolean) { viewModelScope.launch { graph.preferences.flag(key, value) } }
     fun setText(key: String, value: String) { viewModelScope.launch { graph.preferences.text(key, value) } }
     fun setDecimal(key: String, value: Float) { viewModelScope.launch { graph.preferences.decimal(key, value) } }
-    fun setNumber(key: String, value: Int) { viewModelScope.launch { graph.preferences.number(key, value); if (key == "cacheMb") graph.importer.enforceCacheBudget(value) } }
+    fun setNumber(key: String, value: Int) { viewModelScope.launch { graph.preferences.number(key, value); if (key == "cacheMb") graph.sync.enforceCacheBudget(value) } }
     fun addRule(name: String, start: Int, end: Int, priority: Int, charging: Int = -1, dark: Int = -1) {
         val s = state.value
         viewModelScope.launch { graph.repository.dao.putRule(RuleEntity(UUID.randomUUID().toString(), name.ifBlank { "Time window" }, s.screen.collectionId, priority, startMinute = start, endMinute = end, charging = charging, darkTheme = dark, destination = s.destination.name)) }
@@ -160,6 +161,27 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun saveProfile(name: String) { val s=state.value; runOperation("Saving visual profile…") { graph.profiles.save(graph.profiles.snapshot(name,s.destination,s.selected?.id)); "Custom visual profile saved locally." } }
     fun exportProfile(uri: Uri) { val s=state.value; runOperation("Exporting visual profile…") { graph.profiles.export(uri,graph.profiles.snapshot("Custom",s.destination,s.selected?.id)); "Visual profile exported without artwork or credentials." } }
     fun importProfile(uri: Uri) { val s=state.value; runOperation("Importing visual profile…") { val p=graph.profiles.import(uri); graph.profiles.apply(p,s.destination,s.selected?.id); s.selected?.let { select(it.id) }; graph.scheduler.reconcile(); "${p.name} imported and loaded into the selected destination configuration; no wallpaper applied." } }
+    fun addSource(name: String,endpoint: String,kind: String,username: String,password: String,wifi: Boolean,metered: Boolean,privateNetwork: Boolean,budget: Int) {
+        val collection=state.value.screen.collectionId
+        runOperation("Saving trusted source…") {
+            val valid=when(val parsed=NetworkPolicy.endpoint(endpoint,privateNetwork)) { is Outcome.Error -> throw IllegalArgumentException(parsed.message);is Outcome.Ok -> parsed.value }
+            require(kind in setOf("IMAGE","WEBDAV","NEXTCLOUD","RSS","JSON"))
+            if(kind=="WEBDAV" || kind=="NEXTCLOUD") require(valid.uri.path.orEmpty().endsWith('/')) { "WebDAV/Nextcloud collection endpoint must end with / to bound authorized links" }
+            val id=UUID.randomUUID().toString()
+            require(graph.repository.dao.allCollections().any { it.id==collection }) { "Choose an existing collection" }
+            withContext(Dispatchers.IO) {
+                try {
+                    if(username.isNotBlank() || password.isNotBlank()) graph.vault.put(id,com.westkitty.dexwallpaper.security.RemoteCredentials(username,password))
+                    graph.repository.dao.putSource(RemoteSourceEntity(id,name.ifBlank { "Trusted source" }.take(100),valid.uri.toString(),kind,collection,wifi,metered,budget.coerceIn(1,80),privateNetwork))
+                } catch(e: Exception) { graph.vault.remove(id);throw e }
+            }
+            "Trusted source saved; no automatic transfer. Use Synchronize explicitly."
+        }
+    }
+    fun syncSource(id: String) { runOperation("Synchronizing trusted source…") { graph.sync.sync(id) { message -> mutable.update { it.copy(progress=message) } } } }
+    fun toggleSource(source: RemoteSourceEntity) { if(state.value.busy) { notify("Finish or cancel synchronization before changing the source.");return };viewModelScope.launch { graph.repository.dao.source(source.id)?.let { graph.repository.dao.putSource(it.copy(enabled=!it.enabled)) } } }
+    fun deleteSource(source: RemoteSourceEntity) { runOperation("Removing connection configuration…") { graph.sync.removeSource(source.id); "Source and encrypted credential removed; imported artwork kept." } }
+    fun bindData(sourceId: String,sceneId: String) { runOperation("Binding cached numeric data…") { "${graph.sync.bindVariables(sourceId,sceneId)} fields copied into persistent scene variables; revision saved." } }
     fun prepareLivePreview(onReady: () -> Unit) {
         val s=state.value;val asset=s.selected ?: run { notify("Select artwork before opening the live picker.");return }
         viewModelScope.launch {
