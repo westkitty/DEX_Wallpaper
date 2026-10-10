@@ -1,0 +1,189 @@
+package com.westkitty.dexwallpaper.ui
+
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.BroadcastReceiver
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.BatteryManager
+import android.os.PowerManager
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.westkitty.dexwallpaper.core.*
+import com.westkitty.dexwallpaper.platform.CompatibilityRegistry
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+
+@Composable fun MotionWorkspace(vm: DexViewModel, state: UiState, chooseLive: () -> Unit) {
+    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        SectionTitle("Motion studio", "A visible-only wallpaper renderer. Static by default.")
+        ArtworkPreview(vm, state.selected)
+        Eyebrow("Canvas engine")
+        Text("The live service renders your active Home artwork and optional clock. It releases its bitmap while hidden and renders static scenes once, not continuously.")
+        FlagRow("Reduced motion", state.preferences.reducedMotion, "Disable unnecessary animation; image collections remain unchanged.") { vm.setFlag("reducedMotion", it) }
+        FlagRow("Safe mode", state.preferences.safeMode, "Skip soft-focus and vignette effects without changing your edits.") { vm.setFlag("safeMode", it) }
+        Button(chooseLive, enabled = state.assets.isNotEmpty()) { Text("Open Android live-wallpaper picker") }
+        Text("LIVE DESTINATION LIMIT • The system picker, not DEX, chooses Home / Lock. Cancel if it cannot explicitly preserve Lock. Different concurrent live services are not assumed.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        HorizontalDivider()
+        Eyebrow("Effect availability")
+        Text("Brightness, dimming, saturation, contrast, vignette, and downsampled soft focus are implemented in the shared image pipeline.")
+        Text("Shader transitions, video decoding, animated GIF playback, Vulkan, and sensor parallax are not active in this build. No nonfunctional effect toggles are shown.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        OutlinedButton(onClick = { state.selected?.let { vm.select(it.id, true) } }, enabled = state.selected != null) { Text("Edit static effects") }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable fun AutomationWorkspace(vm: DexViewModel, state: UiState) {
+    var name by rememberSaveable { mutableStateOf("") }
+    var start by rememberSaveable { mutableStateOf("08:00") }
+    var end by rememberSaveable { mutableStateOf("18:00") }
+    var priority by rememberSaveable { mutableStateOf("10") }
+    var charging by rememberSaveable { mutableIntStateOf(-1) }
+    var dark by rememberSaveable { mutableIntStateOf(-1) }
+    var previewHours by rememberSaveable { mutableIntStateOf(24) }
+    fun parseTime(text: String) = try { LocalTime.parse(text).let { it.hour * 60 + it.minute } } catch (_: Exception) { null }
+    val rules = state.rules.filter { it.destination == state.destination.name }.map { it.model() }
+    val context = vm.graph.repository.contextSnapshot()
+    val decision = Chronoscape.evaluate(rules, context)
+    val conflicts = Chronoscape.conflicts(rules)
+    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        SectionTitle("Chronoscape", "Rules that can explain themselves.")
+        Text("Rules are evaluated by the scheduled rotation worker. They do not start a second timer. Manual changes use your selected collection.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        CollectionPicker(state, vm::collection)
+        OutlinedTextField(name, { name = it }, label = { Text("Rule name") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedTextField(start, { start = it.take(5) }, label = { Text("Start / HH:mm") }, modifier = Modifier.width(170.dp), singleLine = true, isError = parseTime(start) == null)
+            OutlinedTextField(end, { end = it.take(5) }, label = { Text("End / HH:mm") }, modifier = Modifier.width(170.dp), singleLine = true, isError = parseTime(end) == null)
+            OutlinedTextField(priority, { priority = it.filter { c -> c.isDigit() || c == '-' }.take(6) }, label = { Text("Priority") }, modifier = Modifier.width(140.dp), singleLine = true)
+        }
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(charging == 1, onClick = { charging = if (charging == 1) -1 else 1 }, label = { Text("Charging only") })
+            FilterChip(dark == 1, onClick = { dark = if (dark == 1) -1 else 1 }, label = { Text("Dark theme only") })
+        }
+        Button(onClick = { vm.addRule(name, parseTime(start)!!, parseTime(end)!!, priority.toIntOrNull() ?: 0, charging, dark); name = "" }, enabled = parseTime(start) != null && parseTime(end) != null && state.destination != Destination.BOTH) { Text("Add rule for this collection") }
+        state.rules.filter { it.destination == state.destination.name }.forEach { rule ->
+            FlagRow("${rule.name} / priority ${rule.priority}", rule.enabled, "${rule.startMinute / 60}:${"%02d".format(rule.startMinute % 60)} — ${rule.endMinute / 60}:${"%02d".format(rule.endMinute % 60)} · ${state.collections.firstOrNull { it.id == rule.collectionId }?.name ?: rule.collectionId}") { vm.toggleRule(rule) }
+            TextButton(onClick = { vm.deleteRule(rule.id) }) { Text("Remove rule") }
+        }
+        HorizontalDivider()
+        Eyebrow("Dry run / rule debugger")
+        Text("Evaluation uses current time, charging, battery, and theme. It does NOT change your wallpaper.")
+        if (decision.evaluations.isEmpty()) Text("No rules configured. The selected collection is the fallback.")
+        decision.evaluations.forEach { e -> Text("${e.rule.name} → ${e.reason}", color = if (e.selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
+        if (conflicts.isNotEmpty()) { Text("${conflicts.size} overlapping equal-priority conflict(s). A stable rule ID breaks ties deterministically.", color = MaterialTheme.colorScheme.error); conflicts.forEach { Text("${it.first.take(8)} ↔ ${it.second.take(8)}", style = MaterialTheme.typography.labelSmall) } }
+        Eyebrow("Future preview / no writes")
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { FilterChip(previewHours == 24, { previewHours = 24 }, label = { Text("24 hours") }); FilterChip(previewHours == 168, { previewHours = 168 }, label = { Text("7 days") }) }
+        Text("Hourly simulation; charging, battery, and theme are held at the current snapshot. Not an exact Android execution forecast.", style = MaterialTheme.typography.bodySmall)
+        Chronoscape.preview(rules, context, previewHours).take(24).forEach { (time, collection) -> Text("${time.format(DateTimeFormatter.ofPattern("EEE HH:mm"))} → ${state.collections.firstOrNull { it.id == collection }?.name ?: "Default collection"}", style = MaterialTheme.typography.bodySmall) }
+        if (previewHours > 24) Text("${previewHours - 24} further hours evaluated; first 24 shown to keep the workspace compact.", style = MaterialTheme.typography.bodySmall)
+    }
+}
+
+@Composable fun SourcesWorkspace(vm: DexViewModel, state: UiState, chooseFolder: () -> Unit) {
+    var hidden by rememberSaveable { mutableStateOf(false) }
+    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        SectionTitle("Wallpaper Bridge", "Authorized folders / verified imports / offline originals")
+        Text("Choose a local or Syncthing-managed folder through Android's Storage Access Framework. DEX reads only the selected tree, copies images atomically, and identifies exact duplicates by SHA-256.")
+        Button(chooseFolder) { Text("Authorize a source folder") }
+        FlagRow("Include hidden folders when rescanning", hidden, "Explicit opt-in. Restricted to your authorized folder; no broad filesystem access.") { hidden = it }
+        state.collections.forEach { c ->
+            DataLine(c.name, if (c.sourceTree.isBlank()) "Manual collection · no linked folder" else "Authorized folder · persistent read access requested")
+            if (c.sourceTree.isNotBlank()) OutlinedButton(onClick = { vm.rescan(c, hidden) }, enabled = !state.busy) { Text("Synchronize ${c.name}") }
+        }
+        HorizontalDivider()
+        Eyebrow("Transfer integrity")
+        Text("Protected copies / 80 MB per image / 5,000 files per scan / depth 16 / .partial staging / decode validation / exact duplicate linking")
+        Eyebrow("Network connectors / unavailable")
+        Text("Nextcloud, WebDAV, online artwork discovery, premium providers, and cross-device favorite synchronization are not connected in this build. No remote credentials or user data are transmitted.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+@Composable fun HealthWorkspace(vm: DexViewModel, state: UiState) {
+    val context = LocalContext.current
+    val capabilities = remember { CompatibilityRegistry(context).inspect() }
+    var refresh by remember { mutableIntStateOf(0) }
+    val sizes by produceState<List<Pair<String, Long>>>(emptyList(), refresh, state.assets.size) {
+        value = withContext(Dispatchers.IO) {
+            fun bytes(file: java.io.File): Long = if (file.isDirectory) file.walkTopDown().filter { it.isFile }.sumOf { it.length() } else file.length()
+            listOf("Originals" to bytes(vm.graph.importer.originals), "Thumbnails" to bytes(vm.graph.importer.thumbnails),
+                "Database" to bytes(context.getDatabasePath("living-wall.db")), "Cache" to bytes(context.cacheDir))
+        }
+    }
+    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        SectionTitle("System health", "Capability negotiation, storage, and safe recovery")
+        FlagRow("One-touch safe mode", state.preferences.safeMode, "Disable expensive effects; preserve collections, schedules, and editing sidecars.") { vm.setFlag("safeMode", it) }
+        Eyebrow("Storage budget")
+        sizes.forEach { (name, bytes) -> DataLine(name, "${"%.1f".format(bytes / 1048576.0)} MB") }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(onClick = { vm.validateAssets(); refresh++ }, enabled = !state.busy) { Text("Check missing files") }
+            OutlinedButton(onClick = { vm.graph.scope.launch { vm.graph.importer.thumbnails.listFiles()?.forEach { it.delete() }; vm.notify("Thumbnail cache cleared; originals kept."); refresh++ } }) { Text("Clear thumbnails") }
+        }
+        Text("Missing originals are quarantined, not deleted. Re-authorize or re-import their source to recover. Export diagnostics and backup are added in later checkpoints.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        HorizontalDivider()
+        Eyebrow("Device compatibility")
+        capabilities.forEach { c -> DataLine(c.name, "${c.state.name.replace('_',' ')}\n${c.explanation}") }
+        Eyebrow("Build status")
+        Text("Device behavior requires Android verification. Compilation and unit-test evidence is recorded separately in TEST_REPORT.md; this screen never invents a successful device check.")
+    }
+}
+@Composable fun SettingsWorkspace(vm: DexViewModel, state: UiState) {
+    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        SectionTitle("Workspace settings", "Precise defaults. Optional complexity.")
+        DataLine("Wallpaper destination", "${state.destination.label} · default is Home only")
+        FlagRow("High contrast", state.preferences.highContrast, "Brighter text and control outlines.") { vm.setFlag("highContrast", it) }
+        FlagRow("Compact density", state.preferences.compact, "Denser galleries and smaller workspace margins; touch targets remain accessible.") { vm.setFlag("compact", it) }
+        FlagRow("Reduced motion", state.preferences.reducedMotion, "Motion-free wallpaper fallback; no change to your collection.") { vm.setFlag("reducedMotion", it) }
+        FlagRow("Material You colors", state.preferences.dynamicColors, "Use Android wallpaper-derived colors on Android 12+.", enabled = android.os.Build.VERSION.SDK_INT >= 31) { vm.setFlag("dynamicColors", it) }
+        FlagRow("Safe mode", state.preferences.safeMode, "Bypass blur and vignette while keeping their saved values.") { vm.setFlag("safeMode", it) }
+        HorizontalDivider()
+        Eyebrow("Privacy first")
+        Text("No account, advertisements, analytics, telemetry, or backend. Images and state stay in application-private storage. Permissions are requested only through supported Android pickers.")
+        Eyebrow("Keyboard")
+        Text("Ctrl + →  Next\nCtrl + ←  Previous\nCtrl + L  Library\nCtrl + E  Edit selection\nCtrl + Enter  Apply\nTab / Shift + Tab  Focus navigation")
+        Eyebrow("Scheduling")
+        Text("Automatic rotation is approximate and independent for Home and Lock. Both-screen selection is explicit and manual. Exact alarms and direct-boot storage are not requested.")
+    }
+}
+@Composable fun LiveDataWorkspace(vm: DexViewModel, state: UiState) {
+    val context = LocalContext.current
+    var battery by remember { mutableIntStateOf(0) }
+    var charging by remember { mutableStateOf(false) }
+    var clock by remember { mutableStateOf(LocalTime.now()) }
+    DisposableEffect(context) {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(c: Context?, intent: Intent?) {
+                val level = intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, 0) ?: 0
+                val scale = intent?.getIntExtra(BatteryManager.EXTRA_SCALE, 100)?.coerceAtLeast(1) ?: 100
+                battery = level * 100 / scale
+                charging = (intent?.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) ?: 0) != 0
+            }
+        }
+        context.registerReceiver(receiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        onDispose { context.unregisterReceiver(receiver) }
+    }
+    LaunchedEffect(Unit) { while (true) { clock = LocalTime.now(); kotlinx.coroutines.delay(60_000 - System.currentTimeMillis() % 60_000) } }
+    val power = context.getSystemService(PowerManager::class.java)
+    val cm = context.getSystemService(ConnectivityManager::class.java)
+    val network = cm.getNetworkCapabilities(cm.activeNetwork)
+    val memory = Runtime.getRuntime()
+    Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+        SectionTitle("Ambient Desk", "Local device data / optional wallpaper overlay")
+        Text(clock.format(DateTimeFormatter.ofPattern("HH:mm")), style = MaterialTheme.typography.headlineLarge)
+        DataLine("Date", java.time.LocalDate.now().toString())
+        DataLine("Battery", "$battery%${if (charging) " · charging" else ""}${if (power.isPowerSaveMode) " · Battery Saver" else ""}")
+        DataLine("Network", if (network == null) "Offline" else if (network.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) "Wi-Fi" else "Connected / other transport")
+        DataLine("Process memory snapshot", "${(memory.totalMemory() - memory.freeMemory()) / 1048576} MB Java heap used (not total device RAM)")
+        FlagRow("Clock on live wallpaper", state.preferences.clockOverlay, "Minute-aligned event updates only while visible. Requires selecting the live service.") { vm.setFlag("clockOverlay", it) }
+        Text("Calendar, weather, media, health, geographic data, and CPU usage are unavailable until their authorized integrations are implemented. DEX does not invent live data or request their permissions.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}

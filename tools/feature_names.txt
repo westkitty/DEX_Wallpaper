@@ -1,0 +1,276 @@
+Home-screen-only wallpaper
+Lock-screen-only wallpaper
+Dual-screen wallpaper application
+Independent screen collections
+Synchronized screen collections
+Static wallpaper mode
+Live wallpaper mode
+Manual wallpaper selection
+Automatic timed rotation
+Custom rotation intervals
+Daily rotation
+Clock-time scheduling
+Day-of-week scheduling
+Unlock-triggered rotation
+Lock or screen-off-triggered rotation
+Location-triggered rotation
+Ambient-light-triggered rotation
+Custom light thresholds
+Automatic light/dark wallpaper selection
+Scheduled night mode
+Random wallpaper selection
+Sequential wallpaper selection
+Shuffle without repetition
+Collection-specific schedules
+Time-of-day playlists
+Theme-dependent playlists
+Favorites-only rotation
+Search-based rotation
+Local-folder rotation
+Manual next wallpaper
+Previous wallpaper access
+Pause and resume
+Start and stop rotation
+Restart behavior after reboot
+Default wallpaper restoration
+Collection-specific fallback wallpaper
+Import individual images
+Import complete folders
+Multiple source folders
+Automatic folder rescanning
+Manual folder synchronization
+User-authorized hidden-folder scanning
+Multiple albums
+Manual image collections
+Folder-backed collections
+Favorites
+Pinned collections
+Wallpaper tags
+Tag-filtered rotation
+Copy images between collections
+Move images between collections
+Multi-image selection and editing
+Thumbnail gallery
+Full-screen previews
+Swipe gallery navigation
+Pinch-to-zoom previews
+Wallpaper history
+Search history
+Saved online searches
+Wallpaper downloads
+Online wallpaper discovery
+Curated artwork collections
+Daily featured artwork
+Community artwork sources
+Wallpaper categories
+Licensed premium artwork integration
+Cross-device favorites synchronization
+Muzei-compatible artwork sources
+Custom artwork-source plugins
+Nextcloud integration
+WebDAV integration
+Remote-image caching
+Wi-Fi-only downloads
+Online-search caching
+Interactive cropping
+Pinch-to-zoom editing
+Image panning
+Per-image crop settings
+Per-collection crop defaults
+Numeric positioning and zoom
+Fit-to-screen scaling
+Fill-screen scaling
+Stretch scaling
+Original-size positioning
+Fit-to-height scaling
+Left/center/right alignment
+Launcher wallpaper zoom correction
+Blurred-edge padding
+Sharp-edge padding
+EXIF orientation handling
+Tablet-aware scaling
+Foldable-screen support
+External-display adaptation
+On-device subject-aware cropping
+Custom object-detection models
+Foreground subject isolation
+Background-only effects
+Multiple image formats
+Efficient image downsampling
+Image compression
+Non-destructive editing
+Persistent per-image edits
+Brightness adjustment
+Wallpaper dimming
+Blur
+Vignette
+Grayscale
+Color filters
+Contrast
+Saturation
+Film grain
+Crossfade transitions
+Scale transitions
+Slide transitions
+Atmosphere effects
+Reverse atmosphere
+Reeded glass
+Glass effects
+Reverse glass
+Color Fill effects
+Reverse Color Fill
+Canvas Sketch effects
+Reverse Canvas Sketch
+Frosted-glass effects
+Reverse Frosted effects
+Halftone effects
+Reverse Halftone
+Transition duration
+Effect intensity
+Independent transition enable/disable
+Scrolling effects
+Swipe parallax
+Gyroscope parallax
+Tilt-responsive motion
+Optional zoom animation
+GPU-accelerated rendering
+Vulkan support
+OpenGL ES support and fallback
+Real-time effect previews
+Wallpaper palette extraction
+Android dynamic wallpaper color integration
+Procedural wallpaper generation
+Geometric patterns
+Extensible predefined pattern library
+Custom generated palettes
+Procedural textures
+Random pattern variations
+Offline on-device procedural generation
+Resolution-aware generation
+Saved procedural favorites
+Video wallpapers
+GIF wallpapers
+Animated 2D scenes
+Animated 3D scenes
+Animated wallpaper playlists
+Documented lawful Wallpaper Engine content import
+Compatible portable wallpaper package import
+Mobile animation optimization
+Static motion-free alternatives
+Independent animation controls
+Visual wallpaper editor
+Layer-based composition
+Image overlays
+Custom typography
+Custom fonts
+Vector shapes
+SVG artwork
+Gradients and shadows
+Layer blending
+3D-style text transforms
+Curved/transformed text
+Interactive hotspots where supported
+App-launch actions and supported shortcuts
+Touch-triggered animation
+Formula expressions
+Conditional logic
+Persistent variables
+Event-driven workflows
+Dynamic clocks
+Date and calendar displays
+Weather displays
+Battery indicators
+CPU and memory indicators
+Network-status indicators
+Music and artwork information
+Music-reactive visualization
+Authorized Health Connect data
+HTTP data retrieval
+RSS/XML parsing
+Location/map visualizations
+Weather-driven artwork
+Wind-field visualization
+Particle themes
+Color-generated themes
+Tasker integration
+Android broadcast commands
+External intents
+Quick Settings tiles
+Home screen widgets
+Widget album switching
+Widget wallpaper selection
+Launcher shortcuts
+Geographic triggers
+Device-state triggers
+Theme-switch automation
+External automation variables
+Programmable wallpaper actions
+Automation-triggered preset loading
+Image caching
+Preprocessed next-wallpaper buffers
+Missing-file detection
+Missing-image recovery
+Image relinking
+Persistent shuffle state
+Reboot recovery
+Battery Saver awareness
+Do Not Disturb awareness where permitted
+Visibility-aware rendering
+Static-frame rendering
+Configurable frame rates
+GPU resource cleanup
+Scoped storage access
+Local artwork storage
+Offline operation
+Encrypted remote credentials
+Internet-free offline core
+No advertisements or analytics
+Backup and restore
+Metadata-preserving backup
+Multilingual infrastructure
+Material You support
+Dark theme
+Tablet-optimized layouts
+Rendering diagnostics
+Direct-boot support where safely achievable
+License-compliant modifiable source
+Rule debugger
+Future schedule preview
+Rule conflict resolver
+Wallpaper decision receipt
+Fairness-aware shuffle
+Rule dry-run mode
+Collection eligibility explainer
+Manual override window
+Exact duplicate detection
+Near-duplicate detection
+Corrupt-asset quarantine
+Protected originals
+Editing sidecars
+Orientation-specific focal points
+Composition safe-zone editor
+A/B wallpaper comparison
+Samsung DeX-adaptive workspace
+S Pen precision controls
+Hardware keyboard shortcuts
+Accessible reduced-motion mode
+High-contrast workspace mode
+Customizable editor density
+Multi-orientation preview lab
+Interactive gallery inspector
+Storage budget dashboard
+Configurable cache limits
+Local performance profiler
+GPU context-loss recovery
+One-touch safe mode
+Sanitized diagnostic export
+Verified data migrations
+Profile import and export
+Asset provenance records
+Remote source allowlists
+Provider rate-limit control
+Network budget rules
+Versioned scene manifests
+Safe formula evaluation
+Scene history and revision comparison
+Adaptive render quality policy

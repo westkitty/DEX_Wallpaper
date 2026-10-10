@@ -1,1 +1,52 @@
-# DEX_Wallpaper
+# DEX Wallpaper
+
+**The Living Wall System** — a native, offline-first Android wallpaper instrument for tablets, phones, and resizable Samsung DeX windows. Kotlin, Jetpack Compose / Material 3, Room, DataStore, WorkManager, and a real `WallpaperService`. Application ID: `com.westkitty.dexwallpaper`. Apache-2.0.
+
+## Development state
+
+This is an engineering build, **not the completed 276-feature product**. See [FEATURE_MATRIX.md](FEATURE_MATRIX.md), [TEST_REPORT.md](TEST_REPORT.md), and [operational state](docs/OPERATIONAL_STATE.md) for actual coverage and verification. Unsupported integrations are identified in System health; they never simulate remote data or wallpaper actions.
+
+## First usable journey
+
+1. Install the debug APK from a successful **Android CI → dex-wallpaper-debug** artifact.
+2. Open the actual Control center; no account or onboarding is required.
+3. Use **Add images → Choose a folder** (or individual images) through Android's picker.
+4. Open Library; create/select a collection before importing when desired. Imports create protected private copies and real thumbnails.
+5. In Rotation lab choose **Shuffle**, an interval of at least 15 minutes, and automatic rotation if desired.
+6. Leave the destination at **Home screen**. Select an image in Library, inspect it, and Apply, or use Next wallpaper.
+7. Inspect Home and Lock. **If Android reports a shared/unverifiable Lock wallpaper, DEX refuses Home-only application. Set an independent static Lock wallpaper in system settings first.** It will not silently fall back to Both.
+8. Reopen the app; collections, per-screen configuration, queue, history, and edits persist.
+
+The shared non-destructive image pipeline supports fit/fill/stretch/original/fit-height, separate portrait/landscape framing, pinch/drag, brightness, contrast, saturation/grayscale, dimming, vignette, downsampled soft-focus blur, and manually calibrated icon-safe zones. Original files are not overwritten.
+
+## Home and Lock safety
+
+Static writes go through one controller and explicit `FLAG_SYSTEM`, `FLAG_LOCK`, or a deliberately selected Both destination. Home-only checks the independent Lock identity before and after writing. Unverifiable destinations fail closed. OEM-specific behavior must still be tested on the target Samsung device; no source-only check proves visible Lock preservation.
+
+Live wallpaper uses the Android/OEM picker. The picker determines the final target; cancel if Home-only is not offered. Different simultaneous Home/Lock live services are not assumed. The initial live renderer is Canvas with lifecycle-aware static frames and an optional minute clock.
+
+## Build
+
+- Android 8.0+ (API 26); compile/target API 35.
+- JDK 17, Gradle 8.11.1, AGP 8.9.2, Kotlin 2.1.20.
+- Android SDK platform 35 and build tools.
+
+```sh
+python3 tools/validate_feature_matrix.py
+python3 tools/check_source_policy.py
+./gradlew testDebugUnitTest lintDebug assembleDebug
+```
+
+Create `local.properties` locally with `sdk.dir=...` if needed; never commit it. Gradle downloads require Google Maven / Maven Central. The Arena sandbox has neither JDK nor Android SDK and cannot access those hosts; GitHub Actions is the primary Android verification path.
+
+The wrapper is the authentic official Gradle v8.11.1 wrapper (SHA-256 checked in CI); the distribution checksum is pinned from the official GitHub release. Dependencies and Actions are pinned. No production signing keys or credentials are included.
+
+## Scheduling, sources, accessibility
+
+WorkManager rotation is **approximate**, at least 15 minutes, independently configured for Home and Lock, and deferred while screen-off or Battery Saver. Both is manual only. No exact-alarm permission or clock-polling foreground service. Chronoscape evaluates time/charging/theme/battery predicates with deterministic priorities; simulation never writes wallpaper.
+
+Folder scanning is explicit, bounded to 5,000 files and depth 16, with a hidden-folder opt-in. Image size limit: 80 MB each. SHA-256 deduplication, local perceptual similarity, protected originals, partial-transfer staging, and missing-file quarantine keep imports safe. A Syncthing folder can be authorized just like any other local folder.
+
+Landscape uses a navigation sidebar and multi-pane control/editor layouts; narrow windows use a compact workspace menu. High contrast, density, keyboard navigation, and Material You are optional. Keyboard: Ctrl+Right/Left Next/Previous, Ctrl+L Library, Ctrl+E Edit, Ctrl+Enter Apply. Controls have text or accessibility labels; physical TalkBack/S Pen/DeX verification remains pending.
+
+See [PERMISSIONS.md](PERMISSIONS.md), [PRIVACY.md](PRIVACY.md), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

@@ -1,0 +1,2129 @@
+{
+  "001": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/WallpaperDestinationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
+    ],
+    "ui_location": "Control center / Library",
+    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
+    "test_reference": [],
+    "permissions": [
+      "SET_WALLPAPER"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "OEM identity and rendering validation required"
+    ],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "002": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/WallpaperDestinationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
+    ],
+    "ui_location": "Control center / Library",
+    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
+    "test_reference": [],
+    "permissions": [
+      "SET_WALLPAPER"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "OEM identity and rendering validation required"
+    ],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "003": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/WallpaperDestinationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
+    ],
+    "ui_location": "Control center / Library",
+    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
+    "test_reference": [],
+    "permissions": [
+      "SET_WALLPAPER"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "OEM identity and rendering validation required"
+    ],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "006": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/WallpaperDestinationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
+    ],
+    "ui_location": "Control center / Library",
+    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
+    "test_reference": [],
+    "permissions": [
+      "SET_WALLPAPER"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "OEM identity and rendering validation required"
+    ],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "008": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/WallpaperDestinationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
+    ],
+    "ui_location": "Control center / Library",
+    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
+    "test_reference": [],
+    "permissions": [
+      "SET_WALLPAPER"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "OEM identity and rendering validation required"
+    ],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "030": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/WallpaperDestinationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
+    ],
+    "ui_location": "Control center / Library",
+    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
+    "test_reference": [],
+    "permissions": [
+      "SET_WALLPAPER"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "OEM identity and rendering validation required"
+    ],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "031": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/WallpaperDestinationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt"
+    ],
+    "ui_location": "Control center / Library",
+    "limitations": "Device acceptance pending. Home-only refuses shared/unverifiable Lock. Both requires an explicit selection.",
+    "test_reference": [],
+    "permissions": [
+      "SET_WALLPAPER"
+    ],
+    "api_constraints": [
+      "Android 8+",
+      "OEM identity and rendering validation required"
+    ],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "004": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "009": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "010": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "021": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "022": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "023": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "027": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "029": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "032": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "033": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "034": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "037": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "038": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "039": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "041": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "042": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "043": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "044": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "045": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "046": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "048": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "053": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "057": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "075": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "076": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "077": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "078": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "081": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "082": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "083": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "084": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "085": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "090": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "098": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "099": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "101": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "102": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "103": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "104": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "105": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "106": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "107": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "109": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "110": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "214": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "215": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "222": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "223": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "224": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "226": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "227": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "232": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "237": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "240": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "241": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "242": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "243": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "244": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "245": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "246": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "248": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "250": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "251": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "252": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "257": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "258": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "260": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/AssetImporter.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+    ],
+    "ui_location": "Control / Library / Rotation / Editor / Rules",
+    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "DEVICE_PENDING"
+  },
+  "007": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "019": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "020": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "024": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "025": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "026": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "054": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "056": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "080": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "086": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "089": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "091": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "092": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "093": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "139": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "141": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "159": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "161": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "179": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "180": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "183": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "184": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "204": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "205": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "209": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "211": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "212": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "216": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "218": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "219": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "230": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "231": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "233": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "234": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "236": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "238": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "239": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "247": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "249": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "253": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "254": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "255": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "256": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "259": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "261": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "263": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "265": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "269": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "276": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "Relevant native workspace",
+    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "137": {
+    "implementation_status": "BLOCKED_PLATFORM",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "System health / capability report",
+    "limitations": "No Vulkan backend or proprietary Windows runtime. Direct boot intentionally excludes credential-encrypted artwork. Safe fallback only.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "156": {
+    "implementation_status": "BLOCKED_PLATFORM",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "System health / capability report",
+    "limitations": "No Vulkan backend or proprietary Windows runtime. Direct boot intentionally excludes credential-encrypted artwork. Safe fallback only.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "235": {
+    "implementation_status": "BLOCKED_PLATFORM",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "System health / capability report",
+    "limitations": "No Vulkan backend or proprietary Windows runtime. Direct boot intentionally excludes credential-encrypted artwork. Safe fallback only.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "066": {
+    "implementation_status": "BLOCKED_EXTERNAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "System health / capability report",
+    "limitations": "Requires authorized provider rights or a user-supplied compatible model; none supplied.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  },
+  "095": {
+    "implementation_status": "BLOCKED_EXTERNAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+    ],
+    "ui_location": "System health / capability report",
+    "limitations": "Requires authorized provider rights or a user-supplied compatible model; none supplied.",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [],
+    "verification_status": "NOT_RUN"
+  }
+}

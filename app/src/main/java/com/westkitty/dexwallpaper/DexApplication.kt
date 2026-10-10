@@ -1,0 +1,28 @@
+package com.westkitty.dexwallpaper
+
+import android.app.Application
+import android.content.Context
+import com.westkitty.dexwallpaper.data.*
+import com.westkitty.dexwallpaper.wallpaper.*
+import com.westkitty.dexwallpaper.worker.RotationScheduler
+import kotlinx.coroutines.*
+
+class DexApplication : Application() {
+    lateinit var graph: AppGraph
+        private set
+    override fun onCreate() {
+        super.onCreate()
+        graph = AppGraph(this)
+        graph.scope.launch { graph.repository.initialize(); graph.scheduler.reconcile() }
+    }
+}
+class AppGraph(context: Context) {
+    val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    val db = DexDatabase.open(context)
+    val preferences = Preferences(context)
+    val pipeline = BitmapPipeline()
+    val importer = AssetImporter(context, db, pipeline)
+    val controller = WallpaperDestinationController(AndroidWallpaperPlatform(context))
+    val repository = WallRepository(context, db, importer, pipeline, controller, preferences)
+    val scheduler = RotationScheduler(context)
+}
