@@ -126,3 +126,14 @@ Actual annotations confirm **96 JVM tests, 0 failures/errors**, lintDebug, assem
 **15 native methods compiled; 0 known passed on a device.** Test APK existence/digest is compilation evidence only. The prior boot timeout/system-service failures are retained, not relabeled PASS. No physical Galaxy Tab S9 Ultra, actual picker/import/restart journey, visible unaffected-screen proof or power benchmark exists. Follow [DEVICE_ACCEPTANCE.md](docs/DEVICE_ACCEPTANCE.md) on a disposable test device; do not run wallpaper-modifying tests on a personal device without explicit consent. All 276 requirements/statuses remain unchanged (4/140/61/2/2/67).
 
 Non-blocking build notice: pinned Gradle 8.11.1 is marked out-of-date by setup-gradle. No untested toolchain upgrade was substituted for this passing checkpoint. APKs are debug-signed, not production releases.
+
+## Prior delivered HEAD independently rebuilt
+
+**PASS** — https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278 at `64906f780d3802c03cd18ca6ee1b3b91159ac1a8`, job/check `114327520587`, completed `2026-10-10T22:25:59Z`.
+Actual annotations reconfirm **96 JVM tests, 0 failures/errors**, lintDebug, assembleDebug and assembleDebugAndroidTest; inventory/source/eight Python validator tests, wrapper tasks and three uploads PASS.
+
+- App APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278/artifacts/11684116776 ; SHA-256 `42d418a40277609359d53bec3567a95509f072a5f7991690e405e8c6ef7cd145`.
+- Instrumentation APK: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278/artifacts/11684416069 ; SHA-256 `db334a05823e2f0a9b7160881cdd0ccb851de0dae39e8ef156829ba92f576365`.
+- Reports artifact `11684650804`. **15 compiled native methods, 0 known runtime passes**, no physical Samsung acceptance.
+
+The later requested takeover-prompt documentation commit does not change Android source/test code. Its CI result is separate and must be inspected; no result is inferred here. See `docs/HANDOFF_PROMPT.md` for the unfinished mission and `docs/DEVICE_ACCEPTANCE.md` for safe actual acceptance.

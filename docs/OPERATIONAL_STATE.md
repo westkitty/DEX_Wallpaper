@@ -5,13 +5,14 @@ Session-fixed branch: `arena/62a85de1-dex-wallpaper`. Main remains `db4ef366986c
 
 ## Last independently verified delivery
 
-`ee24a435b0b59e8173f62b1b95f545742c80dd41` was normally pushed and compared independently with `git ls-remote`.
-Twelve verified session commits at the native build checkpoint: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`, `33c9a2a`, `ee24a43`.
+`64906f780d3802c03cd18ca6ee1b3b91159ac1a8` was normally pushed and compared independently with `git ls-remote`.
+Thirteen verified session commits at the prior delivery checkpoint: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`, `33c9a2a`, `ee24a43`, `64906f7`.
 The following documentation-only audit cannot record its own SHA before commit; its latest delivery is available from git/remote history. No application/test source is changed by the audit.
 
 ## Actual execution evidence
 
-- **Latest Android PASS at ee24a43**: run `38090533888`, job/check `114325863215`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug/**assembleDebugAndroidTest**. Eight Python regressions/inventory/source/wrapper checks and three uploads PASS. App artifact `11684455076`, SHA-256 `92fadd0fbc605a876e28faf456e938d0bf191952db76ac134363d748598b11f3`; test APK `11684245354`, SHA-256 `d613720072e1d5ab9c56ae48cc42c38050d39e47e7619bba4fa8205a78b03c30`; reports `11684375144`. **15 native methods compiled, 0 known device passes**.
+- **Latest Android PASS at 64906f7**: run `38091097278`, job/check `114327520587`, completed `2026-10-10T22:25:59Z`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug/**assembleDebugAndroidTest**. Eight Python regressions/inventory/source/wrapper checks and all three uploads PASS. App artifact `11684116776`, SHA-256 `42d418a40277609359d53bec3567a95509f072a5f7991690e405e8c6ef7cd145`; test APK `11684416069`, SHA-256 `db334a05823e2f0a9b7160881cdd0ccb851de0dae39e8ef156829ba92f576365`; reports `11684650804`. **15 native methods compiled, 0 known device passes**.
+- Prior Android PASS at ee24a43: run `38090533888`, job/check `114325863215`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug/**assembleDebugAndroidTest**. Eight Python regressions/inventory/source/wrapper checks and three uploads PASS. App artifact `11684455076`, SHA-256 `92fadd0fbc605a876e28faf456e938d0bf191952db76ac134363d748598b11f3`; test APK `11684245354`, SHA-256 `d613720072e1d5ab9c56ae48cc42c38050d39e47e7619bba4fa8205a78b03c30`; reports `11684375144`. **15 native methods compiled, 0 known device passes**.
 - Prior Android PASS at 33c9a2a: run `38089991851`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. App artifact `11683352853`, SHA-256 `4aada029c4bd26d97a1c0db359dfe54d898fa969fd12e14636e0f0ecf98e1366`; reports `11683882481`.
 
 - Prior Android PASS at daf52c1: run `38089299045`; **90 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11683826676`, SHA-256 `e5616eb6f73536d2ef5c972ad337f645ab46513829903e2d65d80e022abf5db0`; reports `11683496817`. Accelerated device `38089299077` FAILED at emulator boot timeout; no test execution or result artifacts.
@@ -53,3 +54,7 @@ Standard CI at ee24a43 actually assembled/uploaded the instrumentation APK indep
 ## Highest-value next work
 
 Instrumentation compilation is now verified; keep runtime acceptance separate. See [DEVICE_ACCEPTANCE.md](DEVICE_ACCEPTANCE.md). Device runner attempts did not produce app acceptance (software system death, accelerated boot timeout). Highest value is a stable Android test device / actual Galaxy Tab S9 Ultra: launch, real SAF individual/folder import, collection/shuffle/interval, Home-only preview/apply/next, restart, static/live mixed isolation, visibility/orientation/recovery. Verify unaffected visible pixels as well as IDs; do not run wallpaper-modifying instrumentation on a personal device without explicit consent. Provider/power/DeX/S Pen/TalkBack acceptance still needs execution. Never infer acceptance from a build.
+
+## Requested next-chat handoff
+
+The user requested stage/commit/push and a takeover prompt. Existing implementation was clean and independently matched the remote before handoff preparation. [HANDOFF_PROMPT.md](HANDOFF_PROMPT.md) contains a self-contained copy/paste continuation contract, exact verified baseline, full remaining-scope references, priorities, safety invariants and failed approaches. Start the next Arena chat from the existing feature branch, **not README-only main**; respect any newly assigned Arena session branch. This handoff documentation does not alter app/test source or promote a requirement.

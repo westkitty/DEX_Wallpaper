@@ -27,7 +27,11 @@ Live wallpaper uses the Android/OEM picker, which determines the final target; c
 
 The live renderer uses actual OpenGL ES 2 textures/effects/transitions, with per-engine contexts and an event-driven Canvas safe fallback. Clock/battery overlays use minute-boundary Canvas frames and bypass shaders. Video/GIF/Vulkan and continuously layered live scenes remain outstanding. Safe mode and reduced motion are explicitly system-wide accessibility/resource policies, not per-destination image selections.
 
-Latest verified native checkpoint: `ee24a435b0b59e8173f62b1b95f545742c80dd41`: **96 JVM tests, lint, app and instrumentation APK compilation PASS** ([run](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38090533888)). [Actual debug APK artifact](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38090533888/artifacts/11684455076); [compiled test APK](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38090533888/artifacts/11684245354). Source/picker/outcome policies executed on the JVM; **15 native test methods compile but have 0 known passing runtime results**. Latest device runner timed out before boot, not an app acceptance result. See [device acceptance procedure](docs/DEVICE_ACCEPTANCE.md); real SAF/Home-only/restart/Samsung/DeX acceptance remains outstanding.
+Latest verified native checkpoint: `64906f780d3802c03cd18ca6ee1b3b91159ac1a8`: **96 JVM tests, lint, app and instrumentation APK compilation PASS** ([run](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278)). [Actual debug APK artifact](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278/artifacts/11684116776); [compiled test APK](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38091097278/artifacts/11684416069). Source/picker/outcome policies executed on the JVM; **15 native test methods compile but have 0 known passing runtime results**. Latest device runner timed out before boot, not an app acceptance result. See [device acceptance procedure](docs/DEVICE_ACCEPTANCE.md); real SAF/Home-only/restart/Samsung/DeX acceptance remains outstanding.
+
+## Continuation handoff
+
+[Copy/paste prompt for the next Arena chat](docs/HANDOFF_PROMPT.md). Start from the existing feature branch, not `main`; the product is unfinished and all 276 requirements remain in the inventory.
 
 ## Build
 
