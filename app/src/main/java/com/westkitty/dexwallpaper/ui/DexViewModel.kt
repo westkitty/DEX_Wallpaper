@@ -36,6 +36,8 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         destination = Destination.parse(saved["destination"] ?: "HOME"), selectedId = saved["selectedId"]))
     val state: StateFlow<UiState> = mutable.asStateFlow()
     private var operation: Job? = null
+    // Keep startup cleanup from releasing a just-selected folder grant before its collection is saved.
+    private val safGrantMutex = kotlinx.coroutines.sync.Mutex()
     private val editMutex=kotlinx.coroutines.sync.Mutex()
     private val editUndo=ArrayDeque<Pair<String,ImageEdit>>()
     init {
@@ -49,7 +51,11 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         viewModelScope.launch { dao.observeScenes().collect { list -> mutable.update { it.copy(scenes = list) } } }
         viewModelScope.launch { dao.observeRules().collect { list -> mutable.update { it.copy(rules = list) } } }
         viewModelScope.launch { graph.preferences.flow.collect { p -> mutable.update { it.copy(preferences = p) } } }
-        viewModelScope.launch { graph.repository.initialize() }
+        viewModelScope.launch {
+            graph.repository.initialize()
+            val cleanup = cleanupSafGrants()
+            if (cleanup.failed > 0) notify("Some unused document access grants could not be released; review access in Android settings.")
+        }
     }
     fun navigate(page: Workspace) { saved["page"] = page.name; mutable.update { it.copy(page = page) } }
     fun destination(target: Destination) { saved["destination"] = target.name; mutable.update { it.copy(destination = target) } }
@@ -67,6 +73,26 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
             finally { mutable.update { it.copy(busy = false, progress = "") } }
         }
     }
+    private suspend fun cleanupSafGrants(): SafGrantCleanupResult = withContext(NonCancellable) {
+        safGrantMutex.lock()
+        try { cleanupSafGrantsLocked() } finally { safGrantMutex.unlock() }
+    }
+    private suspend fun cleanupSafGrantsLocked(): SafGrantCleanupResult = withContext(NonCancellable) {
+        graph.importer.releaseUnreferencedDocumentGrants()
+    }
+    private fun persistFolderReadGrant(uri: Uri) {
+        val resolver = graph.context.contentResolver
+        try {
+            val alreadyPersisted = resolver.persistedUriPermissions.any { it.uri == uri && it.isReadPermission }
+            if (!alreadyPersisted) resolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        } catch (e: SecurityException) {
+            throw IllegalArgumentException("Folder provider refused persistent read access. Import individual images instead.", e)
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("The selected folder cannot provide persistent read access. Choose it again or import individual images.", e)
+        }
+    }
+    private fun SafGrantCleanupResult.warningSuffix(): String =
+        if (failed == 0) "" else " $failed unused document access grant(s) could not be released; review access in Android settings."
     fun cancel() { operation?.cancel() }
     private fun Outcome<String>.message() = when (this) { is Outcome.Ok -> value; is Outcome.Error -> message }
     fun next() { val target = state.value.destination; runOperation("Selecting and applying…") { graph.repository.next(target).message() } }
@@ -145,38 +171,62 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         val target = state.value.destination
         val collection = state.value.screen.collectionId
         runOperation("Importing protected originals…") {
-            replaceScreenState(persistCollectionSelection(target, collection))
-            val result = graph.importer.importUris(uris, collection) { p ->
-                mutable.update { it.copy(progress = "${p.processed} processed · ${p.imported} imported · ${p.duplicates} duplicates · ${p.rejected} rejected") }
+            var cleanup = SafGrantCleanupResult()
+            val result = try {
+                replaceScreenState(persistCollectionSelection(target, collection))
+                val imported = graph.importer.importUris(uris, collection) { p ->
+                    mutable.update { it.copy(progress = "${p.processed} processed · ${p.imported} imported · ${p.duplicates} duplicates · ${p.rejected} rejected") }
+                }
+                graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
+                imported
+            } finally {
+                cleanup = cleanupSafGrants()
             }
-            graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
             val limitNote = if (result.truncated) " Scan stopped at the 5,000-item limit; choose a smaller selection for the rest." else ""
-            "Imported ${result.imported}; linked ${result.duplicates} duplicates; rejected ${result.rejected}.$limitNote"
+            "Imported ${result.imported}; linked ${result.duplicates} duplicates; rejected ${result.rejected}.$limitNote${cleanup.warningSuffix()}"
         }
     }
     fun importFolder(uri: Uri, includeHidden: Boolean = false) {
+        if (state.value.busy) { notify("Wait for the current operation, or cancel it first."); return }
         val target = state.value.destination
         val collection = state.value.screen.collectionId
         runOperation("Scanning authorized folder…") {
-            replaceScreenState(persistCollectionSelection(target, collection))
-            val result = graph.importer.scanTree(uri, collection, includeHidden) { update ->
-                mutable.update { it.copy(progress = "${update.message} · ${update.scannedEntries} entries scanned · ${update.imported} new · ${update.rejected} rejected") }
+            safGrantMutex.lock()
+            try {
+                var cleanup = SafGrantCleanupResult()
+                val result = try {
+                    persistFolderReadGrant(uri)
+                    replaceScreenState(persistCollectionSelection(target, collection))
+                    val scanned = graph.importer.scanTree(uri, collection, includeHidden) { update ->
+                        mutable.update { it.copy(progress = "${update.message} · ${update.scannedEntries} entries scanned · ${update.imported} new · ${update.rejected} rejected") }
+                    }
+                    val c = graph.repository.dao.allCollections().first { it.id == collection }
+                    graph.repository.dao.putCollection(c.copy(sourceTree = uri.toString()))
+                    graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
+                    scanned
+                } finally {
+                    cleanup = cleanupSafGrantsLocked()
+                }
+                val limitNote = if (result.truncated) " Scan was bounded to 5,000 file/folder entries and depth 16; choose smaller subfolders to import the rest." else ""
+                "Folder synchronized: ${result.imported} new, ${result.duplicates} existing/recovered, ${result.rejected} rejected.$limitNote${cleanup.warningSuffix()}"
+            } finally {
+                safGrantMutex.unlock()
             }
-            val c = graph.repository.dao.allCollections().first { it.id == collection }
-            graph.repository.dao.putCollection(c.copy(sourceTree = uri.toString()))
-            graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
-            val limitNote = if (result.truncated) " Scan was bounded to 5,000 file/folder entries and depth 16; choose smaller subfolders to import the rest." else ""
-            "Folder synchronized: ${result.imported} new, ${result.duplicates} existing/recovered, ${result.rejected} rejected.$limitNote"
         }
     }
     fun rescan(collection: CollectionEntity, includeHidden: Boolean = false) {
         if (collection.sourceTree.isBlank()) { notify("Choose a folder for this collection first."); return }
         runOperation("Synchronizing folder…") {
-            val result = graph.importer.scanTree(Uri.parse(collection.sourceTree), collection.id, includeHidden) { update ->
-                mutable.update { it.copy(progress = "${update.message} · ${update.scannedEntries} entries scanned") }
+            var cleanup = SafGrantCleanupResult()
+            val result = try {
+                graph.importer.scanTree(Uri.parse(collection.sourceTree), collection.id, includeHidden) { update ->
+                    mutable.update { it.copy(progress = "${update.message} · ${update.scannedEntries} entries scanned") }
+                }
+            } finally {
+                cleanup = cleanupSafGrants()
             }
             val limitNote = if (result.truncated) " Scan stopped at the 5,000-entry or depth-16 bound." else ""
-            "Synchronized: ${result.imported} new, ${result.duplicates} existing/recovered, ${result.rejected} rejected.$limitNote"
+            "Synchronized: ${result.imported} new, ${result.duplicates} existing, ${result.rejected} rejected.$limitNote${cleanup.warningSuffix()}"
         }
     }
     fun validateAssets() { runOperation("Checking library files…") { "${graph.importer.validateAssets()} missing files quarantined. Originals are never deleted." } }
@@ -203,7 +253,18 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun exportDiagnostics(uri: Uri) { runOperation("Exporting sanitized diagnostics…") { com.westkitty.dexwallpaper.platform.DiagnosticsRepository(graphContext(), graph).export(uri); "Sanitized diagnostic counts exported; no private names, artwork, URIs, or credentials." } }
     private fun graphContext() = graph.context
     fun exportBackup(uri: Uri, originals: Boolean) { runOperation("Exporting backup…") { val count=graph.backup.export(uri,originals) { message -> mutable.update { it.copy(progress=message) } }; "Backup exported: $count asset records; credentials and device URI grants excluded." } }
-    fun restoreBackup(uri: Uri) { runOperation("Validating backup…") { val count=graph.backup.restore(uri) { message -> mutable.update { it.copy(progress=message) } }; graph.scheduler.reconcile(); "Restored $count records. Rotation and rules paused; review screen destinations before enabling." } }
+    fun restoreBackup(uri: Uri) {
+        runOperation("Validating backup…") {
+            var cleanup = SafGrantCleanupResult()
+            val count = try {
+                graph.backup.restore(uri) { message -> mutable.update { it.copy(progress = message) } }
+            } finally {
+                cleanup = cleanupSafGrants()
+            }
+            graph.scheduler.reconcile()
+            "Restored $count records. Rotation and rules paused; review screen destinations before enabling.${cleanup.warningSuffix()}"
+        }
+    }
     fun exportSidecar(uri: Uri) { val id=state.value.selected?.id ?: return; runOperation("Exporting editing sidecar…") { graph.backup.exportSidecar(uri,id); "Editing sidecar exported; original pixels excluded." } }
     fun importSidecar(uri: Uri) { runOperation("Importing editing sidecars…") { val count=graph.backup.importSidecar(uri); state.value.selected?.let { select(it.id) }; "Applied $count matching sidecars by artwork hash." } }
     fun loadProfile(profile: VisualProfile) {

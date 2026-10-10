@@ -31,16 +31,10 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
     val state by vm.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val images = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
-        if (uris.isNotEmpty()) {
-            uris.forEach { uri -> try { context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) } catch (_: SecurityException) { /* Imported private copies do not need enduring source access. */ } }
-            vm.importUris(uris)
-        }
+        if (uris.isNotEmpty()) vm.importUris(uris)
     }
     val folder = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-        if (uri != null) {
-            try { context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION); vm.importFolder(uri) }
-            catch (_: SecurityException) { vm.notify("Folder provider refused persistent access. Import individual images instead.") }
-        }
+        if (uri != null) vm.importFolder(uri)
     }
     var includeBackupOriginals by remember { mutableStateOf(false) }
     val exportBackup = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri -> uri?.let { vm.exportBackup(it, includeBackupOriginals) } }

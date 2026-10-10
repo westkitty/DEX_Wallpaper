@@ -1,6 +1,7 @@
 package com.westkitty.dexwallpaper.data
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.graphics.BitmapFactory
 import android.provider.DocumentsContract
@@ -11,6 +12,8 @@ import com.westkitty.dexwallpaper.core.CachePolicy
 import com.westkitty.dexwallpaper.core.CacheEntry
 import com.westkitty.dexwallpaper.core.ImportTraversalBudget
 import com.westkitty.dexwallpaper.core.LibraryFilePath
+import com.westkitty.dexwallpaper.core.PersistedReadGrant
+import com.westkitty.dexwallpaper.core.SafGrantPolicy
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.File
@@ -20,6 +23,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
+
+data class SafGrantCleanupResult(val released: Int = 0, val failed: Int = 0)
 
 data class ImportProgress(
     val processed: Int = 0,
@@ -168,6 +173,30 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
             if (!committed) { target.delete(); LibraryFilePath.resolve(thumbnails, "$id.jpg").delete() }
         }
     }
+    suspend fun releaseUnreferencedDocumentGrants(): SafGrantCleanupResult = withContext(Dispatchers.IO) {
+        val retainedTrees = db.library().allCollections().mapNotNull { collection ->
+            collection.sourceTree.takeIf(String::isNotBlank)
+        }.toSet()
+        val resolver = context.contentResolver
+        val staleReadUris = SafGrantPolicy.unreferencedReadUris(
+            resolver.persistedUriPermissions.map { PersistedReadGrant(it.uri.toString(), it.isReadPermission) },
+            retainedTrees,
+        )
+        var released = 0
+        var failed = 0
+        staleReadUris.forEach { value ->
+            try {
+                resolver.releasePersistableUriPermission(Uri.parse(value), Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                released++
+            } catch (_: SecurityException) {
+                failed++
+            } catch (_: IllegalArgumentException) {
+                failed++
+            }
+        }
+        SafGrantCleanupResult(released, failed)
+    }
+
     suspend fun validateAssets(): Int = withContext(Dispatchers.IO) {
         var missing = 0
         db.library().allAssets().forEach { asset ->
