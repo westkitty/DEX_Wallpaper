@@ -2,8 +2,8 @@
 
 One Android application module, small explicit packages, no empty framework layers.
 
-- **core**: immutable destination/crop/queue/rule models, pure ShuffleGuard, Chronoscape, ScheduleMath, FrameSense, asset-integrity helpers. No Android dependency in the business algorithms. Pure logic is unit-testable.
-- **data**: one Room database owns assets, collection membership, edits, per-screen configuration, persistent queues, receipts, and rules. Workspace-only preferences live in DataStore; preferences are not duplicated in Room. Imported originals are in credential-encrypted application-private files; thumbnails are expendable cache.
+- **core**: immutable destination/crop/queue/rule models, pure ShuffleGuard, Chronoscape, ScheduleMath, FrameSense, asset-integrity helpers, and canonical direct-child `LibraryFilePath` resolution. No Android dependency in the business algorithms. Pure logic is unit-testable.
+- **data**: one Room database owns assets, collection membership, edits, per-screen configuration, persistent queues, receipts, and rules. Workspace-only preferences live in DataStore; preferences are not duplicated in Room. Imported originals are in credential-encrypted application-private files; thumbnails are expendable cache, generated under bounded striped locks and atomically published from unique same-directory temporary files.
 - **wallpaper**: bounded EXIF-aware decoding and non-destructive composition. One `WallpaperDestinationController` owns every static platform write. It takes explicit flags after fail-closed preflight, verifies unaffected screen identity, and stops automatic writing on irreversible identity mismatch.
 - **worker**: one unique WorkManager periodic request per independent destination. No competing timers. Reboot/package recovery reconciles requests; WorkManager also persists its own work. No pre-unlock artwork access.
 - **ui**: Compose state comes from lifecycle-aware ViewModel flows. SavedStateHandle retains workspace/destination/selection; edits persist as sidecars as they change. The responsive shell uses semantic controls and a desktop-sized multi-pane layout. Loading/cancellation/errors are explicit.
@@ -27,7 +27,7 @@ Picker preparation writes only a preview draft, never installed configuration. A
 
 ## Import and failure ownership
 
-SAF grants are requested only for authorized trees/documents. Imports stream to an 80-MB-bounded `.partial` file, hash and decode-validate before rename, and transactionally add assets/membership. Exact duplicates link to the existing asset. Recursion and file counts are bounded. Source files are never edited or deleted. Unavailable source permissions are recoverable by choosing a source again; local private copies continue offline. Missing copies are quarantined instead of removed.
+SAF grants are requested only for authorized trees/documents. Imports stream to an 80-MB-bounded `.partial` file, hash and decode-validate before rename, and transactionally add assets/membership. Exact duplicates link to the existing asset. Recursion and file counts are bounded. Persisted original and thumbnail names pass through `LibraryFilePath`, which accepts flat bounded names and rejects canonical paths or symlinks escaping the app-owned directory; backup restore uses the same resolver. Thumbnail reads check cached image bounds and regenerate missing or invalid entries with atomic publication. Source files are never edited or deleted. Unavailable source permissions are recoverable by choosing a source again; local private copies continue offline. Missing copies are quarantined instead of removed.
 
 No silent destructive database migration is configured. Schema exports are produced by Room. Actual migration testing is required before schema upgrades. Backup, scene/network extensions, and recovery enhancements must reuse this shared state rather than build independent stores.
 

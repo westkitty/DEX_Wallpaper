@@ -1,6 +1,6 @@
 # Real-device acceptance — not yet executed
 
-This checklist is **outstanding work**, not test evidence. Latest implementation commit `28e0acc1f3d8b9e3f0dc2299398782ad3679cd30` passed Android CI run `38092686248`: 100 JVM tests pass, lint/app APK/instrumentation APK build pass; all 16 native instrumentation methods compile. No native runtime result is known to pass. The latest actual device attempt (`38089299077`) timed out before emulator boot; no tests ran. Neither result proves an app defect or acceptance. Preserve actual errors/results and update TEST_REPORT and individual matrix entries only after execution.
+This checklist is **outstanding work**, not test evidence. Latest implementation commit `f4d795e7994ed50c9b321e7fef977dd0afee5a73` passed Android CI run `38094246090`: 103 JVM tests pass, lint/app APK/instrumentation APK build pass; all 16 native instrumentation methods compile. No native runtime result is known to pass. The latest actual device attempt (`38089299077`) timed out before emulator boot; no tests ran. Neither result proves an app defect or acceptance. Preserve actual errors/results and update TEST_REPORT and individual matrix entries only after execution.
 
 `LocalRotationJourneyTest` is a later repository-level test authored against a recording wallpaper platform. Even if its Android test APK compiles or that fake-platform method passes, it is **not** system-picker, `WallpaperManager`, visible-pixel, OEM, or physical-device acceptance. Consult that commit's actual Actions result for compilation/execution; do not count it as a Samsung journey pass.
 
@@ -8,7 +8,7 @@ This checklist is **outstanding work**, not test evidence. Latest implementation
 
 Use a disposable emulator or dedicated Android test device. **WallpaperIsolationTest intentionally seeds both Home and Lock wallpapers.** Do not run the entire instrumentation suite on a personal device without explicit consent and a separate wallpaper backup. Never upload private photos, credentials, databases, raw provider responses or unsanitized `dumpsys` output to this public repository.
 
-Retrieve the app and test APKs from the **same successful Actions run**. Latest verified run `38092686248` has app artifact `11684796718` (APK SHA-256 `6f64b50f88675f786b78bce9cf8b88a501bc6caf17d430c2eafb889c80f370a`) and instrumentation artifact `11685175722` (APK SHA-256 `cdf094581c1b7fc73b22ebd96783402edec4e84dd71977c0ed25500d0b50c636`). These are APK hashes, not artifact ZIP hashes. Debug signing is sufficient for acceptance; no release/signing account is involved.
+Retrieve the app and test APKs from the **same successful Actions run**. Latest verified run `38094246090` has app artifact `11685990579` (APK SHA-256 `1a8c7ee64ba0cd9b6e2278c34e5c3fd54b004884a3bf86000519c0938549b3e1`) and instrumentation artifact `11685721313` (APK SHA-256 `9688ebfbe795f747890f7cbf9acc595befeb85b5149479d433b1e6046bb6a7a6`). These are APK hashes, not artifact ZIP hashes. Debug signing is sufficient for acceptance; no release/signing account is involved.
 
 On an authorized test device with the Android SDK available:
 

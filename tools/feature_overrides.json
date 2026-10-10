@@ -1000,14 +1000,19 @@
       "app/src/main/java/com/westkitty/dexwallpaper/core/ShuffleGuard.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/Chronoscape.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/BitmapPipeline.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/LibraryFilePath.kt"
     ],
     "ui_location": "Control / Library / Rotation / Editor / Rules",
-    "limitations": "Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed.",
-    "test_reference": [],
+    "limitations": "All three pure library-path tests pass in Android CI, including symlink escape rejection; actual private-storage import, cache lifecycle, backup restore, and device journey remain unverified.",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/LibraryFilePathTest.kt#resolvesOnlyDirectPrivateChildren",
+      "app/src/test/java/com/westkitty/dexwallpaper/core/LibraryFilePathTest.kt#rejectsAbsoluteTraversalAndNestedNames",
+      "app/src/test/java/com/westkitty/dexwallpaper/core/LibraryFilePathTest.kt#rejectsSymlinksThatResolveOutsideRoot"
+    ],
     "permissions": [],
     "api_constraints": [],
-    "verification_status": "DEVICE_PENDING"
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING"
   },
   "224": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
