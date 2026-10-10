@@ -5,13 +5,15 @@ Session-fixed branch: `arena/62a85de1-dex-wallpaper`. Main remains `db4ef366986c
 
 ## Last independently verified delivery
 
-`daf52c1b2a64b9cade47a3236a3cb25e4efa1079` was normally pushed and compared independently with `git ls-remote`.
-Ten prior session commits: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`.
+`33c9a2a5ab68aca5ccc4d0c48deff8898238136b` was normally pushed and compared independently with `git ls-remote`.
+Eleven prior session commits: `44399d6`, `6c3194a`, `76c1f42`, `40df6b6`, `8afef31`, `23dc9ed`, `f8c6e6b`, `ab0822c`, `c323571`, `daf52c1`, `33c9a2a`.
 The following repair cannot record its own SHA before commit; update this checkpoint after remote verification.
 
 ## Actual execution evidence
 
-- **Latest Android PASS at daf52c1**: run `38089299045`; **90 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11683826676`, SHA-256 `e5616eb6f73536d2ef5c972ad337f645ab46513829903e2d65d80e022abf5db0`; reports `11683496817`. Accelerated device `38089299077` IN PROGRESS last query.
+- **Latest Android PASS at 33c9a2a**: run `38089991851`; **96 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. App artifact `11683352853`, SHA-256 `4aada029c4bd26d97a1c0db359dfe54d898fa969fd12e14636e0f0ecf98e1366`; reports `11683882481`.
+
+- Prior Android PASS at daf52c1: run `38089299045`; **90 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11683826676`, SHA-256 `e5616eb6f73536d2ef5c972ad337f645ab46513829903e2d65d80e022abf5db0`; reports `11683496817`. Accelerated device `38089299077` FAILED at emulator boot timeout; no test execution or result artifacts.
 - Prior Android PASS at ab0822c: run `38087668672`; **76 JVM tests, 0 failures/errors**, lintDebug/assembleDebug. APK artifact `11682024693`, SHA-256 `ca06f4bfe9d72440e5b173ded58d1255424cb56cd0c48725594b49d254752a9e`; reports `11683170074`. Device `38087668819` FAILED before APK install (package service missing / system death); 0 reported tests. Artifact `11683876719`.
 
 - **Android PASS at f8c6e6b**: run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810 ; **70 JVM tests, 0 failures/errors**, lintDebug, assembleDebug.
@@ -33,16 +35,20 @@ Responsive 12 Compose workspaces; SAF individual/folder imports, protected origi
 
 Next source checkpoint adds Room v3/configuration, Keystore credentials, manual trusted HTTPS/WebDAV/Nextcloud/RSS/flat numeric JSON transport and native source journeys. Its first build run `38088800616` FAILED on an actual OkHttp Dns lambda type mismatch; explicit Dns implementation is fixed and PASS at daf52c1. Its 14 new JVM methods really passed (90 total). v1→v3/reopen/collection-upsert and synthetic Keystore device tests remain unverified. Provider acceptance is still unavailable; no real credential was needed to implement safe setup.
 
-## New hardening checkpoint (awaiting its own CI)
+## New hardening checkpoint (Android CI PASS, device pending)
 
-Live picker records/checks before/after identities and actual DEX components, in addition to ownership. Known Home-only assignment is not reported as Both. Attempted-but-unverified writes stop automatic rotation. WorkManager command outputs propagate real errors; editor undo removes the latest matching index; combined cache pruning is used after local imports. Six new JVM methods bring authored total to 96. One further instrumentation method brings authored total to 15; none is reported as passed yet.
+Live picker records/checks before/after identities and actual DEX components, in addition to ownership. Known Home-only assignment is not reported as Both. Attempted-but-unverified writes stop automatic rotation. WorkManager command outputs propagate real errors; editor undo removes the latest matching index; combined cache pruning is used after local imports. Six new JVM methods bring total to 96; checkpoint `33c9a2a` CI `38089991851` completed PASS. Actual annotations confirm 96 tests/0 failures and app SHA `4aada029c4bd26d97a1c0db359dfe54d898fa969fd12e14636e0f0ecf98e1366`. One further instrumentation method brings authored total to 15; none is reported as passed yet.
 
 ## Inventory and material gaps
 
 All 276 requirements retained. Totals: DONE_VERIFIED 4; IMPLEMENTED_UNTESTED 140; PARTIAL 61; BLOCKED_PLATFORM 2; BLOCKED_EXTERNAL 2; NOT_IMPLEMENTED 67. Reconcile against generated JSON after source updates. Verified statuses are limited to distinctly executed core algorithms/schema, not compilation or unrun device tests.
 
-No physical Galaxy Tab S9 Ultra/DeX/S Pen/TalkBack, wallpaper visual isolation, power/GPU lifecycle, widget/tile or credentialed provider acceptance evidence. Video/GIF/Vulkan, continuous live layers/data and advanced scheduling/provider journeys remain incomplete. Shared/unverifiable static Lock state is intentionally refused for Home-only writes; it requires separate Lock setup. Earlier instrumentation crash remains unresolved; newest diagnostics show emulator system death before APK installation, not an app failure. An accelerated Intel macOS HVF diagnostic run is next, without root privileges. No test is skipped/deleted.
+No physical Galaxy Tab S9 Ultra/DeX/S Pen/TalkBack, wallpaper visual isolation, power/GPU lifecycle, widget/tile or credentialed provider acceptance evidence. Video/GIF/Vulkan, continuous live layers/data and advanced scheduling/provider journeys remain incomplete. Shared/unverifiable static Lock state is intentionally refused for Home-only writes; it requires separate Lock setup. Earlier instrumentation crash remains unresolved; newest diagnostics show emulator system death before APK installation, not an app failure. Accelerated Intel macOS HVF diagnostic also failed at boot timeout, without root modifications. No actual app failure cause is inferred from either infrastructure failure. No test is skipped/deleted.
+
+## Instrumentation compile / actual acceptance separation
+
+The next standard CI checkpoint assembles/upload-checks the actual instrumentation APK in addition to app/JVM/lint evidence and runs all Python validator regressions. This is only test compilation, not runtime. Keep all 15 authored instrumentation methods and prior failures; device boot is unavailable in observed runner attempts.
 
 ## Highest-value next work
 
-Inspect the new CI/compiler/lint result and actual AndroidRuntime crash evidence; repair real failures and recheck. Finish/review trusted-source transport and reconcile its individual inventory entries. Execute launch/import/Home-only/restart/live-isolation journeys on an emulator and Galaxy Tab S9 Ultra, preserving the unaffected screen's visible content as well as identity. Never infer acceptance from a build.
+Check the instrumentation-compile checkpoint independently; preserve any real compiler failures. Device runner attempts did not produce app acceptance (software system death, accelerated boot timeout). Highest value is a stable Android test device / actual Galaxy Tab S9 Ultra: launch, real SAF individual/folder import, collection/shuffle/interval, Home-only preview/apply/next, restart, static/live mixed isolation, visibility/orientation/recovery. Verify unaffected visible pixels as well as IDs; do not run wallpaper-modifying instrumentation on a personal device without explicit consent. Provider/power/DeX/S Pen/TalkBack acceptance still needs execution. Never infer acceptance from a build.

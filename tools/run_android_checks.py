@@ -22,7 +22,7 @@ if mode=='sdk':
     annotation('notice','Android SDK verified','Hosted SDK platform 35 and build-tools 35.0.0 exist; no redundant command-line tools download.')
     sys.exit(0)
 log=[]
-command=['./gradlew','--no-daemon','--console=plain','testDebugUnitTest','lintDebug','assembleDebug']
+command=['./gradlew','--no-daemon','--console=plain','testDebugUnitTest','lintDebug','assembleDebug','assembleDebugAndroidTest']
 process=subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
 for line in process.stdout:
     print(line,end='',flush=True)
@@ -44,5 +44,13 @@ if code:
     text=''.join(log[i] for i in sorted(indices))[-6000:] or ''.join(log[-60:])[-6000:]
     annotation('error','Android verification failed',text)
     sys.exit(code)
+if not results or tests==0 or failures:
+    annotation('error','JVM evidence missing or failed',f'{tests} reported tests; {failures} failures/errors. No passing execution is inferred.')
+    sys.exit(1)
+test_apk=Path('app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk')
+if not test_apk.is_file() or not test_apk.stat().st_size:
+    annotation('error','Instrumentation build missing','assembleDebugAndroidTest did not produce a real test APK. Runtime acceptance remains unverified.')
+    sys.exit(1)
+annotation('notice','Instrumentation compilation passed',f'Actual test APK SHA-256 {hashlib.sha256(test_apk.read_bytes()).hexdigest()}; compilation only, no device execution inferred.')
 apk=Path('app/build/outputs/apk/debug/app-debug.apk')
-annotation('notice','Android verification passed',f'{tests} JVM tests; {failures} failures/errors; lintDebug and assembleDebug succeeded; APK SHA-256 {hashlib.sha256(apk.read_bytes()).hexdigest()}')
+annotation('notice','Android verification passed',f'{tests} JVM tests; {failures} failures/errors; lintDebug, assembleDebug and assembleDebugAndroidTest succeeded; APK SHA-256 {hashlib.sha256(apk.read_bytes()).hexdigest()}')

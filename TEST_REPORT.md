@@ -104,3 +104,12 @@ Actual annotations confirm **90 JVM tests, 0 failures/errors**, lintDebug, assem
 Provider requests, network switching and Keystore/device behavior remain unverified. Accelerated device run `38089299077` is in progress; no result inferred.
 
 New hardening awaits its own run: capture/check unaffected wallpaper IDs/current DEX component after the live picker; refuse known Home-only ownership as a successful Both picker result; stop automatic writes after any attempted-but-unverified platform operation; return actual command failures to WorkManager/widgets/status; preserve the newest equal editor undo; apply the combined cache budget after local imports. Three further picker regression methods and three command-completion methods authored: **96 JVM methods total**, not yet all executed. One post-write verification regression expands instrumentation to **15 authored methods**, with no passing result claim. No test is disabled or removed.
+
+## Hardening build PASS / accelerated emulator unavailable
+
+**PASS** — https://github.com/westkitty/DEX_Wallpaper/actions/runs/38089991851 at `33c9a2a5ab68aca5ccc4d0c48deff8898238136b`.
+Actual check annotations: **96 JVM tests, 0 failures/errors**, lintDebug and assembleDebug PASS. App APK SHA-256 `4aada029c4bd26d97a1c0db359dfe54d898fa969fd12e14636e0f0ecf98e1366`; debug artifact https://github.com/westkitty/DEX_Wallpaper/actions/runs/38089991851/artifacts/11683352853 ; reports `11683882481`. The six new picker/command-completion methods really executed; device behavior is not inferred.
+
+Accelerated device run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38089299077 at `daf52c1` — **FAIL**, timeout waiting for emulator boot, before instrumentation/harness execution. No report files/test results were produced. Existing macOS HVF was requested without privileged modifications; actual failure cause beyond boot timeout is unknown. Neither this nor Ubuntu system death is an application acceptance result. No unchanged/infinite emulator retry, test removal, root or Docker workaround.
+
+Next CI improvement explicitly assembles the real instrumentation APK in ordinary Android CI and checks that the file exists; absence of JVM XML/results cannot be mislabeled PASS. Python validator regressions also run remotely. This separates test-code compilation from unavailable device boot. Runtime tests remain outstanding, including physical Samsung/DeX, actual SAF picker journeys and visible Home–Lock isolation.

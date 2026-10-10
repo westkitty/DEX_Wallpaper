@@ -158,7 +158,7 @@
         "OEM destination behavior needs device acceptance"
       ],
       "dependencies": [],
-      "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified. Picker completion additionally checks unaffected wallpaper IDs/current DEX component; three further regression methods await the next build."
+      "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified. Picker completion additionally checks unaffected wallpaper IDs/current DEX component; three additional picker regression methods pass at 33c9a2a (96 total JVM). Actual OEM/device behavior remains pending."
     },
     {
       "id": "008",

@@ -23,10 +23,10 @@ jobs:
         run: python3 tools/run_android_checks.py sdk
       - uses: gradle/actions/setup-gradle@b9bee63ef481cc545e4517ec730544a4d8b1dfa0 # gradle/actions v6.4.0; wrapper validation
       - name: Validate feature inventory and source policies
-        run: python3 tools/validate_feature_matrix.py && python3 tools/check_source_policy.py
+        run: python3 tools/validate_feature_matrix.py && python3 tools/check_source_policy.py && python3 -m unittest discover -s tools/tests -v
       - name: Verify wrapper provenance
         run: echo '2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046  gradle/wrapper/gradle-wrapper.jar' | sha256sum --check
-      - name: Unit tests, lint, and debug APK
+      - name: Unit tests, lint, app and instrumentation APKs
         run: python3 tools/run_android_checks.py build
       - name: Regenerate official Gradle wrapper
         run: ./gradlew --no-daemon wrapper --gradle-version 8.11.1 --distribution-type bin --gradle-distribution-sha256-sum f397b287023acdba1e9f6fc5ea72d22dd63669d59ed4a289a29b1a76eee151c6
@@ -35,6 +35,12 @@ jobs:
         with:
           name: dex-wallpaper-debug
           path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - name: Upload instrumentation APK (compile evidence, not device pass)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # upload-artifact v7.0.2
+        with:
+          name: dex-wallpaper-instrumentation
+          path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
           if-no-files-found: error
       - name: Upload verification reports
         if: always()

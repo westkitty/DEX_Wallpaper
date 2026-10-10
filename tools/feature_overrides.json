@@ -1334,7 +1334,7 @@
       "app/src/main/java/com/westkitty/dexwallpaper/data/Preferences.kt"
     ],
     "ui_location": "Relevant native workspace",
-    "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified. Picker completion additionally checks unaffected wallpaper IDs/current DEX component; three further regression methods await the next build.",
+    "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified. Picker completion additionally checks unaffected wallpaper IDs/current DEX component; three additional picker regression methods pass at 33c9a2a (96 total JVM). Actual OEM/device behavior remains pending.",
     "test_reference": [
       "app/src/test/java/com/westkitty/dexwallpaper/core/LiveIsolationTest.kt",
       "app/src/androidTest/java/com/westkitty/dexwallpaper/GlRendererTest.kt"
