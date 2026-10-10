@@ -24,5 +24,17 @@ class LiveIsolationTest {
         val libraryLater=original.copy(dim=.8f)
         assertEquals(.3f,(LiveConfigCodec.decode(encoded) as Outcome.Ok).value.edit.dim,0f);assertNotEquals(libraryLater,original)
     }
+    @Test fun pickerChangingTheWrongScreenNeverCommitsTheRequestedHomeDraft() {
+        assertFalse(LiveDestinationPolicy.mayFinishPicker(Destination.HOME,listOf(1,2),WallpaperSnapshot(11,22),WallpaperSnapshot(11,23)))
+        assertTrue(LiveDestinationPolicy.mayFinishPicker(Destination.HOME,listOf(1,2),WallpaperSnapshot(11,22),WallpaperSnapshot(12,22)))
+    }
+    @Test fun sharedIdentityStillFailsDespiteAHomeEngine() {
+        assertFalse(LiveDestinationPolicy.mayFinishPicker(Destination.HOME,listOf(1),WallpaperSnapshot(11,-1),WallpaperSnapshot(12,-1)))
+        assertFalse(LiveDestinationPolicy.mayFinishPicker(Destination.HOME,listOf(1),WallpaperSnapshot(11,11),WallpaperSnapshot(12,11)))
+    }
+    @Test fun bothPickerCannotBeReportedSuccessfulWithOnlyAKnownHomeOwner() {
+        assertFalse(LiveDestinationPolicy.mayFinishPicker(Destination.BOTH,listOf(1),WallpaperSnapshot(11,22),WallpaperSnapshot(12,22)))
+        assertTrue(LiveDestinationPolicy.mayFinishPicker(Destination.BOTH,listOf(3),WallpaperSnapshot(11,22),WallpaperSnapshot(12,12)))
+    }
     @Test fun malformedAndExecutableSnapshotsFail() { assertTrue(LiveConfigCodec.decode(" ".repeat(16385)) is Outcome.Error);assertTrue(LiveConfigCodec.decode("{\"version\":9}") is Outcome.Error) }
 }

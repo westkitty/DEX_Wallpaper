@@ -31,6 +31,16 @@ class WallpaperIsolationTest {
             assertEquals(lockId,manager.getWallpaperId(WallpaperManager.FLAG_LOCK))
         } finally { home.recycle(); lock.recycle() }
     }
+    @Test fun failedPostWriteVerificationIsNotRecoverableAutomaticSuccess() = runBlocking {
+        var snapshots=0;var written=0
+        val platform=object: WallpaperPlatform {
+            override fun snapshot(): WallpaperSnapshot { if(++snapshots>1) throw SecurityException("Synthetic verification denial");return WallpaperSnapshot(11,22) }
+            override fun write(bitmap: Bitmap,flags: Int) { written=flags }
+        }
+        val b=Bitmap.createBitmap(16,16,Bitmap.Config.ARGB_8888)
+        try { val outcome=WallpaperDestinationController(platform).apply(b,Destination.HOME);assertEquals(1,written);assertTrue(outcome is Outcome.Error);assertFalse((outcome as Outcome.Error).recoverable) }
+        finally { b.recycle() }
+    }
     @Test fun explicitLockWritePreservesHomeIdentity() = runBlocking {
         val context=ApplicationProvider.getApplicationContext<Context>()
         val manager=WallpaperManager.getInstance(context)

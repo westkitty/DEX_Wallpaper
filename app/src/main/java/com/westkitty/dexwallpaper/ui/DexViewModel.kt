@@ -101,7 +101,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         viewModelScope.launch { editMutex.lock(); try { graph.repository.dao.putEdit(EditEntity.from(id, bounded)); mutable.update { it.copy(editRevision = it.editRevision + 1, editDirty = false) } } finally { editMutex.unlock() } }
     }
     fun resetEdit() { updateEdit(ImageEdit()) }
-    fun undoEdit() { val id=state.value.selected?.id ?: return; val prior=editUndo.lastOrNull { it.first==id } ?: run { notify("No editor undo available."); return }; editUndo.remove(prior); updateEdit(prior.second,rememberUndo=false) }
+    fun undoEdit() { val id=state.value.selected?.id ?: return; val index=editUndo.indexOfLast { it.first==id };if(index<0) { notify("No editor undo available.");return };val prior=editUndo.removeAt(index);updateEdit(prior.second,rememberUndo=false) }
     fun favorite(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(favorite = !it.favorite)) } } }
     fun exclude(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(excluded = !it.excluded)) } } }
     fun tags(id: String, value: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(tags = value.take(400))) } } }
@@ -109,7 +109,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         val collection = state.value.screen.collectionId
         runOperation("Importing protected originals…") {
             val result = graph.importer.importUris(uris, collection) { p -> mutable.update { it.copy(progress = "${p.processed} processed · ${p.imported} imported · ${p.duplicates} duplicates · ${p.rejected} rejected") } }
-            graph.importer.enforceCacheBudget(state.value.preferences.cacheMb)
+            graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
             "Imported ${result.imported}; linked ${result.duplicates} duplicates; rejected ${result.rejected}."
         }
     }
@@ -119,7 +119,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
             val c = graph.repository.dao.allCollections().first { it.id == collection }
             graph.repository.dao.putCollection(c.copy(sourceTree = uri.toString()))
             val p = graph.importer.scanTree(uri, collection, includeHidden) { p -> mutable.update { it.copy(progress = "${p.message} · ${p.imported} new · ${p.rejected} rejected") } }
-            graph.importer.enforceCacheBudget(state.value.preferences.cacheMb)
+            graph.sync.enforceCacheBudget(state.value.preferences.cacheMb)
             "Folder synchronized: ${p.imported} new, ${p.duplicates} existing/recovered, ${p.rejected} rejected."
         }
     }
@@ -182,34 +182,58 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun toggleSource(source: RemoteSourceEntity) { if(state.value.busy) { notify("Finish or cancel synchronization before changing the source.");return };viewModelScope.launch { graph.repository.dao.source(source.id)?.let { graph.repository.dao.putSource(it.copy(enabled=!it.enabled)) } } }
     fun deleteSource(source: RemoteSourceEntity) { runOperation("Removing connection configuration…") { graph.sync.removeSource(source.id); "Source and encrypted credential removed; imported artwork kept." } }
     fun bindData(sourceId: String,sceneId: String) { runOperation("Binding cached numeric data…") { "${graph.sync.bindVariables(sourceId,sceneId)} fields copied into persistent scene variables; revision saved." } }
+    private fun ownsLiveTarget(target: Destination): Boolean {
+        val manager=android.app.WallpaperManager.getInstance(graph.context)
+        val component=android.content.ComponentName(graph.context,com.westkitty.dexwallpaper.wallpaper.DexWallpaperService::class.java)
+        if(android.os.Build.VERSION.SDK_INT<34) return target==Destination.BOTH && manager.wallpaperInfo?.component==component
+        fun owned(flag: Int)=if(android.os.Build.VERSION.SDK_INT>=34) manager.getWallpaperInfo(flag)?.component==component else false
+        return when(target) { Destination.HOME -> owned(1);Destination.LOCK -> owned(2);Destination.BOTH -> owned(1) || owned(2) }
+    }
     fun prepareLivePreview(onReady: () -> Unit) {
         val s=state.value;val asset=s.selected ?: run { notify("Select artwork before opening the live picker.");return }
         viewModelScope.launch {
-            try { val edit=graph.repository.dao.edit(asset.id)?.model() ?: ImageEdit();graph.preferences.prepareLivePreview(s.destination,LiveConfigCodec.encode(LiveConfiguration(asset.id,edit,s.preferences)));onReady() }
-            catch(e: Exception) { notify(e.message ?: "Live preview preparation failed") }
+            try {
+                val before=withContext(Dispatchers.IO) { graph.controller.snapshot() }
+                val safe=DestinationPolicy.check(s.destination,before)
+                if(safe is Outcome.Error) { notify(safe.message);return@launch }
+                require(!asset.quarantined && graph.importer.file(asset).isFile) { "Artwork is unavailable; recover it before live setup" }
+                val edit=graph.repository.dao.edit(asset.id)?.model() ?: ImageEdit()
+                graph.preferences.prepareLivePreview(s.destination,LiveConfigCodec.encode(LiveConfiguration(asset.id,edit,s.preferences)),before)
+                onReady()
+            } catch(e: CancellationException) { throw e }
+              catch(e: Exception) { notify(e.message?.take(180) ?: "Live preview preparation failed") }
         }
     }
     fun completeLivePicker(success: Boolean) {
         viewModelScope.launch {
-            val prepared=graph.preferences.flow.first()
-            val target=Destination.entries.firstOrNull { it.name==prepared.livePending }
-            graph.preferences.text("livePending","") // A cancelled picker cannot replay on process recreation.
-            if(!success || target==null) { notify("Picker cancelled or OEM did not report success; installed live snapshots were not changed. Commit explicitly in Motion if ownership is verified.");return@launch }
-            val owned=withTimeoutOrNull(3000) { com.westkitty.dexwallpaper.wallpaper.LiveEngineRegistry.flow.first { LiveDestinationPolicy.mayUpdate(target,it) } }
-            if(owned==null) { notify("Live target could not be verified; no Home/Lock-only live snapshot was applied. Review the system picker / use static wallpaper.");return@launch }
-            graph.preferences.commitLive(target,prepared.livePreview)
-            notify("Live snapshot committed to verified ${target.label.lowercase()} engine ownership. OS controls final assignment.")
+            try {
+                val prepared=graph.preferences.flow.first()
+                val target=Destination.entries.firstOrNull { it.name==prepared.livePending }
+                graph.preferences.text("livePending","") // Never replay cancellation on engine/process recreation.
+                if(!success || target==null) { notify("Picker cancelled or OEM did not report success; installed live snapshots were not changed. Commit explicitly in Motion if ownership is verified.");return@launch }
+                val flags=withTimeoutOrNull(3000) { com.westkitty.dexwallpaper.wallpaper.LiveEngineRegistry.flow.first { LiveDestinationPolicy.mayUpdate(target,it) } }
+                val before=WallpaperSnapshot(prepared.liveBeforeHome,prepared.liveBeforeLock)
+                val after=withContext(Dispatchers.IO) { graph.controller.snapshot() }
+                if(flags==null || !LiveDestinationPolicy.mayFinishPicker(target,flags,before,after) || !ownsLiveTarget(target)) {
+                    notify("Picker assignment could not match the requested destination / preserve the other identity; no live snapshot committed. OS choices cannot be rolled back safely; review system settings.");return@launch
+                }
+                graph.preferences.commitLive(target,prepared.livePreview)
+                notify(if(target==Destination.BOTH) "Configured all OS-assigned DEX live instances; OS still owns final destinations." else "Live snapshot committed to verified ${target.label.lowercase()} ownership; other wallpaper identity unchanged.")
+            } catch(e: CancellationException) { throw e }
+              catch(e: Exception) { notify("Live destination verification failed; no retry or fallback to Both. Review system settings.") }
         }
     }
     fun commitLive() {
         val s=state.value;val asset=s.selected ?: run { notify("Select artwork first.");return }
-        if(!LiveDestinationPolicy.mayUpdate(s.destination,com.westkitty.dexwallpaper.wallpaper.LiveEngineRegistry.flags())) {
-            notify("Live ownership is unknown/shared or the requested screen has no installed engine. Home/Lock-only updates refused. Use the OS picker, or explicitly select Both to update all assigned DEX live instances.");return
-        }
         runOperation("Committing destination-scoped live snapshot…") {
+            val snapshot=withContext(Dispatchers.IO) { graph.controller.snapshot() }
+            val check=DestinationPolicy.check(s.destination,snapshot)
+            require(check is Outcome.Ok) { (check as Outcome.Error).message }
+            require(LiveDestinationPolicy.mayUpdate(s.destination,com.westkitty.dexwallpaper.wallpaper.LiveEngineRegistry.flags()) && ownsLiveTarget(s.destination)) { "Home/Lock live ownership is unknown/shared/unassigned; scoped update refused. Both only configures OS-assigned DEX instances." }
+            require(!asset.quarantined && graph.importer.file(asset).isFile) { "Artwork must be recovered first" }
             val edit=graph.repository.dao.edit(asset.id)?.model() ?: ImageEdit()
             graph.preferences.commitLive(s.destination,LiveConfigCodec.encode(LiveConfiguration(asset.id,edit,s.preferences)))
-            "Live snapshot updated for ${s.destination.label}. Static wallpaper records cannot rebind live Lock engines."
+            "Live snapshot committed for ${s.destination.label}; static records cannot rebind live Lock. Both only updates assigned DEX instances."
         }
     }
     fun deleteRule(id: String) { viewModelScope.launch { graph.repository.dao.deleteRule(id) } }

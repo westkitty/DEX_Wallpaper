@@ -164,7 +164,7 @@ class DexWallpaperService : WallpaperService() {
                 val asset=graph.repository.dao.asset(id) ?: return@launch
                 val result=try { graph.pipeline.render(graph.importer.file(asset),w,h,edit,safe) }
                     catch(e: CancellationException) { throw e }
-                    catch(_: Exception) { null }
+                    catch(_: Exception) { RenderTelemetry.lastError="Live source decode failed; recover artwork or commit another source";null }
                 if(!isActive || destroyed) { result?.recycle(); return@launch }
                 handler.post {
                     if(destroyed || !visible || !surfaceReady || generation!=loadGeneration) result?.recycle()

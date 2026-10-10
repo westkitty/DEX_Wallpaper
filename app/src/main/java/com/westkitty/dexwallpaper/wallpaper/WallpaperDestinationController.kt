@@ -17,18 +17,22 @@ class AndroidWallpaperPlatform(context: Context) : WallpaperPlatform {
     override fun write(bitmap: Bitmap, flags: Int) { manager.setBitmap(bitmap, null, false, flags) }
 }
 class WallpaperDestinationController(private val platform: WallpaperPlatform) {
+    fun snapshot(): WallpaperSnapshot = platform.snapshot()
     suspend fun apply(bitmap: Bitmap, destination: Destination): Outcome<Unit> = withContext(Dispatchers.IO) {
+        var attempted=false
         try {
             val before = platform.snapshot()
             when (val check = DestinationPolicy.check(destination, before)) {
                 is Outcome.Error -> check
                 is Outcome.Ok -> {
+                    attempted=true
                     platform.write(bitmap, check.value)
                     DestinationPolicy.verify(destination, before, platform.snapshot())
                 }
             }
-        } catch (_: SecurityException) { Outcome.Error("Android denied wallpaper access. Check device policy and system wallpaper settings.") }
-          catch (e: java.io.IOException) { Outcome.Error("Wallpaper could not be written: ${e.message}") }
-          catch (_: IllegalArgumentException) { Outcome.Error("The platform rejected the requested wallpaper destination.") }
+        } catch (_: SecurityException) { Outcome.Error("Android denied wallpaper access. Check device policy and system wallpaper settings.",recoverable=!attempted) }
+          catch (e: java.io.IOException) { Outcome.Error("Wallpaper write or identity verification failed: ${e.message}",recoverable=!attempted) }
+          catch (_: IllegalArgumentException) { Outcome.Error("The platform rejected the requested wallpaper destination.",recoverable=!attempted) }
+          catch (_: RuntimeException) { Outcome.Error("Android wallpaper system failed; identity could not be verified. Automatic rotation stopped pending review.",recoverable=false) }
     }
 }

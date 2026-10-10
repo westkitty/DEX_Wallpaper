@@ -13,3 +13,12 @@ object CommandPolicy {
         return Outcome.Ok(AutomationCommand(kind,target,assetId ?: "",collectionId ?: ""))
     }
 }
+
+/** Work outcomes must reflect the real wallpaper result, not queue acceptance. */
+data class CommandCompletion(val success: Boolean,val message: String)
+object CommandCompletionPolicy {
+    fun from(outcome: Outcome<*>): CommandCompletion = when(outcome) {
+        is Outcome.Error -> CommandCompletion(false,outcome.message.take(220))
+        is Outcome.Ok -> CommandCompletion(true,(outcome.value as? String) ?: "Command completed")
+    }
+}

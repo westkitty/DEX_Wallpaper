@@ -39,6 +39,10 @@ object LiveDestinationPolicy {
         Destination.LOCK -> 2 in installedFlags && installedFlags.all { it==1 || it==2 }
         Destination.BOTH -> installedFlags.isNotEmpty() // Explicitly affects ALL OS-assigned instances, not static wallpaper.
     }
+    fun mayFinishPicker(target: Destination,installedFlags: Collection<Int>,before: WallpaperSnapshot,after: WallpaperSnapshot): Boolean {
+        if(!after.supported || !after.allowed || !mayUpdate(target,installedFlags) || DestinationPolicy.check(target,before) !is Outcome.Ok || DestinationPolicy.verify(target,before,after) !is Outcome.Ok) return false
+        return target!=Destination.BOTH || 0 in installedFlags || 3 in installedFlags || (1 in installedFlags && 2 in installedFlags)
+    }
     fun source(flags: Int,home: String,lock: String,shared: String): String = when(flags) { 1 -> home;2 -> lock;else -> shared }
     // Deliberately no argument for static currentAssetId. It cannot influence a live source.
 }

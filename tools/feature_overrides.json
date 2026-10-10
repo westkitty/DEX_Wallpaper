@@ -1334,7 +1334,7 @@
       "app/src/main/java/com/westkitty/dexwallpaper/data/Preferences.kt"
     ],
     "ui_location": "Relevant native workspace",
-    "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified.",
+    "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. Five isolation JVM tests pass at ab0822c (76 total); real engine/picker/visible isolation still unverified. Picker completion additionally checks unaffected wallpaper IDs/current DEX component; three further regression methods await the next build.",
     "test_reference": [
       "app/src/test/java/com/westkitty/dexwallpaper/core/LiveIsolationTest.kt",
       "app/src/androidTest/java/com/westkitty/dexwallpaper/GlRendererTest.kt"
@@ -3379,7 +3379,7 @@
   },
   "060": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3406,7 +3406,7 @@
   },
   "070": {
     "implementation_status": "PARTIAL",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3433,7 +3433,7 @@
   },
   "071": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3460,7 +3460,7 @@
   },
   "072": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3487,7 +3487,7 @@
   },
   "073": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3514,7 +3514,7 @@
   },
   "188": {
     "implementation_status": "PARTIAL",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3543,7 +3543,7 @@
   },
   "189": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/core/XmlFeeds.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
@@ -3565,11 +3565,11 @@
     "dependencies": [
       "User-authorized endpoint / artwork rights"
     ],
-    "limitations": "Bounded RSS/Atom/DAV SAX parsing; rejects entity/DOCTYPE/oversized/deep content; actual cached feed inspector. Parser unit tests authored; provider and Android parser execution pending."
+    "limitations": "Bounded RSS/Atom/DAV SAX parsing; rejects entity/DOCTYPE/oversized/deep content; actual cached feed inspector. Parser unit tests PASS at daf52c1; provider and Android parser execution pending."
   },
   "225": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "BUILD_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/security/CredentialVault.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
@@ -3595,7 +3595,7 @@
   },
   "270": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3618,11 +3618,11 @@
     "dependencies": [
       "User-authorized endpoint / artwork rights"
     ],
-    "limitations": "HTTPS exact-origin/path namespace, no redirects, literal/DNS loopback/link-local/private safeguards (LAN opt-in), TLS defaults and bounded headers/body. Policy unit tests authored; transport/device evidence pending."
+    "limitations": "HTTPS exact-origin/path namespace, no redirects, literal/DNS loopback/link-local/private safeguards (LAN opt-in), TLS defaults and bounded headers/body. Policy unit tests PASS at daf52c1; transport/device evidence pending."
   },
   "271": {
     "implementation_status": "PARTIAL",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",
@@ -3649,7 +3649,7 @@
   },
   "272": {
     "implementation_status": "PARTIAL",
-    "verification_status": "JVM_PENDING_DEVICE_PENDING",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/sources/SyncCoordinator.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/core/NetworkPolicy.kt",

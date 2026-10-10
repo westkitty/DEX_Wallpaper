@@ -24,20 +24,22 @@ class CommandWorker(context: Context,params: WorkerParameters): CoroutineWorker(
         val parsed=CommandPolicy.parse(inputData.getString("command"),inputData.getString("destination"),inputData.getString("assetId"),inputData.getString("collectionId"))
         if(parsed is Outcome.Error) return Result.failure()
         val c=(parsed as Outcome.Ok).value
-        when(c.kind) {
+        val outcome: Outcome<*> = when(c.kind) {
             CommandKind.NEXT -> graph.repository.next(c.destination)
             CommandKind.PREVIOUS -> graph.repository.previous(c.destination)
-            CommandKind.PAUSE -> graph.repository.updateScreen(c.destination) { it.copy(paused=true) }
-            CommandKind.RESUME -> graph.repository.updateScreen(c.destination) { it.copy(enabled=true,paused=false) }
+            CommandKind.PAUSE -> { graph.repository.updateScreen(c.destination) { it.copy(paused=true) };Outcome.Ok("Rotation paused") }
+            CommandKind.RESUME -> { graph.repository.updateScreen(c.destination) { it.copy(enabled=true,paused=false) };Outcome.Ok("Rotation resumed") }
             CommandKind.APPLY -> graph.repository.apply(c.assetId,c.destination)
             CommandKind.SWITCH_COLLECTION -> {
-                if(graph.repository.dao.allCollections().none { it.id==c.collectionId }) return Result.failure()
-                graph.repository.updateScreen(c.destination) { it.copy(collectionId=c.collectionId,pending="") }
+                if(graph.repository.dao.allCollections().none { it.id==c.collectionId }) return Result.failure(workDataOf("error" to "Collection no longer exists"))
+                graph.repository.updateScreen(c.destination) { it.copy(collectionId=c.collectionId,pending="") };Outcome.Ok("Collection switched")
             }
         }
+        val completion=CommandCompletionPolicy.from(outcome)
+        if(!completion.success) graph.repository.updateScreen(c.destination) { it.copy(error=completion.message) }
         graph.scheduler.reconcile()
         DexWidgetProvider.updateAll(applicationContext)
-        return Result.success()
+        return if(completion.success) Result.success(workDataOf("message" to completion.message)) else Result.failure(workDataOf("error" to completion.message))
     }
 }
 /** Opt-in and strictly whitelisted Tasker "Send Intent" endpoint. No dynamic executable scripts. */
