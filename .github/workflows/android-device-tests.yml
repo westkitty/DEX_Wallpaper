@@ -2,7 +2,7 @@ name: Android device tests
 on:
   push:
     branches: [main, 'arena/**']
-    paths: ['app/**', 'gradle/**', '*.gradle.kts', '.github/workflows/android-device-tests.yml', 'tools/run_android_instrumentation.py']
+    paths: ['.github/workflows/android-device-tests.yml']
   workflow_dispatch:
   workflow_run:
     workflows: ['Android CI']
@@ -11,7 +11,7 @@ permissions:
   contents: read
 concurrency:
   group: device-tests-${{ github.event.workflow_run.head_branch || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   emulator:
     if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
@@ -30,8 +30,10 @@ jobs:
         run: |
           if test -r /dev/kvm && test -w /dev/kvm; then
             echo 'DEX_ACCEL=-accel on' >> "$GITHUB_ENV"
+            echo '::notice title=Emulator acceleration::Existing KVM access available; no privileged setup.'
           else
             echo 'DEX_ACCEL=-accel off' >> "$GITHUB_ENV"
+            echo '::notice title=Emulator acceleration::KVM unavailable without privileges; using software emulation.'
           fi
       - uses: ReactiveCircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808 # verified v2 revision
         with:

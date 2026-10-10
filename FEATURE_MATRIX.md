@@ -6,12 +6,12 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 
 ## Totals
 
-- **DONE_VERIFIED**: 2
-- **IMPLEMENTED_UNTESTED**: 99
-- **PARTIAL**: 52
-- **BLOCKED_PLATFORM**: 3
+- **DONE_VERIFIED**: 4
+- **IMPLEMENTED_UNTESTED**: 133
+- **PARTIAL**: 57
+- **BLOCKED_PLATFORM**: 2
 - **BLOCKED_EXTERNAL**: 2
-- **NOT_IMPLEMENTED**: 118
+- **NOT_IMPLEMENTED**: 78
 - **TOTAL**: 276
 
 ## Individual requirements
@@ -97,7 +97,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 077 | Image panning | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 078 | Per-image crop settings | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 079 | Per-collection crop defaults | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 080 | Numeric positioning and zoom | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
+| 080 | Numeric positioning and zoom | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Editor / FrameSense — Finite bounded numeric zoom/focal inputs and Set actions update persistent sidecars. UI instrumentation pending. |
 | 081 | Fit-to-screen scaling | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 082 | Fill-screen scaling | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 083 | Stretch scaling | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
@@ -128,35 +128,35 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 108 | Color filters | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 109 | Contrast | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 110 | Saturation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 111 | Film grain | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 112 | Crossfade transitions | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 113 | Scale transitions | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 114 | Slide transitions | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 115 | Atmosphere effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 116 | Reverse atmosphere | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 117 | Reeded glass | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 118 | Glass effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 119 | Reverse glass | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 120 | Color Fill effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 121 | Reverse Color Fill | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 122 | Canvas Sketch effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 123 | Reverse Canvas Sketch | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 124 | Frosted-glass effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 125 | Reverse Frosted effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 126 | Halftone effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 127 | Reverse Halftone | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 128 | Transition duration | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 129 | Effect intensity | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 130 | Independent transition enable/disable | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 131 | Scrolling effects | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 132 | Swipe parallax | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 133 | Gyroscope parallax | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 134 | Tilt-responsive motion | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 135 | Optional zoom animation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 136 | GPU-accelerated rendering | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 137 | Vulkan support | BLOCKED_PLATFORM | NOT_RUN | System health / capability report — No Vulkan backend or proprietary Windows runtime. Direct boot intentionally excludes credential-encrypted artwork. Safe fallback only. |
-| 138 | OpenGL ES support and fallback | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 139 | Real-time effect previews | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
+| 111 | Film grain | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 112 | Crossfade transitions | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 113 | Scale transitions | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 114 | Slide transitions | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 115 | Atmosphere effects | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 116 | Reverse atmosphere | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 117 | Reeded glass | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 118 | Glass effects | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 119 | Reverse glass | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 120 | Color Fill effects | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 121 | Reverse Color Fill | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 122 | Canvas Sketch effects | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 123 | Reverse Canvas Sketch | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 124 | Frosted-glass effects | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 125 | Reverse Frosted effects | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 126 | Halftone effects | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 127 | Reverse Halftone | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 128 | Transition duration | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 129 | Effect intensity | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 130 | Independent transition enable/disable | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 131 | Scrolling effects | PARTIAL | NOT_RUN | Motion / Health — Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified. |
+| 132 | Swipe parallax | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 133 | Gyroscope parallax | PARTIAL | NOT_RUN | Motion / Health — Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified. |
+| 134 | Tilt-responsive motion | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 135 | Optional zoom animation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 136 | GPU-accelerated rendering | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 137 | Vulkan support | NOT_IMPLEMENTED | NOT_RUN | Health — Vulkan backend is NOT implemented; this is an implementation gap, not a claim that Samsung lacks Vulkan. |
+| 138 | OpenGL ES support and fallback | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 139 | Real-time effect previews | PARTIAL | NOT_RUN | Motion / Health — Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified. |
 | 140 | Wallpaper palette extraction | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 141 | Android dynamic wallpaper color integration | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 142 | Procedural wallpaper generation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Generative canvas — Five bounded offline recipes, reproducible seed/palette/density, native-resolution save into shared library; instrumentation pending. |
@@ -212,20 +212,20 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 192 | Wind-field visualization | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 193 | Particle themes | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 194 | Color-generated themes | PARTIAL | NOT_RUN | Scene composer / Generative canvas — Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint. |
-| 195 | Tasker integration | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 196 | Android broadcast commands | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 197 | External intents | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 198 | Quick Settings tiles | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 199 | Home screen widgets | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 200 | Widget album switching | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 201 | Widget wallpaper selection | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 202 | Launcher shortcuts | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 195 | Tasker integration | PARTIAL | NOT_RUN | Settings / DeskShift / Tasker Send Intent — Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly. |
+| 196 | Android broadcast commands | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / Android widget, tile, launcher — Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending. |
+| 197 | External intents | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / Android widget, tile, launcher — Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending. |
+| 198 | Quick Settings tiles | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / Android widget, tile, launcher — Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending. |
+| 199 | Home screen widgets | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / Android widget, tile, launcher — Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending. |
+| 200 | Widget album switching | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / Android widget, tile, launcher — Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending. |
+| 201 | Widget wallpaper selection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / Android widget, tile, launcher — Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending. |
+| 202 | Launcher shortcuts | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / Android widget, tile, launcher — Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending. |
 | 203 | Geographic triggers | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 204 | Device-state triggers | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 205 | Theme-switch automation | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 206 | External automation variables | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 207 | Programmable wallpaper actions | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 208 | Automation-triggered preset loading | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 206 | External automation variables | PARTIAL | NOT_RUN | Settings / DeskShift / Tasker Send Intent — Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly. |
+| 207 | Programmable wallpaper actions | PARTIAL | NOT_RUN | Settings / DeskShift / Tasker Send Intent — Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly. |
+| 208 | Automation-triggered preset loading | PARTIAL | NOT_RUN | Settings / DeskShift / Tasker Send Intent — Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly. |
 | 209 | Image caching | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 210 | Preprocessed next-wallpaper buffers | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 211 | Missing-file detection | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Library / Sources / Health — Decode quarantine, missing detection, same-hash re-import recovery/relinking; originals remain protected. Device integration tests committed; not executed. |
@@ -237,8 +237,8 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 217 | Do Not Disturb awareness where permitted | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 218 | Visibility-aware rendering | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 219 | Static-frame rendering | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 220 | Configurable frame rates | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 221 | GPU resource cleanup | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 220 | Configurable frame rates | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
+| 221 | GPU resource cleanup | IMPLEMENTED_UNTESTED | DEVICE_PENDING | MotionGlass / live engine — Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback. |
 | 222 | Scoped storage access | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 223 | Local artwork storage | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 224 | Offline operation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
@@ -251,7 +251,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 231 | Material You support | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 232 | Dark theme | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 233 | Tablet-optimized layouts | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 234 | Rendering diagnostics | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
+| 234 | Rendering diagnostics | PARTIAL | NOT_RUN | Motion / Health — Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified. |
 | 235 | Direct-boot support where safely achievable | BLOCKED_PLATFORM | NOT_RUN | System health / capability report — No Vulkan backend or proprietary Windows runtime. Direct boot intentionally excludes credential-encrypted artwork. Safe fallback only. |
 | 236 | License-compliant modifiable source | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 237 | Rule debugger | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
@@ -280,17 +280,17 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 260 | Interactive gallery inspector | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 261 | Storage budget dashboard | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 262 | Configurable cache limits | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Health / Editor — Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending. |
-| 263 | Local performance profiler | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
-| 264 | GPU context-loss recovery | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 263 | Local performance profiler | PARTIAL | NOT_RUN | Motion / Health — Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified. |
+| 264 | GPU context-loss recovery | PARTIAL | NOT_RUN | Motion / Health — Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified. |
 | 265 | One-touch safe mode | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 266 | Sanitized diagnostic export | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Health / Editor — Bounded versioned ZIP + optional originals, sanitized diagnostic counts, SHA-bound sidecars, thumbnail-only eviction. Restore requires explicit review; Android execution pending. |
 | 267 | Verified data migrations | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
-| 268 | Profile import and export | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
+| 268 | Profile import and export | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Settings / DeskShift — Bounded JSON custom profile import/export plus six presets; no secrets/artwork/implicit destinations. Unit/device verification pending. |
 | 269 | Asset provenance records | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
 | 270 | Remote source allowlists | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 271 | Provider rate-limit control | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 272 | Network budget rules | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 273 | Versioned scene manifests | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
-| 274 | Safe formula evaluation | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Scene composer — Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending. |
+| 273 | Versioned scene manifests | DONE_VERIFIED | UNIT_PASS | Scene composer — Specific pure versioned-manifest / bounded-evaluator behavior verified in passing 56-test CI at 8afef31. Android scene editing/renderer acceptance remains independently pending. |
+| 274 | Safe formula evaluation | DONE_VERIFIED | UNIT_PASS | Scene composer — Specific pure versioned-manifest / bounded-evaluator behavior verified in passing 56-test CI at 8afef31. Android scene editing/renderer acceptance remains independently pending. |
 | 275 | Scene history and revision comparison | PARTIAL | NOT_RUN | Health / Scene composer — Metadata backup omits history/old scene revisions/remote credentials; additive 1→2 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing. |
-| 276 | Adaptive render quality policy | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
+| 276 | Adaptive render quality policy | PARTIAL | NOT_RUN | Motion / Health — Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified. |

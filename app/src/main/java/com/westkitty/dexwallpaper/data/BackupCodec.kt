@@ -33,7 +33,8 @@ object BackupCodec {
         val p=snapshot.preferences
         root.put("preferences",JSONObject().put("reducedMotion",p.reducedMotion).put("highContrast",p.highContrast).put("compact",p.compact)
             .put("safeMode",p.safeMode).put("frameRate",p.frameRate).put("cacheMb",p.cacheMb).put("dynamicColors",p.dynamicColors).put("clockOverlay",p.clockOverlay)
-            .put("batteryOverlay",p.batteryOverlay).put("parallax",p.parallax))
+            .put("batteryOverlay",p.batteryOverlay).put("parallax",p.parallax).put("shaderEffect",p.shaderEffect).put("effectIntensity",p.effectIntensity)
+            .put("transition",p.transition).put("transitionMs",p.transitionMs).put("gyroParallax",p.gyroParallax).put("zoomAnimation",p.zoomAnimation))
         return root.toString().also { require(it.toByteArray().size <= MAX_MANIFEST_BYTES) { "Backup metadata exceeds 8MB" } }
     }
     fun decode(input: String): BackupSnapshot {
@@ -93,8 +94,13 @@ object BackupCodec {
             SceneEntity(id(s.getString("id")),s.getString("name").take(120),manifest,s.optLong("updatedAt",0),s.optInt("revision",1).coerceAtLeast(1))
         }
         val p=root.optJSONObject("preferences") ?: JSONObject()
-        val prefs=WorkspacePreferences(p.optBoolean("reducedMotion"),p.optBoolean("highContrast"),p.optBoolean("compact"),p.optBoolean("safeMode"),
-            p.optInt("frameRate",30).coerceIn(1,60),p.optInt("cacheMb",128).coerceIn(16,512),p.optBoolean("dynamicColors"),p.optBoolean("clockOverlay"),p.optBoolean("batteryOverlay"),p.optBoolean("parallax"))
+        val shader=p.optString("shaderEffect","NONE"); require(shader in com.westkitty.dexwallpaper.core.ShaderEffect.entries.map { it.name }) { "Unknown shader effect" }
+        val transition=p.optString("transition","CROSSFADE"); require(transition in com.westkitty.dexwallpaper.core.Transition.entries.map { it.name }) { "Unknown transition" }
+        val intensity=p.optDouble("effectIntensity",.65); require(intensity.isFinite() && intensity in 0.0..1.0) { "Invalid effect intensity" }
+        val prefs=WorkspacePreferences(reducedMotion=p.optBoolean("reducedMotion"),highContrast=p.optBoolean("highContrast"),compact=p.optBoolean("compact"),safeMode=p.optBoolean("safeMode"),
+            frameRate=p.optInt("frameRate",30).coerceIn(5,60),cacheMb=p.optInt("cacheMb",128).coerceIn(16,512),dynamicColors=p.optBoolean("dynamicColors"),clockOverlay=p.optBoolean("clockOverlay"),
+            batteryOverlay=p.optBoolean("batteryOverlay"),parallax=p.optBoolean("parallax"),shaderEffect=shader,effectIntensity=intensity.toFloat(),transition=transition,
+            transitionMs=p.optInt("transitionMs",700).coerceIn(100,5000),gyroParallax=p.optBoolean("gyroParallax"),zoomAnimation=p.optBoolean("zoomAnimation"))
         return BackupSnapshot(assets,collections,memberships,edits,screens,rules,scenes,prefs)
     }
 }

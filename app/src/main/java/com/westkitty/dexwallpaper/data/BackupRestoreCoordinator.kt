@@ -104,8 +104,11 @@ class BackupRestoreCoordinator(private val context: Context, private val wall: W
             }
             val p=data.preferences
             listOf("reducedMotion" to p.reducedMotion,"highContrast" to p.highContrast,"compact" to p.compact,"safeMode" to p.safeMode,
-                "dynamicColors" to p.dynamicColors,"clockOverlay" to p.clockOverlay,"batteryOverlay" to p.batteryOverlay,"parallax" to p.parallax).forEach { (key,value) -> wall.preferences.flag(key,value) }
+                "dynamicColors" to p.dynamicColors,"clockOverlay" to p.clockOverlay,"batteryOverlay" to p.batteryOverlay,"parallax" to p.parallax,
+                "gyroParallax" to p.gyroParallax,"zoomAnimation" to p.zoomAnimation,"externalCommands" to false,"externalLockCommands" to false,"externalBothCommands" to false).forEach { (key,value) -> wall.preferences.flag(key,value) }
             wall.preferences.number("cacheMb",p.cacheMb); wall.preferences.number("frameRate",p.frameRate)
+            wall.preferences.text("shaderEffect",p.shaderEffect); wall.preferences.decimal("effectIntensity",p.effectIntensity)
+            wall.preferences.text("transition",p.transition); wall.preferences.number("transitionMs",p.transitionMs)
             progress("Restored metadata; schedules paused for destination review")
             data.assets.size
         } finally { stage.deleteRecursively() }

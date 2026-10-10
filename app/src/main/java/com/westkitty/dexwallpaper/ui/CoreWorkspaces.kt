@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+
 package com.westkitty.dexwallpaper.ui
 
 import androidx.compose.foundation.*
@@ -115,7 +117,7 @@ import kotlinx.coroutines.withContext
                 ArtworkPreview(vm, asset)
                 Text("${asset.width} × ${asset.height} · ${asset.bytes / 1024} KB\nImported ${formatTime(asset.importedAt)}\n${asset.license}")
                 Text(ShuffleGuard.eligibility(Candidate(asset.id, asset.favorite, asset.excluded, !asset.quarantined), state.screen.favoritesOnly))
-                Text("SHA-256: ${asset.sha256.take(16)}…", style = MaterialTheme.typography.labelSmall)
+                Text("Asset ID: ${asset.id}\nCollection ID: ${state.screen.collectionId}\nSHA-256: ${asset.sha256.take(16)}…", style = MaterialTheme.typography.labelSmall)
                 val similar = state.assets.count { it.id != id && AssetIntegrity.nearDuplicate(it.perceptualHash, asset.perceptualHash) }
                 Text("$similar visually similar image(s) · local dHash heuristic, not proof of identity")
                 OutlinedTextField(tags, { tags = it }, label = { Text("Tags (comma separated)") })
@@ -142,7 +144,7 @@ import kotlinx.coroutines.withContext
         SectionTitle("Rotation lab", "ShuffleGuard / persistent, explainable selection")
         CollectionPicker(state, vm::collection)
         Eyebrow("Selection method")
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) { RotationMode.entries.forEach { mode -> FilterChip(state.screen.mode == mode.name,
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { RotationMode.entries.forEach { mode -> FilterChip(state.screen.mode == mode.name,
             onClick = { vm.updateScreen { it.copy(mode = mode.name, pending = "") } }, label = { Text(mode.name.lowercase().replaceFirstChar { it.uppercase() }) }) } }
         FlagRow("Automatic rotation", state.screen.enabled, "Independent ${state.destination.label.lowercase()} schedule. Both-screen changes are manual only.", enabled = state.destination != Destination.BOTH) { vm.enableRotation(it) }
         FlagRow("Favorites only", state.screen.favoritesOnly, "Images not marked favorite are excluded from this rotation.") { value -> vm.updateScreen { it.copy(favoritesOnly = value, pending = "") } }
@@ -181,9 +183,10 @@ import kotlinx.coroutines.withContext
     }
     Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(18.dp)) {
         SectionTitle("FrameSense editor", asset.name)
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             FilterChip(portrait, onClick = { portrait = !portrait }, label = { Text(if (portrait) "Portrait" else "Landscape") })
             FilterChip(compare, onClick = { compare = !compare }, label = { Text("Original / edited") })
+            TextButton(vm::undoEdit) { Text("Undo") }
             TextButton(vm::resetEdit) { Text("Reset edits") }
         }
         val gestureModifier = Modifier.pointerInput(asset.id, portrait) {
@@ -214,7 +217,7 @@ import kotlinx.coroutines.withContext
         EditSlider("Top icon-safe zone", state.edit.safeTop, 0f..0.45f) { vm.updateEdit(state.edit.copy(safeTop = it)) }
         EditSlider("Bottom icon-safe zone", state.edit.safeBottom, 0f..0.45f) { vm.updateEdit(state.edit.copy(safeBottom = it)) }
         Text("Safe zones are calibrated manually. DEX cannot read Samsung launcher icon positions.", style = MaterialTheme.typography.bodySmall)
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Button(onClick = { vm.apply(asset.id) }, enabled = !state.busy) { Text("Apply to ${state.destination.label.lowercase()}") }
             OutlinedButton(exportSidecar, enabled = !state.busy) { Text("Export sidecar") }
             OutlinedButton(importSidecar, enabled = !state.busy) { Text("Import sidecar") }
@@ -225,10 +228,22 @@ import kotlinx.coroutines.withContext
 @Composable private fun FramingControls(vm: DexViewModel, state: UiState, portrait: Boolean) {
     Eyebrow("Scaling")
     FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) { ScaleMode.entries.forEach { mode -> FilterChip(state.edit.scale == mode, onClick = { vm.updateEdit(state.edit.copy(scale = mode)) }, label = { Text(mode.name.lowercase().replace('_',' ')) }) } }
+    PrecisionNumber("Zoom",state.edit.zoom,1f..4f) { vm.updateEdit(state.edit.copy(zoom=it)) }
+    PrecisionNumber("Focal X",if(portrait) state.edit.portraitX else state.edit.focalX,0f..1f) { vm.updateEdit(if(portrait) state.edit.copy(portraitX=it) else state.edit.copy(focalX=it)) }
+    PrecisionNumber("Focal Y",if(portrait) state.edit.portraitY else state.edit.focalY,0f..1f) { vm.updateEdit(if(portrait) state.edit.copy(portraitY=it) else state.edit.copy(focalY=it)) }
     EditSlider("Zoom", state.edit.zoom, 1f..4f) { vm.updateEdit(state.edit.copy(zoom = it)) }
     EditSlider("Horizontal focal point", if (portrait) state.edit.portraitX else state.edit.focalX, 0f..1f) { vm.updateEdit(if (portrait) state.edit.copy(portraitX = it) else state.edit.copy(focalX = it)) }
     EditSlider("Vertical focal point", if (portrait) state.edit.portraitY else state.edit.focalY, 0f..1f) { vm.updateEdit(if (portrait) state.edit.copy(portraitY = it) else state.edit.copy(focalY = it)) }
 }
 @Composable private fun EditSlider(label: String, value: Float, range: ClosedFloatingPointRange<Float>, change: (Float) -> Unit) {
     Column { Text("$label  ${"%.2f".format(value)}", style = MaterialTheme.typography.bodySmall); Slider(value.coerceIn(range), change, valueRange = range) }
+}
+
+@Composable private fun PrecisionNumber(label: String,value: Float,range: ClosedFloatingPointRange<Float>,save: (Float)->Unit) {
+    var input by remember(value) { mutableStateOf("%.3f".format(java.util.Locale.ROOT,value)) }
+    val parsed=input.toFloatOrNull()?.takeIf { it.isFinite() && it in range }
+    Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+        OutlinedTextField(input,{input=it.take(12)},label={Text(label)},singleLine=true,modifier=Modifier.weight(1f),isError=parsed==null)
+        TextButton(onClick={parsed?.let(save)},enabled=parsed!=null) { Text("Set") }
+    }
 }

@@ -36,6 +36,8 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
         destination = Destination.parse(saved["destination"] ?: "HOME"), selectedId = saved["selectedId"]))
     val state: StateFlow<UiState> = mutable.asStateFlow()
     private var operation: Job? = null
+    private val editMutex=kotlinx.coroutines.sync.Mutex()
+    private val editUndo=ArrayDeque<Pair<String,ImageEdit>>()
     init {
         val dao = graph.repository.dao
         viewModelScope.launch { dao.observeAssets().collect { list -> mutable.update { it.copy(assets = list) } } }
@@ -89,14 +91,16 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
             if (editor) saved["page"] = Workspace.EDITOR.name
         }
     }
-    fun updateEdit(edit: ImageEdit) {
+    fun updateEdit(edit: ImageEdit, rememberUndo: Boolean = true) {
         val id = state.value.selected?.id ?: return
+        if (rememberUndo) { editUndo.addLast(id to state.value.edit); if(editUndo.size>30) editUndo.removeFirst() }
         val bounded = edit.bounded()
         mutable.update { it.copy(edit = bounded, editDirty = true) }
         // Persist sidecar immediately, so recreation cannot discard unsaved user work.
-        viewModelScope.launch { graph.repository.dao.putEdit(EditEntity.from(id, bounded)); mutable.update { it.copy(editRevision = it.editRevision + 1, editDirty = false) } }
+        viewModelScope.launch { editMutex.lock(); try { graph.repository.dao.putEdit(EditEntity.from(id, bounded)); mutable.update { it.copy(editRevision = it.editRevision + 1, editDirty = false) } } finally { editMutex.unlock() } }
     }
     fun resetEdit() { updateEdit(ImageEdit()) }
+    fun undoEdit() { val id=state.value.selected?.id ?: return; val prior=editUndo.lastOrNull { it.first==id } ?: run { notify("No editor undo available."); return }; editUndo.remove(prior); updateEdit(prior.second,rememberUndo=false) }
     fun favorite(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(favorite = !it.favorite)) } } }
     fun exclude(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(excluded = !it.excluded)) } } }
     fun tags(id: String, value: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(tags = value.take(400))) } } }
@@ -124,6 +128,8 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     }
     fun validateAssets() { runOperation("Checking library files…") { "${graph.importer.validateAssets()} missing files quarantined. Originals are never deleted." } }
     fun setFlag(key: String, value: Boolean) { viewModelScope.launch { graph.preferences.flag(key, value) } }
+    fun setText(key: String, value: String) { viewModelScope.launch { graph.preferences.text(key, value) } }
+    fun setDecimal(key: String, value: Float) { viewModelScope.launch { graph.preferences.decimal(key, value) } }
     fun setNumber(key: String, value: Int) { viewModelScope.launch { graph.preferences.number(key, value); if (key == "cacheMb") graph.importer.enforceCacheBudget(value) } }
     fun addRule(name: String, start: Int, end: Int, priority: Int, charging: Int = -1, dark: Int = -1) {
         val s = state.value
@@ -147,5 +153,12 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun restoreBackup(uri: Uri) { runOperation("Validating backup…") { val count=graph.backup.restore(uri) { message -> mutable.update { it.copy(progress=message) } }; graph.scheduler.reconcile(); "Restored $count records. Rotation and rules paused; review screen destinations before enabling." } }
     fun exportSidecar(uri: Uri) { val id=state.value.selected?.id ?: return; runOperation("Exporting editing sidecar…") { graph.backup.exportSidecar(uri,id); "Editing sidecar exported; original pixels excluded." } }
     fun importSidecar(uri: Uri) { runOperation("Importing editing sidecars…") { val count=graph.backup.importSidecar(uri); state.value.selected?.let { select(it.id) }; "Applied $count matching sidecars by artwork hash." } }
+    fun loadProfile(profile: VisualProfile) {
+        val s=state.value
+        runOperation("Loading visual profile…") { graph.profiles.apply(profile,s.destination,s.selected?.id); s.selected?.let { select(it.id) }; graph.scheduler.reconcile(); "${profile.name} profile loaded; wallpaper was not applied automatically." }
+    }
+    fun saveProfile(name: String) { val s=state.value; runOperation("Saving visual profile…") { graph.profiles.save(graph.profiles.snapshot(name,s.destination,s.selected?.id)); "Custom visual profile saved locally." } }
+    fun exportProfile(uri: Uri) { val s=state.value; runOperation("Exporting visual profile…") { graph.profiles.export(uri,graph.profiles.snapshot("Custom",s.destination,s.selected?.id)); "Visual profile exported without artwork or credentials." } }
+    fun importProfile(uri: Uri) { val s=state.value; runOperation("Importing visual profile…") { val p=graph.profiles.import(uri); graph.profiles.apply(p,s.destination,s.selected?.id); s.selected?.let { select(it.id) }; graph.scheduler.reconcile(); "${p.name} imported and loaded into the selected destination configuration; no wallpaper applied." } }
     fun deleteRule(id: String) { viewModelScope.launch { graph.repository.dao.deleteRule(id) } }
 }

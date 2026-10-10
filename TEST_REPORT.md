@@ -52,3 +52,12 @@ Uploaded debug APK artifact: https://github.com/westkitty/DEX_Wallpaper/actions/
 ## Creative compiler repair
 
 Run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38084305918 — **FAIL**, `compileDebugKotlin`, CreativeWorkspaces.kt line 31. `Composition` collided with Compose runtime's `Composition` factory through wildcard imports. Repair: explicit `ArtComposition` alias for the procedural domain model. Improve CI diagnostics to retain adjacent compiler signatures and report available JVM XML results independently of a later lint failure. No failing test or feature is removed.
+
+## Passing creative/recovery build
+
+**PASS** — https://github.com/westkitty/DEX_Wallpaper/actions/runs/38084606094 at `8afef3122ecf0db5702d10107efcbcdaef16fdf9`.
+GitHub confirms **56 JVM tests, 0 failures/errors**, Android lint and APK compilation, and the real Gradle `wrapper` task. APK SHA-256 `43ba7791bb1636b1d1474df46b039f7017ab29d659da595db4c6e336da24b718`; actual debug artifact https://github.com/westkitty/DEX_Wallpaper/actions/runs/38084606094/artifacts/11681394662 . Instrumentation run `38084606059` is still pending; no emulator success is claimed.
+
+## Native surfaces / MotionGlass checkpoint
+
+Added real ES2 rendering/SurfaceView previews/transitions/effects with resource accounting and adaptive policies; Home-only widget/tile/shortcuts; explicitly authorized external commands; DeskShift profile controls; packaged license reader; serial editor writes, undo and numeric precision. New command/profile/adaptive-policy tests and GPU readback tests are committed for the next CI run, not yet executed. The prior passing checkpoint remains available if these extensions fail validation.

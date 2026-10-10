@@ -12,3 +12,5 @@
 Storage access uses `ACTION_OPEN_DOCUMENT` / `ACTION_OPEN_DOCUMENT_TREE` grants only. Persistable read access is requested for folders; individual images are copied privately and work even if enduring permission is refused. No `MANAGE_EXTERNAL_STORAGE`, broad media/storage, location, health, calendar, exact-alarm, notification-listener, microphone, or camera permission is requested.
 
 Advanced unsupported features are capability-gated, not permission-gated behind fake switches. Optional permissions must be documented here when actual consumers are implemented. No privilege is requested merely to make a feature matrix appear complete.
+
+Native surfaces: `BIND_QUICK_SETTINGS_TILE` restricts the exported tile service to the OS; it is not a permission request. Widget provider is non-exported and uses immutable self PendingIntents. The external command receiver is exported only to support opt-in Tasker/intent automation; default disabled, with separate explicit Lock/Both authorizations. No arbitrary code, paths, or component launches are accepted. No extra runtime permission is required by these action surfaces.

@@ -1446,19 +1446,16 @@
     "verification_status": "NOT_RUN"
   },
   "080": {
-    "implementation_status": "PARTIAL",
+    "implementation_status": "IMPLEMENTED_UNTESTED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Editor / FrameSense",
+    "limitations": "Finite bounded numeric zoom/focal inputs and Set actions update persistent sidecars. UI instrumentation pending.",
     "test_reference": [],
     "permissions": [],
     "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "verification_status": "DEVICE_PENDING"
   },
   "086": {
     "implementation_status": "PARTIAL",
@@ -1538,17 +1535,20 @@
   "139": {
     "implementation_status": "PARTIAL",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/RenderPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/RenderTelemetry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/ShaderPreviewView.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Motion / Health",
+    "limitations": "Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "verification_status": "NOT_RUN",
+    "dependencies": []
   },
   "141": {
     "implementation_status": "PARTIAL",
@@ -1823,17 +1823,20 @@
   "234": {
     "implementation_status": "PARTIAL",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/RenderPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/RenderTelemetry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/ShaderPreviewView.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Motion / Health",
+    "limitations": "Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "verification_status": "NOT_RUN",
+    "dependencies": []
   },
   "236": {
     "implementation_status": "PARTIAL",
@@ -2006,17 +2009,20 @@
   "263": {
     "implementation_status": "PARTIAL",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/RenderPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/RenderTelemetry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/ShaderPreviewView.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Motion / Health",
+    "limitations": "Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "verification_status": "NOT_RUN",
+    "dependencies": []
   },
   "265": {
     "implementation_status": "PARTIAL",
@@ -2051,29 +2057,35 @@
   "276": {
     "implementation_status": "PARTIAL",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/RenderPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/RenderTelemetry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/ShaderPreviewView.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt"
     ],
-    "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
+    "ui_location": "Motion / Health",
+    "limitations": "Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "verification_status": "NOT_RUN",
+    "dependencies": []
   },
   "137": {
-    "implementation_status": "BLOCKED_PLATFORM",
+    "implementation_status": "NOT_IMPLEMENTED",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
     ],
-    "ui_location": "System health / capability report",
-    "limitations": "No Vulkan backend or proprietary Windows runtime. Direct boot intentionally excludes credential-encrypted artwork. Safe fallback only.",
+    "ui_location": "Health",
+    "limitations": "Vulkan backend is NOT implemented; this is an implementation gap, not a claim that Samsung lacks Vulkan.",
     "test_reference": [],
     "permissions": [],
-    "api_constraints": [],
-    "verification_status": "NOT_RUN"
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "verification_status": "NOT_RUN",
+    "dependencies": []
   },
   "156": {
     "implementation_status": "BLOCKED_PLATFORM",
@@ -2421,40 +2433,40 @@
     "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
   },
   "273": {
-    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "implementation_status": "DONE_VERIFIED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt"
     ],
     "ui_location": "Scene composer",
-    "verification_status": "DEVICE_PENDING",
-    "test_reference": [],
+    "verification_status": "UNIT_PASS",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/SceneManifestTest.kt#roundTripPreservesMetadataAndVariables",
+      "TEST_REPORT.md#Passing creative/recovery build"
+    ],
     "permissions": [],
     "api_constraints": [
       "API 26+"
     ],
     "dependencies": [],
-    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+    "limitations": "Specific pure versioned-manifest / bounded-evaluator behavior verified in passing 56-test CI at 8afef31. Android scene editing/renderer acceptance remains independently pending."
   },
   "274": {
-    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "implementation_status": "DONE_VERIFIED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/core/SceneManifest.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/creative/SceneRenderer.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/SafeFormula.kt"
     ],
     "ui_location": "Scene composer",
-    "verification_status": "DEVICE_PENDING",
-    "test_reference": [],
+    "verification_status": "UNIT_PASS",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/SafeFormulaTest.kt#reflectionAndNetworkAreForbidden",
+      "TEST_REPORT.md#Passing creative/recovery build"
+    ],
     "permissions": [],
     "api_constraints": [
       "API 26+"
     ],
     "dependencies": [],
-    "limitations": "Version 1 declarative layers, system typography, numeric variables/formulas, static render/time scrub; unit and instrumentation execution pending."
+    "limitations": "Specific pure versioned-manifest / bounded-evaluator behavior verified in passing 56-test CI at 8afef31. Android scene editing/renderer acceptance remains independently pending."
   },
   "228": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
@@ -2545,21 +2557,21 @@
     "limitations": "Metadata backup omits history/old scene revisions/remote credentials; additive 1\u21922 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing."
   },
   "268": {
-    "implementation_status": "PARTIAL",
+    "implementation_status": "IMPLEMENTED_UNTESTED",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/data/BackupRestoreCoordinator.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CreativeWorkspaces.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/VisualProfile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/ProfileRepository.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
     ],
-    "ui_location": "Health / Scene composer",
-    "verification_status": "NOT_RUN",
+    "ui_location": "Settings / DeskShift",
+    "verification_status": "DEVICE_PENDING",
     "test_reference": [],
     "permissions": [],
     "api_constraints": [
-      "API 26+"
+      "API 26+; live destination OEM-owned"
     ],
     "dependencies": [],
-    "limitations": "Metadata backup omits history/old scene revisions/remote credentials; additive 1\u21922 migration untested; profiles not complete; 20 scene revisions restored via editor but A/B diff missing."
+    "limitations": "Bounded JSON custom profile import/export plus six presets; no secrets/artwork/implicit destinations. Unit/device verification pending."
   },
   "275": {
     "implementation_status": "PARTIAL",
@@ -2643,5 +2655,719 @@
     ],
     "dependencies": [],
     "limitations": "Static/timeline formula previews and neutral portable manifests; animated live playback and document package import not enabled in this checkpoint."
+  },
+  "111": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "112": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "113": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "114": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "115": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "116": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "117": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "118": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "119": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "120": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "121": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "122": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "123": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "124": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "125": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "126": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "127": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "128": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "129": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "130": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "132": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "134": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "135": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "136": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "138": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "220": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "221": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/GlWallpaperRenderer.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt"
+    ],
+    "ui_location": "MotionGlass / live engine",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Actual fixed GLES2 shader modes, explicit intensity/duration/caps and bounded textures; Android shader/engine tests not yet executed. Static writes/clock overlays use Canvas fallback."
+  },
+  "131": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/RenderPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/RenderTelemetry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/ShaderPreviewView.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt"
+    ],
+    "ui_location": "Motion / Health",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified."
+  },
+  "133": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/RenderPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/RenderTelemetry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/ShaderPreviewView.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt"
+    ],
+    "ui_location": "Motion / Health",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified."
+  },
+  "264": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/RenderPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/RenderTelemetry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/ShaderPreviewView.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt"
+    ],
+    "ui_location": "Motion / Health",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Launcher forwarding and rotation-vector sensors are capability-limited; measured counters and one context retry exist. OS-driven lifecycle/performance/Samsung acceptance unverified."
+  },
+  "196": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/AutomationCommand.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/DexWidgetProvider.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/NextWallpaperTile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/MainActivity.kt"
+    ],
+    "ui_location": "Settings / Android widget, tile, launcher",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending."
+  },
+  "197": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/AutomationCommand.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/DexWidgetProvider.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/NextWallpaperTile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/MainActivity.kt"
+    ],
+    "ui_location": "Settings / Android widget, tile, launcher",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending."
+  },
+  "198": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/AutomationCommand.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/DexWidgetProvider.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/NextWallpaperTile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/MainActivity.kt"
+    ],
+    "ui_location": "Settings / Android widget, tile, launcher",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending."
+  },
+  "199": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/AutomationCommand.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/DexWidgetProvider.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/NextWallpaperTile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/MainActivity.kt"
+    ],
+    "ui_location": "Settings / Android widget, tile, launcher",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending."
+  },
+  "200": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/AutomationCommand.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/DexWidgetProvider.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/NextWallpaperTile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/MainActivity.kt"
+    ],
+    "ui_location": "Settings / Android widget, tile, launcher",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending."
+  },
+  "201": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/AutomationCommand.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/DexWidgetProvider.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/NextWallpaperTile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/MainActivity.kt"
+    ],
+    "ui_location": "Settings / Android widget, tile, launcher",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending."
+  },
+  "202": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/core/AutomationCommand.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/DexWidgetProvider.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/NextWallpaperTile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/MainActivity.kt"
+    ],
+    "ui_location": "Settings / Android widget, tile, launcher",
+    "verification_status": "DEVICE_PENDING",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Whitelisted commands, default Home-only surfaces; external Lock/Both separately opt-in. Platform interaction acceptance still pending."
+  },
+  "195": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/VisualProfile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/ProfileRepository.kt"
+    ],
+    "ui_location": "Settings / DeskShift / Tasker Send Intent",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly."
+  },
+  "206": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/VisualProfile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/ProfileRepository.kt"
+    ],
+    "ui_location": "Settings / DeskShift / Tasker Send Intent",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly."
+  },
+  "207": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/VisualProfile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/ProfileRepository.kt"
+    ],
+    "ui_location": "Settings / DeskShift / Tasker Send Intent",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly."
+  },
+  "208": {
+    "implementation_status": "PARTIAL",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/integration/AutomationController.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/core/VisualProfile.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/ProfileRepository.kt"
+    ],
+    "ui_location": "Settings / DeskShift / Tasker Send Intent",
+    "verification_status": "NOT_RUN",
+    "test_reference": [],
+    "permissions": [],
+    "api_constraints": [
+      "API 26+; live destination OEM-owned"
+    ],
+    "dependencies": [],
+    "limitations": "Tasker broadcast endpoint works in code; not a full Locale plugin. Variables/event-preset triggers are incomplete. Profiles do not apply wallpaper implicitly."
   }
 }

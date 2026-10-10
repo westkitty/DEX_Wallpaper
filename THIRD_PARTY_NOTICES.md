@@ -18,9 +18,13 @@ DEX Wallpaper source: Apache License 2.0 (see LICENSE). No third-party artwork, 
 | AndroidX DocumentFile | 1.0.1 | Apache-2.0 |
 | AndroidX ExifInterface | 1.4.1 | Apache-2.0 |
 | AndroidX Palette | 1.0.0 | Apache-2.0 |
+| OkHttp / Okio | OkHttp 4.12.0; compatible pinned stable baseline | Apache-2.0; square/okhttp, square/okio |
+| org.json (JVM tests only) | 20240303 | Public-domain JSON-java implementation |
 | JUnit 4 (tests) | 4.13.2 | Eclipse Public License 1.0 |
 | AndroidX Test / Espresso (tests) | ext 1.2.1, runner 1.6.2, Espresso 3.6.1 | Apache-2.0 |
 
-AndroidX project: https://android.googlesource.com/platform/frameworks/support/ ; licenses are retained by dependency packaging. Gradle repositories are Google Maven, Maven Central, and Gradle Plugin Portal. CI pins official checkout/setup-java/upload-artifact, gradle/actions, and android-actions/setup-android by verified GitHub commit IDs. GitHub-hosted tools are build-time dependencies, not runtime artwork providers.
+AndroidX project: https://android.googlesource.com/platform/frameworks/support/ ; licenses are retained by dependency packaging. Gradle repositories are Google Maven, Maven Central, and Gradle Plugin Portal. CI pins official checkout/setup-java/upload-artifact, gradle/actions, and ReactiveCircus/android-emulator-runner by verified GitHub commit IDs. GitHub-hosted tools are build-time dependencies, not runtime artwork providers.
 
 The Gradle wrapper and distribution checksums were read from the official v8.11.1 GitHub release. Imported artwork license/attribution is supplied by its owner and retained as metadata; DEX grants no rights to redistribute it. Provider integrations and proprietary imports require separate license/terms review. This report is not a claim that optional unimplemented integrations are licensed or available.
+
+The app packages this notice, LICENSE, and PRIVACY.md from canonical root documents into generated APK assets; Settings provides a native reader. OkHttp is used for safe arbitrary WebDAV HTTP methods (not decoration); the compatible stable 4.12 baseline avoids requiring a Kotlin 2.2/AGP upgrade during the verified foundation. No certificate validation is disabled.

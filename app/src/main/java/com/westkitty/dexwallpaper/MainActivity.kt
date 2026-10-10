@@ -15,8 +15,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val graph = (application as DexApplication).graph
+        if (savedInstanceState == null && intent.action == "com.westkitty.dexwallpaper.NEXT_HOME") graph.automation.enqueue(com.westkitty.dexwallpaper.core.AutomationCommand(com.westkitty.dexwallpaper.core.CommandKind.NEXT))
         setContent {
             val vm: DexViewModel = viewModel(factory = viewModelFactory { initializer { DexViewModel(graph, createSavedStateHandle()) } })
+            androidx.compose.runtime.LaunchedEffect(Unit) { if (intent.action == "com.westkitty.dexwallpaper.OPEN_LIBRARY") vm.navigate(Workspace.LIBRARY) }
             DexWorkspace(vm)
         }
     }

@@ -1,0 +1,8 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut android:shortcutId="next_home" android:enabled="true" android:icon="@drawable/ic_dex" android:shortcutShortLabel="@string/shortcut_next">
+        <intent android:action="com.westkitty.dexwallpaper.NEXT_HOME" android:targetPackage="com.westkitty.dexwallpaper" android:targetClass="com.westkitty.dexwallpaper.MainActivity" />
+    </shortcut>
+    <shortcut android:shortcutId="open_library" android:enabled="true" android:icon="@drawable/ic_dex" android:shortcutShortLabel="@string/shortcut_library">
+        <intent android:action="com.westkitty.dexwallpaper.OPEN_LIBRARY" android:targetPackage="com.westkitty.dexwallpaper" android:targetClass="com.westkitty.dexwallpaper.MainActivity" />
+    </shortcut>
+</shortcuts>

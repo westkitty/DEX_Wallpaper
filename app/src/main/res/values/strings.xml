@@ -3,4 +3,6 @@
     <string name="wallpaper_description">The Living Wall System. Private artwork, visible only when your wallpaper is visible.</string>
     <string name="tile_label">Next wallpaper</string>
     <string name="widget_description">Change your DEX wallpaper safely using the saved destination.</string>
+    <string name="shortcut_next">Next Home wallpaper</string>
+    <string name="shortcut_library">Artwork library</string>
 </resources>

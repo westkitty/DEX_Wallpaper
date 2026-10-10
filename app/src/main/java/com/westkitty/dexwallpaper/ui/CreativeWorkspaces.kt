@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+
 package com.westkitty.dexwallpaper.ui
 
 import android.graphics.Color
@@ -38,7 +40,7 @@ import java.util.UUID
         Box(Modifier.fillMaxWidth().heightIn(max=440.dp).aspectRatio(if(portrait) .625f else 1.6f).background(MaterialTheme.colorScheme.surfaceContainer),contentAlignment=Alignment.Center) {
             preview?.let { Image(it.asImageBitmap(),"${pattern.title}, seed $seed",Modifier.fillMaxSize()) } ?: Text("Enter a valid seed and hexadecimal palette.")
         }
-        FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) { Pattern.entries.forEach { p -> FilterChip(pattern==p,onClick={patternName=p.name},label={Text(p.title)}) } }
+        FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) { Pattern.entries.forEach { p -> FilterChip(pattern==p,onClick={patternName=p.name},label={Text(p.title)}) } }
         FlowRow(horizontalArrangement=Arrangement.spacedBy(12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
             OutlinedTextField(seed,{seed=it.take(20)},label={Text("Seed")},singleLine=true,modifier=Modifier.width(170.dp),isError=seed.toLongOrNull()==null)
             OutlinedButton(onClick={seed=kotlin.random.Random.nextLong().toString()}) { Text("New variation") }
@@ -55,7 +57,7 @@ import java.util.UUID
         Button(onClick={ composition?.let { vm.generate(it,if(portrait) 1848 else 2960,if(portrait) 2960 else 1848) } },enabled=composition!=null && !state.busy) { Text("Save native-resolution composition") }
         Text("Saved compositions become ordinary protected artwork, so favorites, collections, rotation, editing, and Home/Lock safety apply without a second content store.",color=MaterialTheme.colorScheme.onSurfaceVariant)
         state.selected?.takeIf { it.attribution.startsWith("Generated offline") }?.let { asset ->
-            Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) { OutlinedButton(onClick={vm.favorite(asset.id)}) { Text(if(asset.favorite) "Unfavorite composition" else "Favorite composition") }; Button(onClick={vm.apply(asset.id)},enabled=!state.busy) { Text("Apply saved composition") } }
+            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) { OutlinedButton(onClick={vm.favorite(asset.id)}) { Text(if(asset.favorite) "Unfavorite composition" else "Favorite composition") }; Button(onClick={vm.apply(asset.id)},enabled=!state.busy) { Text("Apply saved composition") } }
         }
     }
 }
@@ -119,7 +121,7 @@ import java.util.UUID
                 OutlinedTextField(condition,{condition=it.take(512)},label={Text("Visible when / e.g. battery > 20")},modifier=Modifier.fillMaxWidth())
                 OutlinedTextField(formula,{formula=it.take(512)},label={Text("X formula / e.g. 0.2 + sin(time) * 0.1")},modifier=Modifier.fillMaxWidth())
                 TextButton(onClick={try { updateLayer(selected.copy(visibleWhen=condition,xFormula=formula)) } catch(e: Exception) { vm.notify(e.message ?: "Invalid formula") }}) { Text("Validate & save expressions") }
-                Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                     TextButton(onClick={update(scene.copy(layers=scene.layers.filter { it.id!=selected.id }));selectedLayerId=""}) { Text("Remove layer") }
                     TextButton(onClick={val list=scene.layers.toMutableList();val i=list.indexOf(selected);if(i<list.lastIndex){list.removeAt(i);list.add(i+1,selected);update(scene.copy(layers=list))}}) { Text("Bring forward") }
                 }
@@ -127,7 +129,7 @@ import java.util.UUID
             HorizontalDivider()
             Eyebrow("Persistent scene variables")
             scene.variables.forEach { (k,v) -> Text("$k = $v",style=MaterialTheme.typography.bodySmall) }
-            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(variableName,{variableName=it.take(41)},label={Text("Variable name")},modifier=Modifier.width(200.dp),singleLine=true)
                 OutlinedTextField(variableValue,{variableValue=it.take(20)},label={Text("Value")},modifier=Modifier.width(160.dp),singleLine=true)
                 OutlinedButton(onClick={try { update(scene.copy(variables=scene.variables+(variableName to variableValue.toDouble())));variableName="" } catch(e: Exception) { vm.notify(e.message ?: "Invalid variable") }},enabled=variableValue.toDoubleOrNull()!=null) { Text("Save variable") }
@@ -135,7 +137,7 @@ import java.util.UUID
             Eyebrow("Timeline simulation / static export")
             LayerSlider("Time / seconds",time,0f..scene.durationSeconds.toFloat()) { time=it }
             Text("Formula previews and exported static frames work locally. Live animated scene playback is not enabled by this editor yet.",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
-            Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) { Button(onClick={vm.saveScene(sceneId,scene);revisionToken++},enabled=!state.busy) { Text("Save revision") }; OutlinedButton(onClick={vm.renderScene(scene,time.toDouble())},enabled=!state.busy) { Text("Render to library") } }
+            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) { Button(onClick={vm.saveScene(sceneId,scene);revisionToken++},enabled=!state.busy) { Text("Save revision") }; OutlinedButton(onClick={vm.renderScene(scene,time.toDouble())},enabled=!state.busy) { Text("Render to library") } }
             Eyebrow("Scene history")
             revisions.forEach { r -> TextButton(onClick={json=r.manifest;revisionToken++}) { Text("Restore revision ${r.revision} · ${formatTime(r.createdAt)}") } }
             if(revisions.isEmpty()) Text("Save a scene, then select its saved entry to inspect revision history.",style=MaterialTheme.typography.bodySmall)

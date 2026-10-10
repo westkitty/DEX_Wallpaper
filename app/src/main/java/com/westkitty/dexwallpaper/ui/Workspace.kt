@@ -48,6 +48,9 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
     val diagnostics = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri -> uri?.let(vm::exportDiagnostics) }
     val exportSidecar = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri -> uri?.let(vm::exportSidecar) }
     val importSidecar = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(vm::importSidecar) }
+    val exportProfile = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri -> uri?.let(vm::exportProfile) }
+    val importProfile = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(vm::importProfile) }
+    var confirmLivePicker by remember { mutableStateOf(false) }
     val snackbar = remember { SnackbarHostState() }
     LaunchedEffect(state.message) { state.message?.let { snackbar.showSnackbar(it); vm.clearMessage() } }
     BackHandler(state.page != Workspace.CONTROL) { vm.navigate(Workspace.CONTROL) }
@@ -62,6 +65,7 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
                         Key.L -> { vm.navigate(Workspace.LIBRARY); true }
                         Key.E -> { state.selected?.let { vm.select(it.id, true) }; true }
                         Key.Enter -> { vm.apply(); true }
+                        Key.Z -> { if(state.page==Workspace.EDITOR) { vm.undoEdit(); true } else false }
                         else -> false
                     }
                 } else false
@@ -82,7 +86,7 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
                             Spacer(Modifier.weight(1f))
                             var targetOpen by remember { mutableStateOf(false) }
                             Box {
-                                OutlinedButton(onClick = { targetOpen = true }) { Icon(Icons.Outlined.Wallpaper, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text(state.destination.label) }
+                                OutlinedButton(onClick = { targetOpen = true }) { Icon(Icons.Outlined.Wallpaper, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text(if (wide) state.destination.label else when (state.destination) { Destination.HOME -> "Home"; Destination.LOCK -> "Lock"; Destination.BOTH -> "Both" }) }
                                 DropdownMenu(targetOpen, { targetOpen = false }) { Destination.entries.forEach { target -> DropdownMenuItem(text = { Text(target.label) }, onClick = { vm.destination(target); targetOpen = false }) } }
                             }
                             Spacer(Modifier.width(8.dp))
@@ -103,11 +107,7 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
                                 TextButton(onClick = vm::cancel) { Text("Cancel") }
                             }
                         }
-                        val livePicker = {
-                            vm.notify("Android's picker controls the destination. Choose Home only explicitly. If the picker offers only Both, cancel; DEX cannot guarantee Lock preservation for live wallpapers.")
-                            try { context.startActivity(Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER).putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, ComponentName(context, DexWallpaperService::class.java))) }
-                            catch (_: android.content.ActivityNotFoundException) { vm.notify("No compatible live-wallpaper picker is installed.") }
-                        }
+                        val livePicker = { confirmLivePicker = true }
                         Box(Modifier.weight(1f).padding(horizontal = if (wide) 28.dp else 16.dp, vertical = if (state.preferences.compact) 12.dp else 24.dp)) {
                             when (state.page) {
                                 Workspace.CONTROL -> ControlCenter(vm, state, wide)
@@ -118,7 +118,7 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
                                 Workspace.AUTOMATION -> AutomationWorkspace(vm, state)
                                 Workspace.SOURCES -> SourcesWorkspace(vm, state) { folder.launch(null) }
                                 Workspace.HEALTH -> HealthWorkspace(vm, state, { originals -> includeBackupOriginals = originals; exportBackup.launch("dex-wallpaper-backup.zip") }, { restoreBackup.launch(arrayOf("application/zip", "application/octet-stream")) }, { diagnostics.launch("dex-sanitized-diagnostics.json") })
-                                Workspace.SETTINGS -> SettingsWorkspace(vm, state)
+                                Workspace.SETTINGS -> SettingsWorkspace(vm, state, { exportProfile.launch("dex-visual-profile.json") }, { importProfile.launch(arrayOf("application/json", "text/plain")) })
                                 Workspace.DATA -> LiveDataWorkspace(vm, state)
                                 Workspace.GENERATIVE -> GenerativeWorkspace(vm, state)
                                 Workspace.SCENE -> SceneWorkspace(vm, state)
@@ -128,6 +128,13 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
                 }
             }
         }
+        if (confirmLivePicker) AlertDialog(onDismissRequest = { confirmLivePicker = false }, title = { Text("The system controls live destinations") },
+            text = { Text("Android/OEM chooses Home, Lock, or Both. Select Home only explicitly. If your picker cannot preserve a separate Lock screen, cancel. DEX cannot guarantee Home-only live selection or different simultaneous live services.") },
+            confirmButton = { TextButton(onClick = {
+                confirmLivePicker = false
+                try { context.startActivity(Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER).putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, ComponentName(context, DexWallpaperService::class.java))) }
+                catch (_: android.content.ActivityNotFoundException) { vm.notify("No compatible live-wallpaper picker is installed.") }
+            }) { Text("I understand / open picker") } }, dismissButton = { TextButton(onClick = { confirmLivePicker = false }) { Text("Cancel") } })
     }
 }
 @Composable private fun Sidebar(state: UiState, navigate: (Workspace) -> Unit) {

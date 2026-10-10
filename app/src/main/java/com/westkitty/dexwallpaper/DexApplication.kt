@@ -28,4 +28,6 @@ class AppGraph(val context: Context) {
     val scheduler = RotationScheduler(context)
     val creative = CreativeRepository(context, repository)
     val backup = BackupRestoreCoordinator(context, repository)
+    val automation = com.westkitty.dexwallpaper.integration.AutomationController(context)
+    val profiles = ProfileRepository(context, repository)
 }

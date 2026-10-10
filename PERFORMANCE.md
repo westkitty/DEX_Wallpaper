@@ -22,3 +22,7 @@ No Android device, SDK, emulator, GPU profiler, or JDK is available in the Arena
 ## Benchmark procedure
 
 Use synthetic, locally generated images (10, 100, 1,000) and 30MP mixed-aspect photographs with rights. Run repeated next/apply/rotation, portrait/landscape, Activity and wallpaper-engine recreation. Record `dumpsys meminfo`, `gfxinfo` where applicable, Perfetto, renderer trace counters, visible/hidden time, worker execution delay, thermal state, and allocation retention. Also test corrupt/truncated/unsupported input, revoked SAF grants, and storage pressure. Keep generated datasets and personal artwork out of Git.
+
+## GLES extension (device verification pending)
+
+Actual ES2 shader preview/live pipeline with checked texture limits, at most two transition textures, program cleanup, display reference counting and one context-recovery attempt. Visibility/surface events release GPU/bitmap jobs. Adaptive frame caps consume Battery Saver, thermal and low-RAM status; reduced motion/safe mode have real rendering consumers. Measured frame/resource counters appear in Health; these are observations, not claimed benchmark wins. GPU pbuffer tests are committed but not executed at this checkpoint.
