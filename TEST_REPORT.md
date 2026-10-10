@@ -67,3 +67,16 @@ Added real ES2 rendering/SurfaceView previews/transitions/effects with resource 
 Run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38085741752 — **FAIL**, RenderTelemetry.kt conditional mixed Double and Long. Repair converts the last frame duration explicitly to Double.
 
 Run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38084606059 — **FAIL**, instrumentation process crashed; **0 reported executed test results**. Gradle reported 15 discovered tests, no passing result files. This is not counted as device success. Improve the instrumentation harness to capture AndroidRuntime crash evidence through check annotations, preserving all tests. Exact crash cause is not yet known; full log redirects remain sandbox-blocked.
+
+## Verified native build and pending live-isolation repair
+
+**PASS** — https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810 at `f8c6e6b718c337e2dd69cfeaa85366a16595f1f5`.
+Actual check evidence: **70 JVM tests, 0 failures/errors; lintDebug and assembleDebug**.
+Debug APK artifact: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810/artifacts/11682677562 ; SHA-256 `fe70972bcfbd97acda58dace9527f2a79f33cd47a21edffe13b41990b446c64d`.
+Verification report artifact: `11682797175`.
+
+Device run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38085741750 at `23dc9ed` has now **FAILED**, not passed. That ref contains the already repaired telemetry compiler defect; no passing device results are claimed. Manual workflow dispatch is denied by the integration's Actions permissions (HTTP 403); normal branch pushes work. The workflow is meaningfully extended to upload bounded crash/Gradle evidence, triggering another device run without changing main or asking for credentials.
+
+Critical source review found that installed live engines watched the static Home record; Home-only static changes could therefore rebind live Lock content indirectly. The repair removes that observer and stores immutable per-destination live snapshots, gates updates on Android 14+ engine ownership, separates previews, refuses pending-preview replay, serializes ownership changes, and rejects stale preference/decode generations. Five new JVM isolation tests, an equal-ID static preflight regression, and a second actual EGL-context test are authored, **not yet executed**. Current repair: BUILD UNVERIFIED until its own CI result. Physical Samsung isolation and picker/lifecycle behavior remain unverified.
+
+Local checks for this repair: 276-entry inventory validator, source policy including live/static separation, **8 Python validator tests**, Python syntax, Android resource XML parsing, and whitespace/staged inspection PASS. No local Java/SDK/adb is available. No failed tests have been deleted or disabled.

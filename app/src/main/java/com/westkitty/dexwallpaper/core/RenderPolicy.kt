@@ -8,7 +8,8 @@ object AdaptiveQualityPolicy {
     fun evaluate(input: QualityInput): RenderQuality {
         if(!input.visible) return RenderQuality(0,false,false,0f,"Hidden: all animation and decoding suspended")
         if(input.safeMode) return RenderQuality(0,false,false,0f,"Safe mode: static Canvas fallback")
-        if(input.reducedMotion || !input.animated) return RenderQuality(0,input.glSupported,false,if(input.batterySaver) .5f else 1f,"Static event-driven frames")
+        if(input.reducedMotion || !input.animated) return RenderQuality(0,input.glSupported,false,
+            when { input.thermalSeverity>=4 -> 0f;input.thermalSeverity>=3 -> .35f;input.batterySaver -> .5f;input.lowRam -> .75f;else -> 1f },"Static event-driven frames")
         val fps=input.requestedFps.coerceIn(5,60)
         val cap=when { input.thermalSeverity>=4 -> 5; input.thermalSeverity>=3 -> 12; input.batterySaver -> 12; input.lowRam -> 24; else -> 60 }
         val scale=when { input.thermalSeverity>=4 -> 0f; input.thermalSeverity>=3 -> .35f; input.batterySaver -> .5f; input.lowRam -> .75f; else -> 1f }

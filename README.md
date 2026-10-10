@@ -23,7 +23,11 @@ The shared non-destructive image pipeline supports fit/fill/stretch/original/fit
 
 Static writes go through one controller and explicit `FLAG_SYSTEM`, `FLAG_LOCK`, or a deliberately selected Both destination. Home-only checks the independent Lock identity before and after writing. Unverifiable destinations fail closed. OEM-specific behavior must still be tested on the target Samsung device; no source-only check proves visible Lock preservation.
 
-Live wallpaper uses the Android/OEM picker. The picker determines the final target; cancel if Home-only is not offered. Different simultaneous Home/Lock live services are not assumed. The initial live renderer is Canvas with lifecycle-aware static frames and an optional minute clock.
+Live wallpaper uses the Android/OEM picker, which determines the final target; cancel if the requested single-screen destination is not offered. Motion controls edit a **preview draft**; explicitly commit an immutable image/edit/render snapshot to the selected installed destination. Installed live engines never read the static Home current-image record or mutable library edits. Android 14+ engine ownership evidence is required for Home/Lock-only live updates; shared/unknown owners fail closed. Android 8–13 only permits explicitly selected Both live configuration, not a claimed Home-only setup. Cancelled previews cannot replay on engine/process recreation. Different simultaneous live services are not assumed.
+
+The live renderer uses actual OpenGL ES 2 textures/effects/transitions, with per-engine contexts and an event-driven Canvas safe fallback. Clock/battery overlays use minute-boundary Canvas frames and bypass shaders. Video/GIF/Vulkan and continuously layered live scenes remain outstanding. Safe mode and reduced motion are explicitly system-wide accessibility/resource policies, not per-destination image selections.
+
+Latest verified native checkpoint: `f8c6e6b718c337e2dd69cfeaa85366a16595f1f5`: **70 JVM tests, lint, and debug APK PASS** ([run](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810)). [Actual debug APK artifact](https://github.com/westkitty/DEX_Wallpaper/actions/runs/38086139810/artifacts/11682677562). The next live-isolation checkpoint is not covered by that result. Instrumentation previously crashed; no passing device acceptance is claimed.
 
 ## Build
 

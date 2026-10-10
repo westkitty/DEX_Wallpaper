@@ -18,7 +18,9 @@ import com.westkitty.dexwallpaper.DexApplication
 import com.westkitty.dexwallpaper.core.*
 import com.westkitty.dexwallpaper.data.WorkspacePreferences
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.android.asCoroutineDispatcher
+import kotlinx.coroutines.channels.Channel
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -38,13 +40,20 @@ class DexWallpaperService : WallpaperService() {
         @Volatile private var width=1
         @Volatile private var height=1
         private var bitmap: Bitmap?=null // Engine thread only.
-        private var colors: WallpaperColors?=null
+        @Volatile private var colors: WallpaperColors?=null
         private var prefs=WorkspacePreferences()
         private var gl: GlWallpaperRenderer?=null
         private var loading: Job?=null
+        private var loadGeneration=0L
         private var sourceId: String?=null
-        private var sourceRevision=0L
+        private var sourceRevision=""
+        private var sourceEdit=ImageEdit()
+        private var scopeFlags=0
+        private val ownershipEvents=Channel<Int>(Channel.CONFLATED)
+        private val engineId=java.util.UUID.randomUUID().toString()
+        private var lastWorkspace=WorkspacePreferences()
         private var transitionStart=0L
+        private var lastDrawAt=0L
         private var offsetX=0f
         private var offsetY=0f
         private var tiltX=0f
@@ -55,12 +64,13 @@ class DexWallpaperService : WallpaperService() {
             override fun run() {
                 if(!visible || !surfaceReady || destroyed) return
                 val transitioning=transitionStart>0 && android.os.SystemClock.uptimeMillis()-transitionStart<prefs.transitionMs
-                val animated=gl!=null && (transitioning || (prefs.zoomAnimation && !prefs.reducedMotion))
+                val continuous=gl!=null && (transitioning || (prefs.zoomAnimation && !prefs.reducedMotion))
+                val animated=continuous || (gl!=null && (prefs.parallax || prefs.gyroParallax))
                 val thermal=if(Build.VERSION.SDK_INT>=29) power.currentThermalStatus else 0
                 val quality=AdaptiveQualityPolicy.evaluate(QualityInput(visible,animated,prefs.frameRate,power.isPowerSaveMode,thermal,
                     getSystemService(ActivityManager::class.java).isLowRamDevice,prefs.reducedMotion,prefs.safeMode,true))
                 drawFrame(quality)
-                if(quality.motion && quality.framesPerSecond>0) handler.postDelayed(this,1000L/quality.framesPerSecond)
+                if(continuous && quality.motion && quality.framesPerSecond>0) handler.postDelayed(this,1000L/quality.framesPerSecond)
                 else if(prefs.clockOverlay || prefs.batteryOverlay) handler.postDelayed(this,60_000-System.currentTimeMillis()%60_000)
             }
         }
@@ -68,10 +78,53 @@ class DexWallpaperService : WallpaperService() {
             super.onCreate(holder)
             RenderTelemetry.engines.incrementAndGet()
             setTouchEventsEnabled(true)
-            scope.launch {
-                combine(graph.repository.dao.observeScreens(),graph.preferences.flow) { screens,settings -> screens.firstOrNull { it.destination=="HOME" } to settings }
-                    .collect { (screen,settings) -> handler.post { if(!destroyed) { val changed=screen?.currentAssetId!=sourceId || (screen?.lastSuccess ?: 0)!=sourceRevision || settings.safeMode!=prefs.safeMode || settings.clockOverlay!=prefs.clockOverlay || settings.batteryOverlay!=prefs.batteryOverlay; sourceId=screen?.currentAssetId; sourceRevision=screen?.lastSuccess ?: 0; prefs=settings; configureSensors(); if(changed || bitmap==null) reload() else scheduleFrame() } } }
+            scopeFlags=if(Build.VERSION.SDK_INT>=34) wallpaperFlags else 0
+            if(!isPreview) {
+                LiveEngineRegistry.report(engineId,scopeFlags)
+                scope.launch(handler.asCoroutineDispatcher()) {
+                    for(which in ownershipEvents) {
+                        if(destroyed) break
+                        if(which==scopeFlags) continue
+                        val previous=scopeFlags
+                        val workspace=graph.preferences.flow.first()
+                        val stable=sourceRevision.ifBlank { LiveDestinationPolicy.source(previous,workspace.liveHome,workspace.liveLock,workspace.liveShared) }
+                        LiveEngineRegistry.report(engineId,0) // No Home/Lock-only commits while reassignment is in flight.
+                        if(previous==3 && which in 1..2 && LiveConfigCodec.decode(stable) is Outcome.Ok) {
+                            graph.preferences.preserveLiveScope(if(which==1) Destination.HOME else Destination.LOCK,stable)
+                        }
+                        scopeFlags=which
+                        consume(graph.preferences.flow.first())
+                        LiveEngineRegistry.report(engineId,which)
+                    }
+                }
             }
+            scope.launch {
+                graph.preferences.flow.collect { settings -> handler.post { if(!destroyed) consume(settings) } }
+            }
+            scope.launch {
+                graph.repository.dao.observeAssets().collect { assets -> handler.post {
+                    if(!destroyed && visible && bitmap==null && assets.any { it.id==sourceId && !it.quarantined }) reload()
+                } }
+            }
+        }
+        private fun consume(workspace: WorkspacePreferences) {
+            if(workspace.revision<lastWorkspace.revision) return // Reject delayed pre-reassignment emissions.
+            lastWorkspace=workspace
+            val encoded=if(isPreview) workspace.livePreview else LiveDestinationPolicy.source(scopeFlags,workspace.liveHome,workspace.liveLock,workspace.liveShared)
+            val config=(LiveConfigCodec.decode(encoded) as? Outcome.Ok)?.value
+            // Safe/reduced-motion are explicitly system-wide accessibility policies. Image/effect edits are snapshots.
+            val effective=(config?.settings ?: WorkspacePreferences()).copy(safeMode=workspace.safeMode,reducedMotion=workspace.reducedMotion || config?.settings?.reducedMotion==true)
+            val changed=encoded!=sourceRevision || effective.safeMode!=prefs.safeMode || effective.reducedMotion!=prefs.reducedMotion
+            prefs=effective;sourceId=config?.assetId;sourceEdit=config?.edit ?: ImageEdit();sourceRevision=encoded
+            configureSensors()
+            if(changed || bitmap==null) reload() else scheduleFrame()
+        }
+        override fun onWallpaperFlagsChanged(which: Int) {
+            if(Build.VERSION.SDK_INT<34) return
+            super.onWallpaperFlagsChanged(which)
+            if(isPreview) return
+            // Serialized on this engine's thread; no static screen flow participates in source selection.
+            ownershipEvents.trySend(which)
         }
         private fun configureSensors() {
             val wanted=visible && gl!=null && prefs.gyroParallax && !prefs.reducedMotion && !prefs.safeMode
@@ -87,25 +140,34 @@ class DexWallpaperService : WallpaperService() {
             try { gl=GlWallpaperRenderer().also { it.create(surfaceHolder.surface,width,height) } }
             catch(e: Exception) { gl?.close(); gl=null; RenderTelemetry.lastError="GLES setup failed; Canvas fallback" }
         }
-        private fun scheduleFrame() { handler.removeCallbacks(frame); if(visible && surfaceReady && !destroyed) handler.post(frame) }
+        private fun scheduleFrame() {
+            handler.removeCallbacks(frame)
+            if(visible && surfaceReady && !destroyed) {
+                val thermal=if(Build.VERSION.SDK_INT>=29) power.currentThermalStatus else 0
+                val q=AdaptiveQualityPolicy.evaluate(QualityInput(true,true,prefs.frameRate,power.isPowerSaveMode,thermal,getSystemService(ActivityManager::class.java).isLowRamDevice,prefs.reducedMotion,prefs.safeMode,gl!=null))
+                val delay=if(q.framesPerSecond>0) (1000L/q.framesPerSecond-(android.os.SystemClock.uptimeMillis()-lastDrawAt)).coerceAtLeast(0) else 0L
+                handler.postDelayed(frame,delay)
+            }
+        }
         private fun reload() {
             loading?.cancel()
+            val generation=++loadGeneration
             if(!surfaceReady || !visible || destroyed) return
             if(prefs.safeMode || prefs.clockOverlay || prefs.batteryOverlay) { gl?.close(); gl=null }
             setupGl()
             configureSensors()
-            val id=sourceId ?: run { scheduleFrame(); return }
+            val id=sourceId ?: run { bitmap?.recycle();bitmap=null;gl?.close();gl=null;scheduleFrame();return }
             val w=width.coerceIn(1,4096); val h=height.coerceIn(1,4096)
             val safe=prefs.safeMode
+            val edit=sourceEdit
             loading=scope.launch {
                 val asset=graph.repository.dao.asset(id) ?: return@launch
-                val edit=graph.repository.dao.edit(id)?.model() ?: ImageEdit()
                 val result=try { graph.pipeline.render(graph.importer.file(asset),w,h,edit,safe) }
                     catch(e: CancellationException) { throw e }
                     catch(_: Exception) { null }
                 if(!isActive || destroyed) { result?.recycle(); return@launch }
                 handler.post {
-                    if(destroyed || !visible || !surfaceReady) result?.recycle()
+                    if(destroyed || !visible || !surfaceReady || generation!=loadGeneration) result?.recycle()
                     else {
                         bitmap?.recycle(); bitmap=result
                         if(Build.VERSION.SDK_INT>=27) { colors=result?.let { WallpaperColors.fromBitmap(it) }; notifyColorsChanged() }
@@ -121,6 +183,7 @@ class DexWallpaperService : WallpaperService() {
             }
         }
         private fun drawFrame(quality: RenderQuality) {
+            lastDrawAt=android.os.SystemClock.uptimeMillis()
             if(gl!=null && quality.gpu) {
                 val effect=ShaderEffect.entries.firstOrNull { it.name==prefs.shaderEffect } ?: ShaderEffect.NONE
                 val transition=Transition.entries.firstOrNull { it.name==prefs.transition } ?: Transition.NONE
@@ -174,13 +237,13 @@ class DexWallpaperService : WallpaperService() {
             visible=isVisible
             handler.post { handler.removeCallbacks(frame); configureSensors(); if(isVisible) reload() else releaseFrame() }
         }
-        private fun releaseFrame() { loading?.cancel(); bitmap?.recycle(); bitmap=null; gl?.close(); gl=null }
+        private fun releaseFrame() { loadGeneration++;loading?.cancel(); bitmap?.recycle(); bitmap=null; gl?.close(); gl=null }
         override fun onSurfaceCreated(holder: SurfaceHolder) { super.onSurfaceCreated(holder); surfaceReady=true; handler.post { if(visible) reload() } }
         override fun onSurfaceChanged(holder: SurfaceHolder,format: Int,w: Int,h: Int) { super.onSurfaceChanged(holder,format,w,h); width=w; height=h; surfaceReady=true; handler.post { gl?.close(); gl=null; reload() } }
         override fun onSurfaceDestroyed(holder: SurfaceHolder) { surfaceReady=false; handler.post { handler.removeCallbacks(frame); releaseFrame() }; super.onSurfaceDestroyed(holder) }
         override fun onComputeColors(): WallpaperColors?=colors
         override fun onDestroy() {
-            destroyed=true; visible=false; surfaceReady=false; scope.cancel()
+            destroyed=true; visible=false; surfaceReady=false; ownershipEvents.close();scope.cancel();LiveEngineRegistry.remove(engineId)
             handler.post { handler.removeCallbacksAndMessages(null); sensors.unregisterListener(this); sensorRegistered=false; releaseFrame(); RenderTelemetry.engines.decrementAndGet(); thread.quitSafely() }
             super.onDestroy()
         }

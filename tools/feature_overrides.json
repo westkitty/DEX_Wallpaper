@@ -1328,16 +1328,23 @@
   "007": {
     "implementation_status": "PARTIAL",
     "source_file": [
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/SystemWorkspaces.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/DexWallpaperService.kt",
-      "app/src/main/java/com/westkitty/dexwallpaper/platform/CompatibilityRegistry.kt"
+      "app/src/main/java/com/westkitty/dexwallpaper/core/LiveConfiguration.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/wallpaper/LiveEngineRegistry.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Preferences.kt"
     ],
     "ui_location": "Relevant native workspace",
-    "limitations": "Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding.",
-    "test_reference": [],
+    "limitations": "Real GLES/Canvas engines with immutable destination-scoped snapshots and a separate preview draft. No static Home-record observer. Home/Lock-only live updates require Android 14+ matching ownership; shared/unknown ownership fails closed. Picker final assignment remains OEM-owned. New isolation tests authored; current repair awaits Android execution.",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/core/LiveIsolationTest.kt",
+      "app/src/androidTest/java/com/westkitty/dexwallpaper/GlRendererTest.kt"
+    ],
     "permissions": [],
-    "api_constraints": [],
+    "api_constraints": [
+      "Android 8+ static/explicit shared live fallback",
+      "Android 14+ engine getWallpaperFlags / onWallpaperFlagsChanged",
+      "OEM destination behavior needs device acceptance"
+    ],
     "verification_status": "NOT_RUN"
   },
   "019": {

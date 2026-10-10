@@ -160,5 +160,35 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun saveProfile(name: String) { val s=state.value; runOperation("Saving visual profile…") { graph.profiles.save(graph.profiles.snapshot(name,s.destination,s.selected?.id)); "Custom visual profile saved locally." } }
     fun exportProfile(uri: Uri) { val s=state.value; runOperation("Exporting visual profile…") { graph.profiles.export(uri,graph.profiles.snapshot("Custom",s.destination,s.selected?.id)); "Visual profile exported without artwork or credentials." } }
     fun importProfile(uri: Uri) { val s=state.value; runOperation("Importing visual profile…") { val p=graph.profiles.import(uri); graph.profiles.apply(p,s.destination,s.selected?.id); s.selected?.let { select(it.id) }; graph.scheduler.reconcile(); "${p.name} imported and loaded into the selected destination configuration; no wallpaper applied." } }
+    fun prepareLivePreview(onReady: () -> Unit) {
+        val s=state.value;val asset=s.selected ?: run { notify("Select artwork before opening the live picker.");return }
+        viewModelScope.launch {
+            try { val edit=graph.repository.dao.edit(asset.id)?.model() ?: ImageEdit();graph.preferences.prepareLivePreview(s.destination,LiveConfigCodec.encode(LiveConfiguration(asset.id,edit,s.preferences)));onReady() }
+            catch(e: Exception) { notify(e.message ?: "Live preview preparation failed") }
+        }
+    }
+    fun completeLivePicker(success: Boolean) {
+        viewModelScope.launch {
+            val prepared=graph.preferences.flow.first()
+            val target=Destination.entries.firstOrNull { it.name==prepared.livePending }
+            graph.preferences.text("livePending","") // A cancelled picker cannot replay on process recreation.
+            if(!success || target==null) { notify("Picker cancelled or OEM did not report success; installed live snapshots were not changed. Commit explicitly in Motion if ownership is verified.");return@launch }
+            val owned=withTimeoutOrNull(3000) { com.westkitty.dexwallpaper.wallpaper.LiveEngineRegistry.flow.first { LiveDestinationPolicy.mayUpdate(target,it) } }
+            if(owned==null) { notify("Live target could not be verified; no Home/Lock-only live snapshot was applied. Review the system picker / use static wallpaper.");return@launch }
+            graph.preferences.commitLive(target,prepared.livePreview)
+            notify("Live snapshot committed to verified ${target.label.lowercase()} engine ownership. OS controls final assignment.")
+        }
+    }
+    fun commitLive() {
+        val s=state.value;val asset=s.selected ?: run { notify("Select artwork first.");return }
+        if(!LiveDestinationPolicy.mayUpdate(s.destination,com.westkitty.dexwallpaper.wallpaper.LiveEngineRegistry.flags())) {
+            notify("Live ownership is unknown/shared or the requested screen has no installed engine. Home/Lock-only updates refused. Use the OS picker, or explicitly select Both to update all assigned DEX live instances.");return
+        }
+        runOperation("Committing destination-scoped live snapshot…") {
+            val edit=graph.repository.dao.edit(asset.id)?.model() ?: ImageEdit()
+            graph.preferences.commitLive(s.destination,LiveConfigCodec.encode(LiveConfiguration(asset.id,edit,s.preferences)))
+            "Live snapshot updated for ${s.destination.label}. Static wallpaper records cannot rebind live Lock engines."
+        }
+    }
     fun deleteRule(id: String) { viewModelScope.launch { graph.repository.dao.deleteRule(id) } }
 }

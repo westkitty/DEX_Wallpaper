@@ -50,6 +50,7 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
     val importSidecar = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(vm::importSidecar) }
     val exportProfile = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri -> uri?.let(vm::exportProfile) }
     val importProfile = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(vm::importProfile) }
+    val livePickerResult = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result -> vm.completeLivePicker(result.resultCode == android.app.Activity.RESULT_OK) }
     var confirmLivePicker by remember { mutableStateOf(false) }
     val snackbar = remember { SnackbarHostState() }
     LaunchedEffect(state.message) { state.message?.let { snackbar.showSnackbar(it); vm.clearMessage() } }
@@ -129,11 +130,13 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
             }
         }
         if (confirmLivePicker) AlertDialog(onDismissRequest = { confirmLivePicker = false }, title = { Text("The system controls live destinations") },
-            text = { Text("Android/OEM chooses Home, Lock, or Both. Select Home only explicitly. If your picker cannot preserve a separate Lock screen, cancel. DEX cannot guarantee Home-only live selection or different simultaneous live services.") },
+            text = { Text("Requested: ${state.destination.label}. Android/OEM controls final assignment. Choose exactly that destination; cancel if a single-screen choice cannot preserve the other screen. Preview does not change installed DEX snapshots. A reported successful result commits only with matching engine ownership; otherwise return to Motion to review. Different simultaneous live services are not guaranteed.") },
             confirmButton = { TextButton(onClick = {
                 confirmLivePicker = false
-                try { context.startActivity(Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER).putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, ComponentName(context, DexWallpaperService::class.java))) }
-                catch (_: android.content.ActivityNotFoundException) { vm.notify("No compatible live-wallpaper picker is installed.") }
+                vm.prepareLivePreview {
+                    try { livePickerResult.launch(Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER).putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, ComponentName(context, DexWallpaperService::class.java))) }
+                    catch (_: android.content.ActivityNotFoundException) { vm.notify("No compatible live-wallpaper picker is installed.") }
+                }
             }) { Text("I understand / open picker") } }, dismissButton = { TextButton(onClick = { confirmLivePicker = false }) { Text("Cancel") } })
     }
 }

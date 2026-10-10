@@ -55,6 +55,7 @@ class GlWallpaperRenderer {
     fun resize(w: Int,h: Int) { width=w.coerceAtLeast(1); height=h.coerceAtLeast(1); GLES20.glViewport(0,0,width,height) }
     fun upload(bitmap: Bitmap, keepPrevious: Boolean=true) {
         require(program!=0)
+        ensureCurrent()
         if(previousTexture!=0) { deleteTexture(previousTexture); previousTexture=0 }
         if(keepPrevious) previousTexture=texture else if(texture!=0) deleteTexture(texture)
         texture=0
@@ -71,6 +72,7 @@ class GlWallpaperRenderer {
     fun draw(effect: ShaderEffect,intensity: Float,progress: Float=1f,transition: Transition=Transition.NONE,parallaxX: Float=0f,parallaxY: Float=0f,timeSeconds: Float=0f,zoom: Float=1f) {
         if(program==0 || texture==0) return
         val start=System.nanoTime()
+        ensureCurrent()
         GLES20.glUseProgram(program)
         GLES20.glClearColor(0f,0f,0f,1f); GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
         vertices.position(0)
@@ -81,7 +83,7 @@ class GlWallpaperRenderer {
         GLES20.glUniform1i(location("uTexture"),0)
         GLES20.glActiveTexture(GLES20.GL_TEXTURE1); GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,if(previousTexture!=0) previousTexture else texture)
         GLES20.glUniform1i(location("uPrevious"),1)
-        GLES20.glUniform1i(location("uEffect"),effect.ordinal)
+        GLES20.glUniform1i(location("uEffect"),if(intensity<=.001f) 0 else effect.ordinal)
         GLES20.glUniform1f(location("uIntensity"),intensity.coerceIn(0f,1f))
         GLES20.glUniform1f(location("uProgress"),progress.coerceIn(0f,1f))
         GLES20.glUniform1i(location("uTransition"),if(previousTexture!=0) transition.ordinal else 0)
@@ -97,9 +99,14 @@ class GlWallpaperRenderer {
     }
     /** Test/readback only: must run on the owning EGL thread. Bottom-up RGBA bytes. */
     fun pixels(): ByteArray {
+        ensureCurrent()
         val bytes=ByteBuffer.allocateDirect(width*height*4)
         GLES20.glReadPixels(0,0,width,height,GLES20.GL_RGBA,GLES20.GL_UNSIGNED_BYTE,bytes); checkGl("readback")
         return ByteArray(width*height*4).also { bytes.position(0); bytes.get(it) }
+    }
+    private fun ensureCurrent() {
+        check(context!=EGL14.EGL_NO_CONTEXT && surface!=EGL14.EGL_NO_SURFACE) { "EGL owner is not initialized" }
+        if(EGL14.eglGetCurrentContext()!=context) check(EGL14.eglMakeCurrent(display,surface,surface,context)) { "EGL context ownership lost" }
     }
     private fun location(name: String)=GLES20.glGetUniformLocation(program,name)
     private fun deleteTexture(id: Int) { GLES20.glDeleteTextures(1,intArrayOf(id),0); RenderTelemetry.textures.decrementAndGet() }

@@ -5,7 +5,7 @@ object DestinationPolicy {
     fun check(destination: Destination, snapshot: WallpaperSnapshot): Outcome<Int> = when {
         !snapshot.supported -> Outcome.Error("This device does not support wallpaper changes.", false)
         !snapshot.allowed -> Outcome.Error("Wallpaper changes are disabled by device policy.", false)
-        destination == Destination.HOME && snapshot.lockId <= 0 -> Outcome.Error(
+        destination == Destination.HOME && (snapshot.lockId <= 0 || snapshot.lockId == snapshot.homeId) -> Outcome.Error(
             "Home-only safety: Android reports a shared or unverifiable Lock wallpaper. Set a separate static Lock wallpaper in system settings first; DEX will not change both screens.")
         destination == Destination.LOCK && snapshot.homeId <= 0 -> Outcome.Error("The Home wallpaper identity cannot be verified. Lock-only application was not attempted.")
         else -> Outcome.Ok(destination.flags)

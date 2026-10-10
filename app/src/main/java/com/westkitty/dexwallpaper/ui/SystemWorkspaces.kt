@@ -57,8 +57,11 @@ import java.time.format.DateTimeFormatter
         FlagRow("Slow zoom animation",state.preferences.zoomAnimation,"Bounded 1×–1.05× breathing zoom at the configured/adaptive frame cap.",enabled=glAvailable && !state.preferences.reducedMotion) { vm.setFlag("zoomAnimation",it) }
         FlagRow("Reduced motion",state.preferences.reducedMotion,"Disable transitions, parallax, and zoom without disabling your artwork.") { vm.setFlag("reducedMotion",it) }
         FlagRow("Safe mode",state.preferences.safeMode,"CPU static fallback; skip GPU effects, blur, vignette, and motion.") { vm.setFlag("safeMode",it) }
-        Button(chooseLive,enabled=state.assets.isNotEmpty()) { Text("Open Android live-wallpaper picker") }
+        OutlinedButton(onClick=vm::commitLive,enabled=state.selected!=null && !state.busy) { Text("Commit live snapshot / ${state.destination.label}") }
+        Text("Controls above edit a preview draft. Installed wallpaper changes only when you explicitly commit a snapshot. Static Home/Lock changes and per-image edits never rebind a live Lock source. Independent live updates require Android 14+ engine ownership evidence; unknown/shared Home-only updates fail closed.",style=MaterialTheme.typography.bodySmall)
+        Button(chooseLive,enabled=state.selected!=null && (android.os.Build.VERSION.SDK_INT>=34 || state.destination==Destination.BOTH)) { Text("Open Android live-wallpaper picker") }
         Text("GPU effects apply to the live engine, not static WallpaperManager writes. Clock/battery overlays use the event-driven Canvas fallback and bypass shaders. Vulkan, video/GIF decoders, and independent simultaneous live services are not implemented.",color=MaterialTheme.colorScheme.onSurfaceVariant)
+        if(android.os.Build.VERSION.SDK_INT<34) Text("This Android version cannot report live engine ownership. Home/Lock-only live setup is disabled; static destinations remain available. Both requires explicit selection.",style=MaterialTheme.typography.bodySmall)
         Text("LIVE DESTINATION LIMIT • The system picker decides the destination. Cancel if it cannot explicitly preserve Lock.",style=MaterialTheme.typography.bodySmall)
     }
 }
