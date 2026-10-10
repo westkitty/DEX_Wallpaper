@@ -61,3 +61,9 @@ GitHub confirms **56 JVM tests, 0 failures/errors**, Android lint and APK compil
 ## Native surfaces / MotionGlass checkpoint
 
 Added real ES2 rendering/SurfaceView previews/transitions/effects with resource accounting and adaptive policies; Home-only widget/tile/shortcuts; explicitly authorized external commands; DeskShift profile controls; packaged license reader; serial editor writes, undo and numeric precision. New command/profile/adaptive-policy tests and GPU readback tests are committed for the next CI run, not yet executed. The prior passing checkpoint remains available if these extensions fail validation.
+
+## Native/compiler and emulator defects
+
+Run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38085741752 — **FAIL**, RenderTelemetry.kt conditional mixed Double and Long. Repair converts the last frame duration explicitly to Double.
+
+Run https://github.com/westkitty/DEX_Wallpaper/actions/runs/38084606059 — **FAIL**, instrumentation process crashed; **0 reported executed test results**. Gradle reported 15 discovered tests, no passing result files. This is not counted as device success. Improve the instrumentation harness to capture AndroidRuntime crash evidence through check annotations, preserving all tests. Exact crash cause is not yet known; full log redirects remain sandbox-blocked.

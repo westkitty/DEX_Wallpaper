@@ -14,5 +14,5 @@ object RenderTelemetry {
     @Volatile var lastError: String=""
     @Synchronized fun frame(nanos: Long) { frames.incrementAndGet(); durations.addLast(nanos); if(durations.size>120) durations.removeFirst() }
     @Synchronized fun snapshot()=RenderMetrics(engines.get(),contexts.get(),textures.get(),frames.get(),
-        if(durations.isEmpty()) 0.0 else durations.average()/1_000_000,if(durations.isEmpty()) 0.0 else durations.last()/1_000_000,recoveries.get(),lastError)
+        if(durations.isEmpty()) 0.0 else durations.average()/1_000_000,if(durations.isEmpty()) 0.0 else durations.last().toDouble()/1_000_000,recoveries.get(),lastError)
 }
