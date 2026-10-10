@@ -85,8 +85,13 @@ import kotlinx.coroutines.withContext
         SectionTitle("Artwork library", "Protected originals. One shared collection database.")
         FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             CollectionPicker(state, vm::collection)
-            OutlinedButton(onClick = { create = true }) { Text("New collection") }
-            FilterChip(favoritesOnly, onClick = { favoritesOnly = !favoritesOnly }, label = { Text("Favorites") })
+            OutlinedButton(onClick = { create = true }, enabled = !state.busy) { Text("New collection") }
+            state.collection?.let { collection ->
+                OutlinedButton(onClick = { vm.pinCollection(collection.id, !collection.pinned) }, enabled = !state.busy) {
+                    Text(if (collection.pinned) "Unpin collection" else "Pin collection")
+                }
+            }
+            FilterChip(favoritesOnly, onClick = { favoritesOnly = !favoritesOnly }, enabled = !state.busy, label = { Text("Favorites") })
         }
         OutlinedTextField(state.search, vm::search, label = { Text("Search artwork or tags") }, modifier = Modifier.fillMaxWidth(), singleLine = true, leadingIcon = { Icon(Icons.Outlined.Search, null) })
         if (assets.isEmpty()) {

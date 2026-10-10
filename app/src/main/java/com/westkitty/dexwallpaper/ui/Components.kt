@@ -71,7 +71,7 @@ import kotlinx.coroutines.withContext
     Box {
         OutlinedButton(onClick = { open = true }) { Text(state.collection?.name ?: "Personal library") }
         DropdownMenu(open, onDismissRequest = { open = false }) {
-            state.collections.forEach { c -> DropdownMenuItem(text = { Text(c.name) }, onClick = { onCollection(c.id); open = false }) }
+            state.collections.forEach { c -> DropdownMenuItem(text = { Text(if (c.pinned) "Pinned · ${c.name}" else c.name) }, onClick = { onCollection(c.id); open = false }) }
         }
     }
 }

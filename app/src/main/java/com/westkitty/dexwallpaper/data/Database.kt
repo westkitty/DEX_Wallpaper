@@ -70,7 +70,7 @@ interface LibraryDao {
     @Query("SELECT * FROM assets WHERE sha256 = :hash") suspend fun byHash(hash: String): AssetEntity?
     @Insert(onConflict = OnConflictStrategy.ABORT) suspend fun insertAsset(asset: AssetEntity)
     @Update suspend fun updateAsset(asset: AssetEntity)
-    @Query("SELECT * FROM collections ORDER BY pinned DESC, name") fun observeCollections(): Flow<List<CollectionEntity>>
+    @Query("SELECT * FROM collections") fun observeCollections(): Flow<List<CollectionEntity>>
     @Query("SELECT * FROM collections ORDER BY name") suspend fun allCollections(): List<CollectionEntity>
     @Upsert suspend fun putCollection(collection: CollectionEntity)
     @Insert(onConflict = OnConflictStrategy.IGNORE) suspend fun addMembership(membership: Membership)

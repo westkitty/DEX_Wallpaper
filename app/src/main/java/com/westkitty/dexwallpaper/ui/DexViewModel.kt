@@ -43,7 +43,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     init {
         val dao = graph.repository.dao
         viewModelScope.launch { dao.observeAssets().collect { list -> mutable.update { it.copy(assets = list) } } }
-        viewModelScope.launch { dao.observeCollections().collect { list -> mutable.update { it.copy(collections = list) } } }
+        viewModelScope.launch { dao.observeCollections().collect { list -> mutable.update { it.copy(collections = CollectionPinPolicy.forPicker(list)) } } }
         viewModelScope.launch { dao.observeMemberships().collect { list -> mutable.update { it.copy(memberships = list) } } }
         viewModelScope.launch { dao.observeScreens().collect { list -> mutable.update { it.copy(screens = list) } } }
         viewModelScope.launch { dao.observeHistory().collect { list -> mutable.update { it.copy(history = list) } } }
@@ -164,6 +164,14 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     }
     fun resetEdit() { updateEdit(ImageEdit()) }
     fun undoEdit() { val id=state.value.selected?.id ?: return; val index=editUndo.indexOfLast { it.first==id };if(index<0) { notify("No editor undo available.");return };val prior=editUndo.removeAt(index);updateEdit(prior.second,rememberUndo=false) }
+    fun pinCollection(id: String, pinned: Boolean) {
+        runOperation(if (pinned) "Pinning collection…" else "Unpinning collection…") {
+            val collection = graph.repository.dao.allCollections().firstOrNull { it.id == id }
+                ?: throw IllegalArgumentException("Collection no longer exists.")
+            graph.repository.dao.putCollection(CollectionPinPolicy.setPinned(collection, pinned))
+            "${if (pinned) "Pinned" else "Unpinned"} ${collection.name}; the collection picker updates its order."
+        }
+    }
     fun favorite(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(favorite = !it.favorite)) } } }
     fun exclude(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(excluded = !it.excluded)) } } }
     fun tags(id: String, value: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(tags = value.take(400))) } } }
