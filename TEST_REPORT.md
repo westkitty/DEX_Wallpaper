@@ -22,3 +22,11 @@ Committed but not yet executed: 35 JVM test methods covering no-repeat/fair shuf
 Install → actual dashboard → authorize folder → thumbnails → collection → shuffle/interval → Home-only preview/application → visible Home change → next → independent Lock preservation → process recreation persistence.
 
 Also pending: Samsung Tab S9 Ultra portrait/landscape, DeX resizing, S Pen, keyboard focus, TalkBack, system picker destinations, real wallpaper engine preview/visibility/surface recreation, background scheduling/reboot, permission revocation, large-photo memory profiling. An emulator result alone does not certify OEM wallpaper isolation.
+
+## CI repair checkpoint
+
+First CI run: https://github.com/westkitty/DEX_Wallpaper/actions/runs/38083429516 — **FAIL**, at `android-actions/setup-android`, before Gradle or app compilation. Full-log download is blocked by the sandbox's `results-receiver.actions.githubusercontent.com` redirect restriction. Job/check APIs are accessible; no detailed SDK error is fabricated. Check annotations also report deprecated Node 20 / setup-java v4.
+
+Repair: use the verified preinstalled Ubuntu 24.04 SDK 35 instead of a redundant SDK tool download; verify SDK files explicitly. Upgrade build actions to actual current releases read from GitHub and pin their SHAs. Emit bounded Gradle failure / test-count annotations to the accessible check API. This is an infrastructure repair, not evidence that the application compiles yet.
+
+Local Python validator regression tests: **8 passed** (`python3 -m unittest discover -s tools/tests -v`).
