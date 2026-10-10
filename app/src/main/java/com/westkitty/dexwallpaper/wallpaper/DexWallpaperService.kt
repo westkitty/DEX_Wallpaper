@@ -64,8 +64,10 @@ class DexWallpaperService : WallpaperService() {
                     if (destroyed) result?.recycle()
                     else {
                         bitmap?.recycle(); bitmap = result
-                        colors = result?.let { WallpaperColors.fromBitmap(it) }
-                        notifyColorsChanged()
+                        if (android.os.Build.VERSION.SDK_INT >= 27) {
+                            colors = result?.let { WallpaperColors.fromBitmap(it) }
+                            notifyColorsChanged()
+                        }
                         handler.removeCallbacks(frame); handler.post(frame)
                     }
                 }

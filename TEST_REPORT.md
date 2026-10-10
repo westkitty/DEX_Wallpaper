@@ -30,3 +30,7 @@ First CI run: https://github.com/westkitty/DEX_Wallpaper/actions/runs/3808342951
 Repair: use the verified preinstalled Ubuntu 24.04 SDK 35 instead of a redundant SDK tool download; verify SDK files explicitly. Upgrade build actions to actual current releases read from GitHub and pin their SHAs. Emit bounded Gradle failure / test-count annotations to the accessible check API. This is an infrastructure repair, not evidence that the application compiles yet.
 
 Local Python validator regression tests: **8 passed** (`python3 -m unittest discover -s tools/tests -v`).
+
+## Foundation compiler/lint checkpoint
+
+https://github.com/westkitty/DEX_Wallpaper/actions/runs/38083566334 — **FAIL** at `lintDebug`: `WallpaperColors.fromBitmap` requires API 27, but minSdk is 26. The corrected hosted-SDK setup and Kotlin compilation reached Android lint. Repair: explicitly guard color extraction/notification at API 27 and report that capability accurately. No lint suppression or feature deletion. Full test-count evidence is pending a successful verification run.

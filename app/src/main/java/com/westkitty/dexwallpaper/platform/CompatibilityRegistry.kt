@@ -22,7 +22,7 @@ class CompatibilityRegistry(private val context: Context) {
             Capability("OpenGL ES", if (gl >= 0x20000) CapabilityState.SUPPORTED_WITH_LIMITATIONS else CapabilityState.UNSUPPORTED,
                 "Device reports ES ${gl shr 16}.${gl and 65535}. This foundation uses a Canvas renderer; GPU effects are not active."),
             Capability("Vulkan renderer", CapabilityState.UNSUPPORTED, "No Vulkan backend in this build. Static Canvas is the fallback."),
-            Capability("Dynamic wallpaper colors", CapabilityState.SUPPORTED, "Android 8+ color callbacks; Material You requires Android 12+."),
+            Capability("Dynamic wallpaper colors", if (Build.VERSION.SDK_INT >= 27) CapabilityState.SUPPORTED else CapabilityState.UNSUPPORTED, "Color callbacks require Android 8.1+; Material You requires Android 12+."),
             Capability("External displays / DeX", CapabilityState.SUPPORTED_WITH_LIMITATIONS, "$screens display(s) reported. Resizable app windows are supported; external wallpaper ownership is OEM-controlled."),
             Capability("Exact scheduling", CapabilityState.UNSUPPORTED, "No exact-alarm permission. Background rotation is approximate, minimum 15 minutes, and deferred while screen-off or in Battery Saver."),
             Capability("Subject segmentation", CapabilityState.UNSUPPORTED, "No bundled or downloaded detection model. Manual focal points remain available."),
