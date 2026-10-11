@@ -3743,7 +3743,7 @@
   },
   "050": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "NOT_RUN",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicy.kt",
@@ -3760,11 +3760,11 @@
     "permissions": [],
     "api_constraints": [],
     "dependencies": [],
-    "limitations": "Copy adds a library membership without rewriting protected originals, edits, or per-screen settings. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending."
+    "limitations": "Copy adds a library membership without rewriting protected originals, edits, or per-screen settings. Two pure membership-policy tests pass in JVM CI; the Room transaction instrumentation method only compiled and has not run on a device. Compose interaction and device acceptance remain pending."
   },
   "051": {
     "implementation_status": "IMPLEMENTED_UNTESTED",
-    "verification_status": "NOT_RUN",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
     "source_file": [
       "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
       "app/src/main/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicy.kt",
@@ -3781,6 +3781,6 @@
     "permissions": [],
     "api_constraints": [],
     "dependencies": [],
-    "limitations": "Move changes only membership links and confirms before removing the source link; it never deletes the protected original or edit sidecar. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending."
+    "limitations": "Move changes only membership links and confirms before removing the source link; it never deletes the protected original or edit sidecar. Two pure membership-policy tests pass in JVM CI; the Room transaction instrumentation method only compiled and has not run on a device. Compose interaction and device acceptance remain pending."
   }
 }

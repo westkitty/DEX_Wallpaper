@@ -1008,7 +1008,7 @@
       ],
       "ui_location": "Library / artwork details",
       "implementation_status": "IMPLEMENTED_UNTESTED",
-      "verification_status": "NOT_RUN",
+      "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
       "test_reference": [
         "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#copyAddsDestinationAndKeepsSourceMembership",
         "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#copyToExistingDestinationIsIdempotent",
@@ -1017,7 +1017,7 @@
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "Copy adds a library membership without rewriting protected originals, edits, or per-screen settings. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending."
+      "limitations": "Copy adds a library membership without rewriting protected originals, edits, or per-screen settings. Two pure membership-policy tests pass in JVM CI; the Room transaction instrumentation method only compiled and has not run on a device. Compose interaction and device acceptance remain pending."
     },
     {
       "id": "051",
@@ -1032,7 +1032,7 @@
       ],
       "ui_location": "Library / artwork details",
       "implementation_status": "IMPLEMENTED_UNTESTED",
-      "verification_status": "NOT_RUN",
+      "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
       "test_reference": [
         "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#moveAddsDestinationBeforeRemovingSourceMembership",
         "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#movingToExistingDestinationOnlyRemovesSourceLink",
@@ -1041,7 +1041,7 @@
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "Move changes only membership links and confirms before removing the source link; it never deletes the protected original or edit sidecar. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending."
+      "limitations": "Move changes only membership links and confirms before removing the source link; it never deletes the protected original or edit sidecar. Two pure membership-policy tests pass in JVM CI; the Room transaction instrumentation method only compiled and has not run on a device. Compose interaction and device acceptance remain pending."
     },
     {
       "id": "052",
