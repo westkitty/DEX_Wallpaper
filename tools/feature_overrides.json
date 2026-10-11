@@ -3719,5 +3719,26 @@
       "User-authorized endpoint / artwork rights"
     ],
     "limitations": "Per-sync 1–80MB successful-response body budget and Wi-Fi/unmetered gates. Headers/TLS bytes are not metered; no cumulative daily/monthly/account quota."
+  },
+  "047": {
+    "implementation_status": "IMPLEMENTED_UNTESTED",
+    "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
+    "source_file": [
+      "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/data/CollectionPinPolicy.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+      "app/src/main/java/com/westkitty/dexwallpaper/ui/Components.kt"
+    ],
+    "ui_location": "Library / Collection picker",
+    "test_reference": [
+      "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionPinPolicyTest.kt#pinnedCollectionsAppearFirstThenSortByNameAndId",
+      "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionPinPolicyTest.kt#changingPinStatePreservesCollectionIdentityAndFolderLink",
+      "app/src/test/java/com/westkitty/dexwallpaper/core/BackupCodecTest.kt#roundTripPreservesMetadataButNotDeviceGrants"
+    ],
+    "permissions": [],
+    "api_constraints": [],
+    "dependencies": [],
+    "limitations": "The Library can pin/unpin collections; the persisted pinned field is ordered before unpinned choices and labeled in the picker, and backup codec roundtrip preserves it. Two pure JVM pin-policy tests pass; actual Room persistence and Compose interaction remain unverified."
   }
 }

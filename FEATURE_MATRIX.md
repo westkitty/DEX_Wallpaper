@@ -7,11 +7,11 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 ## Totals
 
 - **DONE_VERIFIED**: 4
-- **IMPLEMENTED_UNTESTED**: 140
+- **IMPLEMENTED_UNTESTED**: 141
 - **PARTIAL**: 61
 - **BLOCKED_PLATFORM**: 2
 - **BLOCKED_EXTERNAL**: 2
-- **NOT_IMPLEMENTED**: 67
+- **NOT_IMPLEMENTED**: 66
 - **TOTAL**: 276
 
 ## Individual requirements
@@ -64,7 +64,7 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 044 | Manual image collections | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — A repository-level test is authored for collection creation, imported membership, and persistence after database reopen. This is not an end-to-end Compose/SAF device test. |
 | 045 | Folder-backed collections | IMPLEMENTED_UNTESTED | JVM_POLICY_PASS_DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Folder read access is retained only while a collection references the selected tree; failed/unreferenced grants and replaced trees are reconciled. The pure grant-policy JVM methods pass in Android CI; actual provider and device lifecycle acceptance remains pending. |
 | 046 | Favorites | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
-| 047 | Pinned collections | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 047 | Pinned collections | IMPLEMENTED_UNTESTED | JVM_POLICY_PASS_DEVICE_PENDING | Library / Collection picker — The Library can pin/unpin collections; the persisted pinned field is ordered before unpinned choices and labeled in the picker, and backup codec roundtrip preserves it. Two pure JVM pin-policy tests pass; actual Room persistence and Compose interaction remain unverified. |
 | 048 | Wallpaper tags | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 049 | Tag-filtered rotation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 050 | Copy images between collections | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |

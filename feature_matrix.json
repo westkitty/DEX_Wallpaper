@@ -2,8 +2,8 @@
   "schema_version": 1,
   "total": 276,
   "counts": {
-    "IMPLEMENTED_UNTESTED": 140,
-    "NOT_IMPLEMENTED": 67,
+    "IMPLEMENTED_UNTESTED": 141,
+    "NOT_IMPLEMENTED": 66,
     "PARTIAL": 61,
     "DONE_VERIFIED": 4,
     "BLOCKED_EXTERNAL": 2,
@@ -939,15 +939,25 @@
       "id": "047",
       "name": "Pinned collections",
       "subsystem": "Library & content",
-      "source_file": [],
-      "ui_location": "Not exposed",
-      "implementation_status": "NOT_IMPLEMENTED",
-      "verification_status": "NOT_RUN",
-      "test_reference": [],
+      "source_file": [
+        "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/data/CollectionPinPolicy.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/Components.kt"
+      ],
+      "ui_location": "Library / Collection picker",
+      "implementation_status": "IMPLEMENTED_UNTESTED",
+      "verification_status": "JVM_POLICY_PASS_DEVICE_PENDING",
+      "test_reference": [
+        "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionPinPolicyTest.kt#pinnedCollectionsAppearFirstThenSortByNameAndId",
+        "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionPinPolicyTest.kt#changingPinStatePreservesCollectionIdentityAndFolderLink",
+        "app/src/test/java/com/westkitty/dexwallpaper/core/BackupCodecTest.kt#roundTripPreservesMetadataButNotDeviceGrants"
+      ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "Requirement retained; implementation and acceptance verification remain outstanding."
+      "limitations": "The Library can pin/unpin collections; the persisted pinned field is ordered before unpinned choices and labeled in the picker, and backup codec roundtrip preserves it. Two pure JVM pin-policy tests pass; actual Room persistence and Compose interaction remain unverified."
     },
     {
       "id": "048",
