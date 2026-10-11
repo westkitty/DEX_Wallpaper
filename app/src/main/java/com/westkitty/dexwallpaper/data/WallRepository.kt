@@ -113,6 +113,40 @@ class WallRepository(private val context: Context, val db: DexDatabase, val impo
             }
         }
     }
+    suspend fun transferAsset(
+        assetId: String,
+        sourceCollectionId: String,
+        targetCollectionId: String,
+        mode: CollectionTransferMode,
+    ): Outcome<String> = db.withTransaction {
+        val collections = dao.allCollections()
+        val asset = dao.asset(assetId)
+        val memberships = dao.membershipsForAsset(assetId).mapTo(mutableSetOf()) { it.collectionId }
+        val plan = when (val decision = CollectionTransferPolicy.plan(
+            assetId = assetId,
+            sourceCollectionId = sourceCollectionId,
+            targetCollectionId = targetCollectionId,
+            existingCollectionIds = collections.mapTo(mutableSetOf()) { it.id },
+            assetExists = asset != null,
+            membershipCollectionIds = memberships,
+            mode = mode,
+        )) {
+            is Outcome.Ok -> decision.value
+            is Outcome.Error -> return@withTransaction decision
+        }
+        val target = collections.first { it.id == targetCollectionId }
+        if (plan.addTargetMembership) dao.addMembership(Membership(targetCollectionId, assetId))
+        if (plan.removeSourceMembership) dao.removeMembership(sourceCollectionId, assetId)
+
+        val name = asset?.name ?: "Artwork"
+        val message = when {
+            mode == CollectionTransferMode.COPY && !plan.changesMemberships -> "$name is already linked to ${target.name}."
+            mode == CollectionTransferMode.COPY -> "Copied $name to ${target.name}; the source collection is unchanged."
+            else -> "Moved $name to ${target.name}; the protected original and per-screen settings are unchanged."
+        }
+        Outcome.Ok(message)
+    }
+
     suspend fun createCollection(name: String): String {
         require(name.isNotBlank()) { "Collection needs a name" }
         val id = UUID.randomUUID().toString()

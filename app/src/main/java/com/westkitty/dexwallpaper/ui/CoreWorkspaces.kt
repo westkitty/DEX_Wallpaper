@@ -80,6 +80,7 @@ import kotlinx.coroutines.withContext
     var collectionName by rememberSaveable { mutableStateOf("") }
     var create by remember { mutableStateOf(false) }
     var inspectorId by rememberSaveable { mutableStateOf<String?>(null) }
+    var pendingMoveTargetId by remember { mutableStateOf<String?>(null) }
     val assets = state.collectionAssets.filter { a -> (!favoritesOnly || a.favorite) && (state.search.isBlank() || "${a.name} ${a.tags}".contains(state.search, true)) }
     Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         SectionTitle("Artwork library", "Protected originals. One shared collection database.")
@@ -127,10 +128,53 @@ import kotlinx.coroutines.withContext
                 Text("$similar visually similar image(s) · local dHash heuristic, not proof of identity")
                 OutlinedTextField(tags, { tags = it }, label = { Text("Tags (comma separated)") })
                 Row { TextButton(onClick = { vm.tags(id, tags); vm.notify("Tags saved.") }) { Text("Save tags") }; TextButton(onClick = { vm.exclude(id) }) { Text(if (asset.excluded) "Include in rotation" else "Exclude") } }
+                val transferTargets = state.collections.filterNot { it.id == state.screen.collectionId }
+                var transferTargetId by remember(asset.id, state.screen.collectionId) { mutableStateOf(transferTargets.firstOrNull()?.id) }
+                var transferMenuOpen by remember(asset.id) { mutableStateOf(false) }
+                if (transferTargets.isNotEmpty()) {
+                    Box {
+                        OutlinedButton(onClick = { transferMenuOpen = true }, enabled = !state.busy) {
+                            Text(transferTargets.firstOrNull { it.id == transferTargetId }?.name ?: "Choose collection")
+                        }
+                        DropdownMenu(expanded = transferMenuOpen, onDismissRequest = { transferMenuOpen = false }) {
+                            transferTargets.forEach { target ->
+                                DropdownMenuItem(text = { Text(target.name) }, onClick = {
+                                    transferTargetId = target.id
+                                    transferMenuOpen = false
+                                })
+                            }
+                        }
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        TextButton(onClick = { transferTargetId?.let { vm.transferAsset(id, it, CollectionTransferMode.COPY) } },
+                            enabled = transferTargetId != null && !state.busy) { Text("Copy to collection") }
+                        TextButton(onClick = { transferTargetId?.let { pendingMoveTargetId = it } },
+                            enabled = transferTargetId != null && !state.busy) { Text("Move to collection") }
+                    }
+                    Text("Only collection membership changes. Protected original, edits, and screen configuration stay on this device.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                } else {
+                    Text("Create another collection to copy or move this artwork.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
                 TextButton(onClick = { vm.apply(id, overrideMinutes = 60); inspectorId = null }) { Text("Apply & pin for 1 hour") }
             }
         }, confirmButton = { TextButton(onClick = { vm.apply(id); inspectorId = null }) { Text("Apply to ${state.destination.label.lowercase()}") } }, dismissButton = { TextButton(onClick = { vm.select(id, true); inspectorId = null }) { Text("Edit") } })
     } }
+    val moveTargetId = pendingMoveTargetId
+    val moveTarget = state.collections.firstOrNull { it.id == moveTargetId }
+    val moveAsset = state.assets.firstOrNull { it.id == inspectorId }
+    if (moveTarget != null && moveAsset != null) AlertDialog(
+        onDismissRequest = { pendingMoveTargetId = null },
+        title = { Text("Move artwork to ${moveTarget.name}?") },
+        text = { Text("This removes the artwork's membership from ${state.collection?.name ?: "the current collection"}. Its protected original and edits remain in the library; this does not apply a wallpaper or change screen settings.") },
+        confirmButton = {
+            TextButton(onClick = {
+                vm.transferAsset(moveAsset.id, moveTarget.id, CollectionTransferMode.MOVE)
+                pendingMoveTargetId = null
+                inspectorId = null
+            }, enabled = !state.busy) { Text("Move membership") }
+        },
+        dismissButton = { TextButton(onClick = { pendingMoveTargetId = null }) { Text("Cancel") } },
+    )
 }
 @Composable private fun Thumbnail(vm: DexViewModel, asset: AssetEntity) {
     val bitmap by produceState<android.graphics.Bitmap?>(null, asset.id) {

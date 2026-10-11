@@ -78,6 +78,7 @@ interface LibraryDao {
     @Query("SELECT a.* FROM assets a INNER JOIN membership m ON m.assetId = a.id WHERE m.collectionId = :collection ORDER BY a.name, a.id") suspend fun collectionAssets(collection: String): List<AssetEntity>
     @Query("SELECT * FROM membership") fun observeMemberships(): Flow<List<Membership>>
     @Query("SELECT * FROM membership") suspend fun memberships(): List<Membership>
+    @Query("SELECT * FROM membership WHERE assetId = :assetId") suspend fun membershipsForAsset(assetId: String): List<Membership>
     @Query("SELECT * FROM edits WHERE assetId = :id") suspend fun edit(id: String): EditEntity?
     @Query("SELECT * FROM edits") suspend fun allEdits(): List<EditEntity>
     @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun putEdit(edit: EditEntity)

@@ -172,6 +172,13 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
             "${if (pinned) "Pinned" else "Unpinned"} ${collection.name}; the collection picker updates its order."
         }
     }
+    fun transferAsset(assetId: String, targetCollectionId: String, mode: CollectionTransferMode) {
+        val sourceCollectionId = state.value.screen.collectionId
+        if (sourceCollectionId == targetCollectionId) { notify("Choose a different destination collection."); return }
+        runOperation(if (mode == CollectionTransferMode.COPY) "Copying artwork link…" else "Moving artwork link…") {
+            graph.repository.transferAsset(assetId, sourceCollectionId, targetCollectionId, mode).message()
+        }
+    }
     fun favorite(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(favorite = !it.favorite)) } } }
     fun exclude(id: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(excluded = !it.excluded)) } } }
     fun tags(id: String, value: String) { viewModelScope.launch { graph.repository.dao.asset(id)?.let { graph.repository.dao.updateAsset(it.copy(tags = value.take(400))) } } }

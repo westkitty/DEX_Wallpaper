@@ -2,8 +2,8 @@
   "schema_version": 1,
   "total": 276,
   "counts": {
-    "IMPLEMENTED_UNTESTED": 141,
-    "NOT_IMPLEMENTED": 66,
+    "IMPLEMENTED_UNTESTED": 143,
+    "NOT_IMPLEMENTED": 64,
     "PARTIAL": 61,
     "DONE_VERIFIED": 4,
     "BLOCKED_EXTERNAL": 2,
@@ -999,29 +999,49 @@
       "id": "050",
       "name": "Copy images between collections",
       "subsystem": "Library & content",
-      "source_file": [],
-      "ui_location": "Not exposed",
-      "implementation_status": "NOT_IMPLEMENTED",
+      "source_file": [
+        "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicy.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      ],
+      "ui_location": "Library / artwork details",
+      "implementation_status": "IMPLEMENTED_UNTESTED",
       "verification_status": "NOT_RUN",
-      "test_reference": [],
+      "test_reference": [
+        "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#copyAddsDestinationAndKeepsSourceMembership",
+        "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#copyToExistingDestinationIsIdempotent",
+        "app/src/androidTest/java/com/westkitty/dexwallpaper/CollectionTransferTest.kt#copyAndMoveChangeOnlyMembershipsAndKeepScreenConfiguration"
+      ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "Requirement retained; implementation and acceptance verification remain outstanding."
+      "limitations": "Copy adds a library membership without rewriting protected originals, edits, or per-screen settings. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending."
     },
     {
       "id": "051",
       "name": "Move images between collections",
       "subsystem": "Library & content",
-      "source_file": [],
-      "ui_location": "Not exposed",
-      "implementation_status": "NOT_IMPLEMENTED",
+      "source_file": [
+        "app/src/main/java/com/westkitty/dexwallpaper/data/Database.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicy.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/data/WallRepository.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/DexViewModel.kt",
+        "app/src/main/java/com/westkitty/dexwallpaper/ui/CoreWorkspaces.kt"
+      ],
+      "ui_location": "Library / artwork details",
+      "implementation_status": "IMPLEMENTED_UNTESTED",
       "verification_status": "NOT_RUN",
-      "test_reference": [],
+      "test_reference": [
+        "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#moveAddsDestinationBeforeRemovingSourceMembership",
+        "app/src/test/java/com/westkitty/dexwallpaper/data/CollectionTransferPolicyTest.kt#movingToExistingDestinationOnlyRemovesSourceLink",
+        "app/src/androidTest/java/com/westkitty/dexwallpaper/CollectionTransferTest.kt#copyAndMoveChangeOnlyMembershipsAndKeepScreenConfiguration"
+      ],
       "permissions": [],
       "api_constraints": [],
       "dependencies": [],
-      "limitations": "Requirement retained; implementation and acceptance verification remain outstanding."
+      "limitations": "Move changes only membership links and confirms before removing the source link; it never deletes the protected original or edit sidecar. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending."
     },
     {
       "id": "052",

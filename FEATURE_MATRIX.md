@@ -7,11 +7,11 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 ## Totals
 
 - **DONE_VERIFIED**: 4
-- **IMPLEMENTED_UNTESTED**: 141
+- **IMPLEMENTED_UNTESTED**: 143
 - **PARTIAL**: 61
 - **BLOCKED_PLATFORM**: 2
 - **BLOCKED_EXTERNAL**: 2
-- **NOT_IMPLEMENTED**: 66
+- **NOT_IMPLEMENTED**: 64
 - **TOTAL**: 276
 
 ## Individual requirements
@@ -67,8 +67,8 @@ Generated from `tools/feature_names.txt` and explicit `tools/feature_overrides.j
 | 047 | Pinned collections | IMPLEMENTED_UNTESTED | JVM_POLICY_PASS_DEVICE_PENDING | Library / Collection picker — The Library can pin/unpin collections; the persisted pinned field is ordered before unpinned choices and labeled in the picker, and backup codec roundtrip preserves it. Two pure JVM pin-policy tests pass; actual Room persistence and Compose interaction remain unverified. |
 | 048 | Wallpaper tags | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 049 | Tag-filtered rotation | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 050 | Copy images between collections | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
-| 051 | Move images between collections | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
+| 050 | Copy images between collections | IMPLEMENTED_UNTESTED | NOT_RUN | Library / artwork details — Copy adds a library membership without rewriting protected originals, edits, or per-screen settings. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending. |
+| 051 | Move images between collections | IMPLEMENTED_UNTESTED | NOT_RUN | Library / artwork details — Move changes only membership links and confirms before removing the source link; it never deletes the protected original or edit sidecar. Pure policy and Room transaction tests are authored but not yet executed; Compose interaction and device acceptance remain pending. |
 | 052 | Multi-image selection and editing | NOT_IMPLEMENTED | NOT_RUN | Not exposed — Requirement retained; implementation and acceptance verification remain outstanding. |
 | 053 | Thumbnail gallery | IMPLEMENTED_UNTESTED | DEVICE_PENDING | Control / Library / Rotation / Editor / Rules — Code exists; Android compilation, unit execution, and device acceptance are not yet verified. Core tests are committed but not executed. |
 | 054 | Full-screen previews | PARTIAL | NOT_RUN | Relevant native workspace — Foundation or limited behavior only. Full individual acceptance and expanded capability remain outstanding. |
