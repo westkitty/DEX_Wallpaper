@@ -141,13 +141,28 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
             val hash = digest.digest().joinToString("") { "%02x".format(it) }
             val existing = db.library().byHash(hash)
             if (existing != null) {
-                if (!file(existing).isFile || existing.quarantined) {
-                    val decoded = pipeline.decode(temp, 320, 320)
-                    try { writeThumbnail(decoded, LibraryFilePath.resolve(thumbnails, "${existing.id}.jpg")) } finally { decoded.recycle() }
-                    java.nio.file.Files.move(temp.toPath(), file(existing).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE)
-                    db.library().updateAsset(existing.copy(quarantined = false, sourceUri = uri.toString()))
+                // An existing path can contain modified/corrupt bytes even when its
+                // database row was not quarantined. Reverify before trusting it.
+                val localIsIntact = OriginalIntegrity.matches(file(existing), hash, count)
+                if (localIsIntact) {
+                    db.withTransaction {
+                        if (existing.quarantined) db.library().updateAsset(existing.copy(quarantined=false, sourceUri=uri.toString()))
+                        db.library().addMembership(Membership(collection,existing.id))
+                    }
+                } else {
+                    val decoded=pipeline.decode(temp,320,320)
+                    try { writeThumbnail(decoded, LibraryFilePath.resolve(thumbnails,"${existing.id}.jpg")) }
+                    finally { decoded.recycle() }
+                    require(!target.exists()) { "New recovery file name already exists" }
+                    // A fresh opaque filename is committed atomically with the DB
+                    // pointer. The previous file is never replaced or deleted.
+                    java.nio.file.Files.move(temp.toPath(),target.toPath(),java.nio.file.StandardCopyOption.ATOMIC_MOVE)
+                    db.withTransaction {
+                        db.library().updateAsset(existing.copy(relativePath=target.name,quarantined=false,sourceUri=uri.toString()))
+                        db.library().addMembership(Membership(collection,existing.id))
+                    }
+                    committed=true
                 }
-                db.library().addMembership(Membership(collection, existing.id))
                 return false
             }
             val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -200,7 +215,14 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
     suspend fun validateAssets(): Int = withContext(Dispatchers.IO) {
         var missing = 0
         db.library().allAssets().forEach { asset ->
-            val broken = if (!file(asset).isFile) true else try { pipeline.decode(file(asset), 160, 160).also { it.recycle() }; false } catch (_: Exception) { true }
+            // A decodable image may still have been modified since import. Never clear
+            // quarantine until both the stored content hash and decoder agree.
+            val original = file(asset)
+            val trustedBytes = OriginalIntegrity.matches(original, asset.sha256, asset.bytes)
+            val broken = if (!trustedBytes) true else try {
+                pipeline.decode(original, 160, 160).also { it.recycle() }
+                false
+            } catch (_: Exception) { true }
             if (broken) missing++
             if (asset.quarantined != broken) db.library().updateAsset(asset.copy(quarantined = broken))
         }

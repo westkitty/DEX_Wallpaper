@@ -41,6 +41,30 @@ class NativePipelineTest {
             assertTrue(db.library().asset(asset.id)!!.quarantined)
         } finally { source.delete(); db.close() }
     }
+    @Test fun alteredButDecodableOriginalIsQuarantined() = runBlocking {
+        val db = Room.inMemoryDatabaseBuilder(context,DexDatabase::class.java).build()
+        val pipeline = BitmapPipeline()
+        val importer = AssetImporter(context,db,pipeline)
+        val source = File(context.cacheDir,"integrity-fixture-original.png")
+        val original = Bitmap.createBitmap(120,80,Bitmap.Config.ARGB_8888).apply { eraseColor(Color.RED) }
+        source.outputStream().use { assertTrue(original.compress(Bitmap.CompressFormat.PNG,100,it)) }
+        original.recycle()
+        try {
+            db.library().putCollection(CollectionEntity("integrity","Integrity"))
+            assertEquals(1,importer.importUris(listOf(Uri.fromFile(source)),"integrity") {}.imported)
+            val asset = db.library().allAssets().single()
+            val altered = Bitmap.createBitmap(120,80,Bitmap.Config.ARGB_8888).apply { eraseColor(Color.BLUE) }
+            importer.file(asset).outputStream().use { assertTrue(altered.compress(Bitmap.CompressFormat.PNG,100,it)) }
+            altered.recycle()
+            // Demonstrate that the replacement is a valid bitmap. Old validation would
+            // have falsely treated it as healthy because it only decoded the image.
+            pipeline.decode(importer.file(asset),160,160).recycle()
+            assertFalse(OriginalIntegrity.matches(importer.file(asset),asset.sha256,asset.bytes))
+            assertEquals(1,importer.validateAssets())
+            assertTrue(db.library().asset(asset.id)!!.quarantined)
+        } finally { source.delete();db.close() }
+    }
+
     @Test fun corruptInputIsRejectedWithoutRows() = runBlocking {
         val db = Room.inMemoryDatabaseBuilder(context,DexDatabase::class.java).build()
         val importer = AssetImporter(context,db,BitmapPipeline())

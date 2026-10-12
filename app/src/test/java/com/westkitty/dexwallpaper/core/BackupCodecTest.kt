@@ -16,5 +16,13 @@ class BackupCodecTest {
         assertTrue(runCatching { BackupCodec.decode(BackupCodec.encode(snapshot).replace("\"version\":1","\"version\":999")) }.isFailure)
         assertTrue(runCatching { BackupCodec.decode(BackupCodec.encode(snapshot).replace("\"id\":\"a\"","\"id\":\"../secret\"")) }.isFailure)
     }
+    @Test fun duplicateRuleAndSceneIdentitiesRejectedBeforeRestore() {
+        val rule=RuleEntity("same-rule","Rule","c",1)
+        val duplicateRules=snapshot.copy(rules=listOf(rule,rule.copy(name="Conflicting rule")))
+        assertTrue(runCatching { BackupCodec.decode(BackupCodec.encode(duplicateRules)) }.isFailure)
+        val scene=SceneEntity("same-scene","Scene",SceneCodec.encode(SceneManifest(title="Scene")),123)
+        val duplicateScenes=snapshot.copy(scenes=listOf(scene,scene.copy(name="Another scene")))
+        assertTrue(runCatching { BackupCodec.decode(BackupCodec.encode(duplicateScenes)) }.isFailure)
+    }
     @Test fun danglingMembershipRejected() { assertTrue(runCatching { BackupCodec.decode(BackupCodec.encode(snapshot.copy(memberships=listOf(Membership("c","missing"))))) }.isFailure) }
 }

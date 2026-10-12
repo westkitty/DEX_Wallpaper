@@ -93,6 +93,8 @@ object BackupCodec {
             val manifest=s.getString("manifest"); require(SceneCodec.decode(manifest) is Outcome.Ok) { "Invalid scene in backup" }
             SceneEntity(id(s.getString("id")),s.getString("name").take(120),manifest,s.optLong("updatedAt",0),s.optInt("revision",1).coerceAtLeast(1))
         }
+        require(rules.map { it.id }.distinct().size==rules.size) { "Duplicate backup rule identities" }
+        require(scenes.map { it.id }.distinct().size==scenes.size) { "Duplicate backup scene identities" }
         val p=root.optJSONObject("preferences") ?: JSONObject()
         val shader=p.optString("shaderEffect","NONE"); require(shader in com.westkitty.dexwallpaper.core.ShaderEffect.entries.map { it.name }) { "Unknown shader effect" }
         val transition=p.optString("transition","CROSSFADE"); require(transition in com.westkitty.dexwallpaper.core.Transition.entries.map { it.name }) { "Unknown transition" }

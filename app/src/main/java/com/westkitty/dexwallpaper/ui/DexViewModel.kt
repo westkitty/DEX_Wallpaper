@@ -244,7 +244,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
             "Synchronized: ${result.imported} new, ${result.duplicates} existing, ${result.rejected} rejected.$limitNote${cleanup.warningSuffix()}"
         }
     }
-    fun validateAssets() { runOperation("Checking library files…") { "${graph.importer.validateAssets()} missing files quarantined. Originals are never deleted." } }
+    fun validateAssets() { runOperation("Checking library files…") { "${graph.importer.validateAssets()} missing, altered or unreadable originals quarantined. Originals are never deleted." } }
     fun setFlag(key: String, value: Boolean) { viewModelScope.launch { graph.preferences.flag(key, value) } }
     fun setText(key: String, value: String) { viewModelScope.launch { graph.preferences.text(key, value) } }
     fun setDecimal(key: String, value: Float) { viewModelScope.launch { graph.preferences.decimal(key, value) } }

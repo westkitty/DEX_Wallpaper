@@ -15,10 +15,16 @@ object Chronoscape {
     fun evaluate(rules: List<ContextRule>, context: ContextSnapshot): RuleDecision {
         val evaluations = rules.sortedWith(compareByDescending<ContextRule> { it.priority }.thenBy { it.id }).map { rule ->
             val time = context.time.toLocalTime()
-            val inTime = if (rule.start <= rule.end) time >= rule.start && time <= rule.end else time >= rule.start || time <= rule.end
+            val overnight = rule.start > rule.end
+            // An overnight window belongs to the day on which it STARTED.
+            // E.g. Friday 22:00–Saturday 02:00 remains a Friday rule after midnight.
+            val owningDay = if (overnight && time <= rule.end) context.time.dayOfWeek.minus(1)
+                            else context.time.dayOfWeek
+            val inTime = if (overnight) time >= rule.start || time <= rule.end
+                         else time >= rule.start && time <= rule.end
             val reason = when {
                 !rule.enabled -> "Disabled"
-                context.time.dayOfWeek !in rule.days -> "Day does not match"
+                owningDay !in rule.days -> "Day does not match"
                 !inTime -> "Outside time window"
                 rule.charging != null && rule.charging != context.charging -> "Charging condition does not match"
                 rule.darkTheme != null && rule.darkTheme != context.darkTheme -> "Theme does not match"
@@ -35,16 +41,31 @@ object Chronoscape {
     fun conflicts(rules: List<ContextRule>): List<Pair<String, String>> {
         val enabled = rules.filter { it.enabled }
         return enabled.flatMapIndexed { i, a -> enabled.drop(i + 1).filter { b ->
-            a.priority == b.priority && a.collectionId != b.collectionId && a.days.intersect(b.days).isNotEmpty() &&
+            a.priority == b.priority && a.collectionId != b.collectionId &&
                 (a.charging == null || b.charging == null || a.charging == b.charging) &&
                 (a.darkTheme == null || b.darkTheme == null || a.darkTheme == b.darkTheme) &&
-                timeOverlap(a, b)
+                weeklyOverlap(a, b)
         }.map { a.id to it.id } }
     }
-    private fun timeOverlap(a: ContextRule, b: ContextRule): Boolean = (0..1439).any { minute ->
-        val t = LocalTime.of(minute / 60, minute % 60)
-        fun contains(rule: ContextRule) = if (rule.start <= rule.end) t >= rule.start && t <= rule.end else t >= rule.start || t <= rule.end
-        contains(a) && contains(b)
+    /** Weekly second ranges preserve overnight spillover, including Sunday into Monday. */
+    private fun weeklyRanges(rule: ContextRule): List<IntRange> = buildList {
+        val secondsPerDay = 86_400
+        val start = rule.start.toSecondOfDay()
+        val end = rule.end.toSecondOfDay()
+        for (day in rule.days) {
+            val offset = (day.value - 1) * secondsPerDay
+            if (rule.start <= rule.end) add(offset + start..offset + end)
+            else {
+                add(offset + start..offset + secondsPerDay - 1)
+                val nextOffset = (day.value % 7) * secondsPerDay
+                add(nextOffset..nextOffset + end)
+            }
+        }
+    }
+    private fun weeklyOverlap(a: ContextRule, b: ContextRule): Boolean {
+        val aRanges = weeklyRanges(a)
+        val bRanges = weeklyRanges(b)
+        return aRanges.any { x -> bRanges.any { y -> x.first <= y.last && y.first <= x.last } }
     }
     fun preview(rules: List<ContextRule>, context: ContextSnapshot, hours: Int): List<Pair<ZonedDateTime, String?>> =
         (0 until hours.coerceIn(1, 168)).map { h -> context.time.plusHours(h.toLong()).let { time -> time to evaluate(rules, context.copy(time = time)).winner?.collectionId } }
@@ -53,8 +74,19 @@ object ScheduleMath {
     const val MIN_PERIOD_MINUTES = 15L
     fun nextDaily(now: ZonedDateTime, time: LocalTime, days: Set<DayOfWeek>): ZonedDateTime? {
         if (days.isEmpty()) return null
-        return (0..7).map { now.toLocalDate().plusDays(it.toLong()).atTime(time).atZone(now.zone) }
-            .firstOrNull { it > now && it.dayOfWeek in days }
+        // On fall-back days the same local clock time can happen twice. If the first
+        // occurrence has passed, the second is still a valid future occurrence.
+        // In spring gaps atZone resolves to the first valid time after the gap.
+        for (offset in 0..7) {
+            val date = now.toLocalDate().plusDays(offset.toLong())
+            if (date.dayOfWeek !in days) continue
+            val local = date.atTime(time)
+            val validOffsets = now.zone.rules.getValidOffsets(local)
+            val occurrences = if (validOffsets.isEmpty()) listOf(local.atZone(now.zone))
+                              else validOffsets.map { ZonedDateTime.ofLocal(local, now.zone, it) }
+            occurrences.sorted().firstOrNull { it.isAfter(now) }?.let { return it }
+        }
+        return null
     }
     fun nextInterval(lastSuccess: Long, now: Long, minutes: Long): Long =
         maxOf(lastSuccess, now) + minutes.coerceIn(MIN_PERIOD_MINUTES, 10080) * 60_000

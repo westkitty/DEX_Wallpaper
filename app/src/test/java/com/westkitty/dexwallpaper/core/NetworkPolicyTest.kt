@@ -19,5 +19,14 @@ class NetworkPolicyTest {
         assertEquals(300L,NetworkPolicy.retryAfterSeconds("300",now))
         assertNull(NetworkPolicy.retryAfterSeconds(null,now))
     }
+    @Test fun malformedRetryHeadersFallBackInsteadOfCrashingSync() {
+        val now=java.time.Instant.parse("2026-10-10T00:00:00Z")
+        for(header in listOf("", "  ", "not a date", "9999999999999999999999999999999", "1.5")) {
+            assertNull(NetworkPolicy.retryAfterSeconds(header,now))
+        }
+        assertEquals(0L,NetworkPolicy.retryAfterSeconds("-30",now))
+        assertEquals(300L,NetworkPolicy.retryAfterSeconds(" 300 ",now))
+        assertEquals(0L,NetworkPolicy.retryAfterSeconds("Fri, 09 Oct 2026 00:00:00 GMT",now))
+    }
     @Test fun budgetsRejectMeteredAndOversizedRequests() { assertFalse(NetworkPolicy.mayTransfer(true,false,false,false,0,1,100));assertFalse(NetworkPolicy.mayTransfer(false,false,true,true,0,1,100));assertFalse(NetworkPolicy.mayTransfer(false,true,true,true,50,51,100));assertTrue(NetworkPolicy.mayTransfer(true,false,true,false,50,50,100)) }
 }

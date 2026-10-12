@@ -40,9 +40,14 @@ object NetworkPolicy {
         return a==0 || a==100 && b in 64..127 || a==198 && b in 18..19
     }
     fun retryAfterSeconds(header: String?,now: java.time.Instant=java.time.Instant.now()): Long? {
-        if(header==null) return null
-        val seconds=header.toLongOrNull() ?: java.time.Duration.between(now,java.time.ZonedDateTime.parse(header,java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME).toInstant()).seconds
-        return seconds.coerceAtLeast(0)
+        val value = header?.trim()?.takeIf { it.isNotEmpty() } ?: return null
+        value.toLongOrNull()?.let { return it.coerceAtLeast(0) }
+        // Servers may send malformed/oversized Retry-After values. Treat those as
+        // absent and use the bounded exponential fallback, not a parser crash.
+        return runCatching {
+            val deadline = java.time.ZonedDateTime.parse(value,java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME).toInstant()
+            java.time.Duration.between(now,deadline).seconds.coerceAtLeast(0)
+        }.getOrNull()
     }
     fun retryDelayMillis(attempt: Int,retryAfterSeconds: Long?=null): Long =
         (retryAfterSeconds?.coerceIn(1,60)?.times(1000) ?: min(60_000L,2000L*(1L shl attempt.coerceIn(0,5))))

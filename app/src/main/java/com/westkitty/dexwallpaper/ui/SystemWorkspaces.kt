@@ -188,7 +188,7 @@ import java.time.format.DateTimeFormatter
         Eyebrow("Storage budget")
         sizes.forEach { (name, bytes) -> DataLine(name, "${"%.1f".format(bytes / 1048576.0)} MB") }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = { vm.validateAssets(); refresh++ }, enabled = !state.busy) { Text("Check missing files") }
+            OutlinedButton(onClick = { vm.validateAssets(); refresh++ }, enabled = !state.busy) { Text("Verify original integrity") }
             OutlinedButton(onClick = { vm.graph.scope.launch { vm.graph.importer.thumbnails.listFiles()?.forEach { it.delete() }; vm.notify("Thumbnail cache cleared; originals kept."); refresh++ } }) { Text("Clear thumbnails") }
         }
         Text("Missing originals are quarantined, not deleted. Re-import the same source to recover matching hashes without changing identity.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
