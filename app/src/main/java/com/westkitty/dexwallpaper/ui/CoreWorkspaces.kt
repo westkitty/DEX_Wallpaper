@@ -180,9 +180,8 @@ import kotlinx.coroutines.withContext
     val bitmap by produceState<android.graphics.Bitmap?>(null, asset.id) {
         value = withContext(Dispatchers.IO) { try { android.graphics.BitmapFactory.decodeFile(vm.graph.importer.thumbnail(asset).path) } catch (e: kotlinx.coroutines.CancellationException) { throw e } catch (_: Exception) { null } }
     }
-    DisposableEffect(bitmap) {
-        onDispose { bitmap?.takeUnless { it.isRecycled }?.recycle() }
-    }
+    // Never recycle a Bitmap while its Compose painter may still draw it.
+    // The native allocation is reclaimed after Compose drops the last reference.
     Box(Modifier.fillMaxWidth().aspectRatio(1.6f).clip(RoundedCornerShape(6.dp)).background(MaterialTheme.colorScheme.surfaceContainer), contentAlignment = Alignment.Center) {
         bitmap?.let { Image(it.asImageBitmap(), asset.name, Modifier.fillMaxSize(), contentScale = ContentScale.Crop) }
             ?: Icon(Icons.Outlined.BrokenImage, "Thumbnail unavailable for ${asset.name}")

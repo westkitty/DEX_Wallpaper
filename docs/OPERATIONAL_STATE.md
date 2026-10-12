@@ -95,3 +95,11 @@ Instrumentation compilation is now verified; keep runtime acceptance separate. S
 ## Requested next-chat handoff
 
 The user requested stage/commit/push and a takeover prompt. Existing implementation was clean and independently matched the remote before handoff preparation. [HANDOFF_PROMPT.md](HANDOFF_PROMPT.md) contains a self-contained copy/paste continuation contract, exact verified baseline, full remaining-scope references, priorities, safety invariants and failed approaches. Start the next Arena chat from the existing feature branch, **not README-only main**; respect any newly assigned Arena session branch. This handoff documentation does not alter app/test source or promote a requirement.
+
+## 2026-10-12 — Galaxy Tab S9 Ultra recycled-bitmap crash (newer incident record)
+
+Observed on the physical SM-X910 with production debug build from commit `dc97ce21823ff0c74fbb620c94901de3330b51b8`: multiple Android crash-buffer entries for `com.westkitty.dexwallpaper` show `FATAL EXCEPTION: main`, `java.lang.RuntimeException: Canvas: trying to use a recycled bitmap`, and Compose `BitmapPainter.onDraw` / `AndroidCanvas.drawImageRect`. This is direct evidence of a rendering-lifecycle crash, not proof the selected source images were unsupported.
+
+At the failing baseline, `ui/CoreWorkspaces.kt` (Thumbnail) and `ui/Components.kt` (ArtworkPreview) explicitly called `Bitmap.recycle()` from Compose `DisposableEffect` while `Image(...asImageBitmap())` could still be drawing the same native bitmap. The bounded repair removes those two premature recycling actions. It does not change the importer, source files, saved artwork, wallpaper destination controller, or Home/Lock rules. Regression guards include a CI source-policy check and an Android Compose import/library/editor/recreation test.
+
+**Evidence states:** observed crash = verified; source-level ownership defect = verified; code-level repair = implemented; Android CI build = pending; physical import journey with fixed APK = unverified. The user uninstalled the crashing app. Do **not** reinstall it or change either wallpaper without a new explicit request. The older emulator instability is separate from this observed on-device exception.
