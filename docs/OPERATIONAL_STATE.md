@@ -103,3 +103,11 @@ Observed on the physical SM-X910 with production debug build from commit `dc97ce
 At the failing baseline, `ui/CoreWorkspaces.kt` (Thumbnail) and `ui/Components.kt` (ArtworkPreview) explicitly called `Bitmap.recycle()` from Compose `DisposableEffect` while `Image(...asImageBitmap())` could still be drawing the same native bitmap. The bounded repair removes those two premature recycling actions. It does not change the importer, source files, saved artwork, wallpaper destination controller, or Home/Lock rules. Regression guards include a CI source-policy check and an Android Compose import/library/editor/recreation test.
 
 **Evidence states:** observed crash = verified; source-level ownership defect = verified; code-level repair = implemented; Android CI build = pending; physical import journey with fixed APK = unverified. The user uninstalled the crashing app. Do **not** reinstall it or change either wallpaper without a new explicit request. The older emulator instability is separate from this observed on-device exception.
+
+## 2026-10-12 — Opt-in unlock rotation and short video clips
+
+Requested: independent wallpaper change on device unlock for Home and Lock, plus short animated clip support, Git commit/push and tablet ADB installation. Source implementation uses persisted disabled-by-default flags, a special-use foreground monitor with dynamically registered `ACTION_USER_PRESENT` and visible ongoing notification, existing per-destination `WallRepository.next(...)` safety checks, and no implicit Both changes. Android 8+ manifest implicit receivers are not reliable for this event; background service restrictions can still block boot-time resumption.
+
+Media support is limited to local MP4/WebM up to 15 seconds and 30 MB, uses metadata validation, silent playback through the system-assigned DEX live engine, still poster thumbnails, and the OEM live wallpaper picker for final assignment. Static rotation excludes clips. Original photo and video bytes stay private. Installation alone never applies Home or Lock wallpaper.
+
+Verification state: **implementation pending build**, live picker/Lock OEM acceptance and physical real unlock/video playback unverified until exercised. No new Home or Lock automated writes should be inferred from source presence or a passing CI build.

@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.westkitty.dexwallpaper.core.ImageEdit
+import com.westkitty.dexwallpaper.core.VideoClips
 import com.westkitty.dexwallpaper.data.AssetEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,7 +48,8 @@ import kotlinx.coroutines.withContext
             value = withContext(Dispatchers.IO) {
                 try {
                     val file = vm.graph.importer.file(asset)
-                    if (original) vm.graph.pipeline.decode(file, 1000, 1000)
+                    if (VideoClips.isVideo(asset)) VideoClips.poster(file,if(portrait) 625 else 1000,if(portrait) 1000 else 625)
+                    else if (original) vm.graph.pipeline.decode(file, 1000, 1000)
                     else vm.graph.pipeline.render(file, if (portrait) 625 else 1000, if (portrait) 1000 else 625,
                         edit ?: vm.graph.repository.dao.edit(asset.id)?.model() ?: ImageEdit(), vm.state.value.preferences.safeMode)
                 } catch (e: kotlinx.coroutines.CancellationException) { throw e }

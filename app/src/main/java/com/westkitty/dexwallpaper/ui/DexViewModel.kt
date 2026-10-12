@@ -100,10 +100,30 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
     fun apply(id: String? = state.value.selected?.id, overrideMinutes: Int = 0) {
         val target = state.value.destination
         if (id == null) { notify("Import and select artwork first."); return }
+        if (state.value.selected?.id == id && state.value.selected?.let(VideoClips::isVideo) == true) {
+            notify("Animated clips use Motion → live wallpaper picker; a static write would freeze the clip.")
+            return
+        }
         runOperation("Rendering ${target.label.lowercase()}…") { graph.repository.apply(id, target, overrideMinutes).message() }
     }
     fun togglePause() { val s = state.value; updateScreen { it.copy(paused = !s.screen.paused) } }
     fun enableRotation(enabled: Boolean) { updateScreen { it.copy(enabled = enabled, paused = false) } }
+    fun setUnlockRotation(enabled: Boolean) {
+        val target = state.value.destination
+        if (target == Destination.BOTH) { notify("Choose Home or Lock separately."); return }
+        viewModelScope.launch {
+            val key = if (target == Destination.HOME) "rotateOnUnlockHome" else "rotateOnUnlockLock"
+            try {
+                graph.preferences.flag(key, enabled)
+                com.westkitty.dexwallpaper.worker.UnlockRotationMonitor.reconcile(graph.context, graph.preferences.flow.first())
+                notify(if (enabled) "Unlock rotation enabled for ${target.label.lowercase()}. An ongoing notification keeps the listener active."
+                    else "Unlock rotation disabled for ${target.label.lowercase()}.")
+            } catch (e: RuntimeException) {
+                graph.preferences.flag(key, false)
+                notify("Android could not start unlock monitoring: ${e.message?.take(120) ?: "system restriction"}. This destination remains disabled.")
+            }
+        }
+    }
     fun updateScreen(transform: (ScreenEntity) -> ScreenEntity) {
         val target = state.value.destination
         viewModelScope.launch { graph.repository.updateScreen(target, transform); graph.scheduler.reconcile() }
@@ -198,7 +218,7 @@ class DexViewModel(val graph: AppGraph, private val saved: SavedStateHandle) : V
                 cleanup = cleanupSafGrants()
             }
             val limitNote = if (result.truncated) " Scan stopped at the 5,000-item limit; choose a smaller selection for the rest." else ""
-            "Imported ${result.imported}; linked ${result.duplicates} duplicates; rejected ${result.rejected}.$limitNote${cleanup.warningSuffix()}"
+            "Imported ${result.imported}; linked ${result.duplicates} duplicates; rejected ${result.rejected}.${if (result.rejected > 0) " Last error: ${result.message}" else ""}$limitNote${cleanup.warningSuffix()}"
         }
     }
     fun importFolder(uri: Uri, includeHidden: Boolean = false) {

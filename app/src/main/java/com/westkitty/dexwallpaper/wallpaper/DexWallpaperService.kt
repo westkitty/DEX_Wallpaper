@@ -7,6 +7,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
@@ -40,6 +41,7 @@ class DexWallpaperService : WallpaperService() {
         @Volatile private var width=1
         @Volatile private var height=1
         private var bitmap: Bitmap?=null // Engine thread only.
+        private var clipPlayer: MediaPlayer?=null // Engine thread only.
         @Volatile private var colors: WallpaperColors?=null
         private var prefs=WorkspacePreferences()
         private var gl: GlWallpaperRenderer?=null
@@ -62,7 +64,7 @@ class DexWallpaperService : WallpaperService() {
         private var recoveryAttempted=false
         private val frame=object: Runnable {
             override fun run() {
-                if(!visible || !surfaceReady || destroyed) return
+                if(!visible || !surfaceReady || destroyed || clipPlayer!=null) return
                 val transitioning=transitionStart>0 && android.os.SystemClock.uptimeMillis()-transitionStart<prefs.transitionMs
                 val continuous=gl!=null && (transitioning || (prefs.zoomAnimation && !prefs.reducedMotion))
                 val animated=continuous || (gl!=null && (prefs.parallax || prefs.gyroParallax))
@@ -142,6 +144,7 @@ class DexWallpaperService : WallpaperService() {
         }
         private fun scheduleFrame() {
             handler.removeCallbacks(frame)
+            if(clipPlayer != null) return // MediaPlayer owns the Surface for short video loops.
             if(visible && surfaceReady && !destroyed) {
                 val thermal=if(Build.VERSION.SDK_INT>=29) power.currentThermalStatus else 0
                 val q=AdaptiveQualityPolicy.evaluate(QualityInput(true,true,prefs.frameRate,power.isPowerSaveMode,thermal,getSystemService(ActivityManager::class.java).isLowRamDevice,prefs.reducedMotion,prefs.safeMode,gl!=null))
@@ -151,6 +154,7 @@ class DexWallpaperService : WallpaperService() {
         }
         private fun reload() {
             loading?.cancel()
+            stopClip()
             val generation=++loadGeneration
             if(!surfaceReady || !visible || destroyed) return
             if(prefs.safeMode || prefs.clockOverlay || prefs.batteryOverlay) { gl?.close(); gl=null }
@@ -162,7 +166,18 @@ class DexWallpaperService : WallpaperService() {
             val edit=sourceEdit
             loading=scope.launch {
                 val asset=graph.repository.dao.asset(id) ?: return@launch
-                val result=try { graph.pipeline.render(graph.importer.file(asset),w,h,edit,safe) }
+                if (VideoClips.isVideo(asset) && !prefs.reducedMotion && !safe) {
+                    val file = graph.importer.file(asset)
+                    handler.post {
+                        if (!destroyed && visible && surfaceReady && generation==loadGeneration)
+                            startClip(file,generation)
+                    }
+                    return@launch
+                }
+                val result=try {
+                    if (VideoClips.isVideo(asset)) VideoClips.poster(graph.importer.file(asset),w,h)
+                    else graph.pipeline.render(graph.importer.file(asset),w,h,edit,safe)
+                }
                     catch(e: CancellationException) { throw e }
                     catch(_: Exception) { RenderTelemetry.lastError="Live source decode failed; recover artwork or commit another source";null }
                 if(!isActive || destroyed) { result?.recycle(); return@launch }
@@ -180,6 +195,47 @@ class DexWallpaperService : WallpaperService() {
                         scheduleFrame()
                     }
                 }
+            }
+        }
+        private fun stopClip() {
+            val current=clipPlayer ?: return
+            clipPlayer=null
+            try {
+                current.setOnPreparedListener(null)
+                current.setOnErrorListener(null)
+                current.release()
+            } catch (_: RuntimeException) { /* Ignore a player already torn down by Android. */ }
+        }
+        private fun startClip(source: java.io.File, generation: Long) {
+            stopClip()
+            handler.removeCallbacks(frame)
+            gl?.close();gl=null
+            bitmap?.recycle();bitmap=null
+            if (!source.isFile || destroyed || !surfaceReady || !visible) return
+            val player=MediaPlayer()
+            try {
+                player.setDataSource(source.absolutePath)
+                player.setSurface(surfaceHolder.surface)
+                player.isLooping=true
+                player.setVolume(0f,0f) // Silent loops only; never play imported audio.
+                player.setOnPreparedListener {
+                    if (clipPlayer===it && visible && surfaceReady && !destroyed && loadGeneration==generation) {
+                        try { it.start() } catch (_: RuntimeException) { stopClip() }
+                    } else if (clipPlayer===it) stopClip()
+                }
+                player.setOnErrorListener { _,_,_ ->
+                    RenderTelemetry.lastError="Video clip decoder failed; check codec or use a different MP4/WebM."
+                    stopClip()
+                    scheduleFrame()
+                    true
+                }
+                clipPlayer=player
+                player.prepareAsync()
+            } catch (_: Exception) {
+                if (clipPlayer===player) clipPlayer=null
+                player.release()
+                RenderTelemetry.lastError="Video clip could not start; check the source format."
+                scheduleFrame()
             }
         }
         private fun drawFrame(quality: RenderQuality) {
@@ -237,7 +293,7 @@ class DexWallpaperService : WallpaperService() {
             visible=isVisible
             handler.post { handler.removeCallbacks(frame); configureSensors(); if(isVisible) reload() else releaseFrame() }
         }
-        private fun releaseFrame() { loadGeneration++;loading?.cancel(); bitmap?.recycle(); bitmap=null; gl?.close(); gl=null }
+        private fun releaseFrame() { loadGeneration++;loading?.cancel(); stopClip(); bitmap?.recycle(); bitmap=null; gl?.close(); gl=null }
         override fun onSurfaceCreated(holder: SurfaceHolder) { super.onSurfaceCreated(holder); surfaceReady=true; handler.post { if(visible) reload() } }
         override fun onSurfaceChanged(holder: SurfaceHolder,format: Int,w: Int,h: Int) { super.onSurfaceChanged(holder,format,w,h); width=w; height=h; surfaceReady=true; handler.post { gl?.close(); gl=null; reload() } }
         override fun onSurfaceDestroyed(holder: SurfaceHolder) { surfaceReady=false; handler.post { handler.removeCallbacks(frame); releaseFrame() }; super.onSurfaceDestroyed(holder) }

@@ -64,3 +64,11 @@ Feed/data snapshots can be inspected offline; numeric fields can be explicitly c
 Landscape uses a navigation sidebar and multi-pane control/editor layouts; narrow windows use a compact workspace menu. High contrast, density, keyboard navigation, and Material You are optional. Keyboard: Ctrl+Right/Left Next/Previous, Ctrl+L Library, Ctrl+E Edit, Ctrl+Enter Apply. Controls have text or accessibility labels; physical TalkBack/S Pen/DeX verification remains pending.
 
 See [PERMISSIONS.md](PERMISSIONS.md), [PRIVACY.md](PRIVACY.md), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+### Rotate on unlock and animated clips (2026-10-12)
+
+In Rotation lab, select **Home** or **Lock**, then opt into **Change on each unlock** separately for either target. Both flags are off after installation. The unlock monitor uses an ongoing foreground-service notification and a dynamically registered Android `ACTION_USER_PRESENT` receiver. Automatic changes respect pause, manual overrides, Battery Saver, screen state and existing static-vs-live ownership; no implicit Both writes. Disabling both toggles stops monitoring. Android can restrict background or boot-time service starts, so verify the notification remains present.
+
+**Animated short clips:** Add images → Choose images or short clips, then select an MP4 or WebM no larger than 30 MB, 15 seconds, or the 8.3 megapixel limit. Video originals are kept privately with a still thumbnail. Select a clip, open Motion, and use the **Android live wallpaper picker** to confirm the intended Home, Lock or Both assignment. Video is muted and loops only while the live wallpaper is visible; reduced-motion/safe-mode uses a still frame. Static rotation does not try to apply video files. Live wallpaper destination is ultimately controlled by Android/OEM; do not interpret a preview as consent to change Lock wallpaper.
+
+No wallpaper is applied automatically during app installation.

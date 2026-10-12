@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.graphics.BitmapFactory
+import com.westkitty.dexwallpaper.core.VideoClips
 import android.provider.DocumentsContract
 import androidx.documentfile.provider.DocumentFile
 import androidx.room.withTransaction
@@ -64,7 +65,7 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
         require(rootId.isNotBlank()) { "The selected folder has no document identity." }
         val uris = mutableListOf<Uri>()
         val budget = ImportTraversalBudget()
-        val imageExtensions = setOf("jpg", "jpeg", "png", "webp", "heic", "heif", "bmp", "gif")
+        val imageExtensions = setOf("jpg", "jpeg", "png", "webp", "heic", "heif", "bmp", "gif", "mp4", "webm")
 
         suspend fun walk(documentId: String, depth: Int) {
             if (budget.entryLimitReached) return
@@ -99,7 +100,7 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
                     val mimeType = children.getString(typeColumn).orEmpty()
                     if (mimeType == DocumentsContract.Document.MIME_TYPE_DIR) {
                         walk(childId, depth + 1)
-                    } else if (mimeType.startsWith("image/") || name.substringAfterLast('.', "").lowercase() in imageExtensions) {
+                    } else if (mimeType.startsWith("image/") || mimeType in setOf("video/mp4", "video/webm") || name.substringAfterLast('.', "").lowercase() in imageExtensions) {
                         uris += DocumentsContract.buildDocumentUriUsingTree(uri, childId)
                     }
                     if (budget.entryLimitReached) break
@@ -118,7 +119,9 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
     private suspend fun importOne(uri: Uri, collection: String): Boolean {
         val id = UUID.randomUUID().toString()
         val temp = LibraryFilePath.resolve(originals, "$id.partial")
-        val target = LibraryFilePath.resolve(originals, "$id.img")
+        val videoSuffix = VideoClips.suffixFor(context.contentResolver.getType(uri),
+            if (uri.scheme == "file") uri.path else DocumentFile.fromSingleUri(context,uri)?.name)
+        val target = LibraryFilePath.resolve(originals, "$id.${videoSuffix ?: "img"}")
         var committed = false
         try {
             val digest = MessageDigest.getInstance("SHA-256")
@@ -132,12 +135,15 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
                         val size = source.read(buffer)
                         if (size < 0) break
                         count += size
-                        require(count <= 80L * 1024 * 1024) { "Image exceeds 80 MB import limit" }
+                        require(count <= (if (videoSuffix != null) VideoClips.MAX_BYTES else 80L*1024*1024)) {
+                            if (videoSuffix != null) "Clip exceeds 30 MB import limit" else "Image exceeds 80 MB import limit"
+                        }
                         digest.update(buffer, 0, size)
                         out.write(buffer, 0, size)
                     }
                 }
             }
+            val clip = if (videoSuffix != null) VideoClips.inspect(temp) else null
             val hash = digest.digest().joinToString("") { "%02x".format(it) }
             val existing = db.library().byHash(hash)
             if (existing != null) {
@@ -150,7 +156,7 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
                         db.library().addMembership(Membership(collection,existing.id))
                     }
                 } else {
-                    val decoded=pipeline.decode(temp,320,320)
+                    val decoded=if (clip != null) VideoClips.poster(temp,320,320) else pipeline.decode(temp,320,320)
                     try { writeThumbnail(decoded, LibraryFilePath.resolve(thumbnails,"${existing.id}.jpg")) }
                     finally { decoded.recycle() }
                     require(!target.exists()) { "New recovery file name already exists" }
@@ -166,9 +172,11 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
                 return false
             }
             val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-            BitmapFactory.decodeFile(temp.path, bounds)
-            require(bounds.outWidth > 0 && bounds.outHeight > 0) { "Corrupt or unsupported image" }
-            val decoded = pipeline.decode(temp, 320, 320)
+            if (clip == null) {
+                BitmapFactory.decodeFile(temp.path, bounds)
+                require(bounds.outWidth > 0 && bounds.outHeight > 0) { "Corrupt or unsupported image" }
+            }
+            val decoded = if (clip != null) VideoClips.poster(temp,320,320) else pipeline.decode(temp,320,320)
             val phash: Long
             try {
                 phash = pipeline.perceptualHash(decoded)
@@ -178,7 +186,7 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
             val name = if (uri.scheme == "file") File(requireNotNull(uri.path)).name else DocumentFile.fromSingleUri(context, uri)?.name ?: "Imported artwork"
             db.withTransaction {
                 db.library().insertAsset(AssetEntity(id, name.take(200), target.name, uri.toString(), hash,
-                    bounds.outWidth, bounds.outHeight, count, System.currentTimeMillis(), perceptualHash = phash))
+                    clip?.width ?: bounds.outWidth, clip?.height ?: bounds.outHeight, count, System.currentTimeMillis(), perceptualHash = phash))
                 db.library().addMembership(Membership(collection, id))
             }
             committed = true
@@ -220,7 +228,8 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
             val original = file(asset)
             val trustedBytes = OriginalIntegrity.matches(original, asset.sha256, asset.bytes)
             val broken = if (!trustedBytes) true else try {
-                pipeline.decode(original, 160, 160).also { it.recycle() }
+                if (VideoClips.isVideo(asset)) VideoClips.inspect(original)
+                else pipeline.decode(original, 160, 160).also { it.recycle() }
                 false
             } catch (_: Exception) { true }
             if (broken) missing++
@@ -236,7 +245,8 @@ class AssetImporter(private val context: Context, private val db: DexDatabase, p
                 target.delete()
                 val original = file(asset)
                 if (original.isFile) {
-                    val bitmap = pipeline.decode(original, 320, 320)
+                    val bitmap = if (VideoClips.isVideo(asset)) VideoClips.poster(original,320,320)
+                                 else pipeline.decode(original, 320, 320)
                     try { writeThumbnail(bitmap, target) }
                     finally { bitmap.recycle() }
                 }

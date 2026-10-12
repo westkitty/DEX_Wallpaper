@@ -89,7 +89,7 @@ import com.westkitty.dexwallpaper.wallpaper.DexWallpaperService
                             Box {
                                 FilledTonalButton(onClick = { addOpen = true }, enabled = !state.busy) { Icon(Icons.Outlined.Add, null); if (wide) Text("Add images") }
                                 DropdownMenu(addOpen, { addOpen = false }) {
-                                    DropdownMenuItem(text = { Text("Choose images") }, onClick = { addOpen = false; images.launch(arrayOf("image/*")) })
+                                    DropdownMenuItem(text = { Text("Choose images or short clips") }, onClick = { addOpen = false; images.launch(arrayOf("image/*","video/mp4","video/webm")) })
                                     DropdownMenuItem(text = { Text("Choose a folder") }, onClick = { addOpen = false; folder.launch(null) })
                                 }
                             }
