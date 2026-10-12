@@ -55,9 +55,9 @@ import kotlinx.coroutines.withContext
             }
         }
     }
-    DisposableEffect(image) {
-        onDispose { image?.takeUnless { it.isRecycled }?.recycle() }
-    }
+    // Compose's Image painter shares the backing Android Bitmap. Disposal of the
+    // producer state does not mean the draw node has finished using those pixels.
+    // Let GC reclaim the bitmap when Compose releases its final reference.
     Box(modifier.clip(RoundedCornerShape(8.dp)).background(MaterialTheme.colorScheme.surfaceContainer).aspectRatio(if (portrait) .625f else 1.6f), contentAlignment = Alignment.Center) {
         if (image != null) Image(image!!.asImageBitmap(), "Preview of ${asset?.name}", Modifier.fillMaxSize(), contentScale = ContentScale.Fit)
         else Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
