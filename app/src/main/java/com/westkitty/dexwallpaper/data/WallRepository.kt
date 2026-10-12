@@ -37,11 +37,11 @@ class WallRepository(private val context: Context, val db: DexDatabase, val impo
         return ContextSnapshot(ZonedDateTime.now(), status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL,
             (level * 100 / scale).coerceIn(0,100), context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
     }
-    suspend fun next(destination: Destination, automatic: Boolean = false): Outcome<String> = writeMutex.withLock {
+    suspend fun next(destination: Destination, automatic: Boolean = false, onUnlock: Boolean = false): Outcome<String> = writeMutex.withLock {
         val screen = dao.screen(destination.name) ?: ScreenEntity(destination.name)
         val now = System.currentTimeMillis()
         if (automatic) {
-            if (!screen.enabled || screen.paused) return@withLock Outcome.Error("Rotation is paused.")
+            if ((!onUnlock && !screen.enabled) || screen.paused) return@withLock Outcome.Error("Rotation is paused.")
             if (screen.manualUntil > now) return@withLock Outcome.Error("Manual override is active until ${screen.manualUntil}.")
             val power = context.getSystemService(PowerManager::class.java)
             if (power.isPowerSaveMode || !power.isInteractive) return@withLock Outcome.Error("Rotation deferred: Battery Saver or screen off.")
@@ -49,13 +49,14 @@ class WallRepository(private val context: Context, val db: DexDatabase, val impo
         val decision = Chronoscape.evaluate(dao.allRules().filter { it.destination == destination.name }.map { it.model() }, contextSnapshot())
         val collection = if (automatic) decision.winner?.collectionId ?: screen.collectionId else screen.collectionId
         val assets = dao.collectionAssets(collection)
-        val candidates = assets.map { Candidate(it.id, it.favorite, it.excluded, !it.quarantined && importer.file(it).isFile) }
+        val candidates = assets.map { Candidate(it.id, it.favorite, it.excluded || VideoClips.isVideo(it),
+            !it.quarantined && importer.file(it).isFile) }
         val mode = RotationMode.entries.firstOrNull { it.name == screen.mode } ?: RotationMode.SHUFFLE
         val state = if (collection == screen.collectionId) screen.queue() else QueueState(recent = screen.queue().recent, cycle = screen.cycle)
         when (val selection = ShuffleGuard.next(candidates, state, mode, destination.ordinal.toLong() + screen.lastSuccess, screen.minimumSeparation, screen.favoritesOnly)) {
             is Outcome.Error -> selection
             is Outcome.Ok -> applyLocked(selection.value.assetId, destination, screen, selection.value,
-                collection, if (automatic) "Scheduled · ${decision.winner?.name ?: "default collection"}" else "Manual next", if (automatic) decision.winner?.id ?: "" else "")
+                collection, if (onUnlock) "Unlock · ${decision.winner?.name ?: "default collection"}" else if (automatic) "Scheduled · ${decision.winner?.name ?: "default collection"}" else "Manual next", if (automatic) decision.winner?.id ?: "" else "")
         }
     }
     suspend fun apply(assetId: String, destination: Destination, overrideMinutes: Int = 0): Outcome<String> = writeMutex.withLock {
@@ -71,6 +72,7 @@ class WallRepository(private val context: Context, val db: DexDatabase, val impo
     }
     private suspend fun applyLocked(assetId: String, destination: Destination, screen: ScreenEntity, selection: Selection?, collection: String, reason: String, ruleId: String): Outcome<String> = withContext(Dispatchers.IO) {
         val asset = dao.asset(assetId) ?: return@withContext Outcome.Error("Artwork is no longer in the library.")
+        if (VideoClips.isVideo(asset)) return@withContext Outcome.Error("Animated clips require the live wallpaper picker in Motion; static wallpaper writes are blocked.")
         if (asset.quarantined || !importer.file(asset).isFile) {
             dao.updateAsset(asset.copy(quarantined = true))
             return@withContext Outcome.Error("Original is missing or quarantined. Re-import the source folder to recover it.")

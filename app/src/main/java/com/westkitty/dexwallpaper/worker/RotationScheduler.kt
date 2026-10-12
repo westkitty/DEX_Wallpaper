@@ -8,6 +8,7 @@ import com.westkitty.dexwallpaper.DexApplication
 import com.westkitty.dexwallpaper.core.Destination
 import com.westkitty.dexwallpaper.core.Outcome
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
 import java.util.concurrent.TimeUnit
 
 class RotationScheduler(private val context: Context) {
@@ -45,6 +46,11 @@ class RecoveryReceiver : BroadcastReceiver() {
         if (intent.action !in setOf(Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_MY_PACKAGE_REPLACED)) return
         val result = goAsync()
         val app = context.applicationContext as DexApplication
-        app.graph.scope.launch { try { app.graph.repository.initialize(); app.graph.scheduler.reconcile() } finally { result.finish() } }
+        app.graph.scope.launch { try {
+            app.graph.repository.initialize()
+            app.graph.scheduler.reconcile()
+            try { UnlockRotationMonitor.reconcile(context, app.graph.preferences.flow.first()) }
+            catch (_: RuntimeException) { /* Android may deny boot-time foreground starts. Next app open can retry. */ }
+        } finally { result.finish() } }
     }
 }

@@ -198,6 +198,20 @@ import kotlinx.coroutines.withContext
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) { RotationMode.entries.forEach { mode -> FilterChip(state.screen.mode == mode.name,
             onClick = { vm.updateScreen { it.copy(mode = mode.name, pending = "") } }, label = { Text(mode.name.lowercase().replaceFirstChar { it.uppercase() }) }) } }
         FlagRow("Automatic rotation", state.screen.enabled, "Independent ${state.destination.label.lowercase()} schedule. Both-screen changes are manual only.", enabled = state.destination != Destination.BOTH) { vm.enableRotation(it) }
+        if (state.destination != Destination.BOTH) {
+            val unlockEnabled = if (state.destination == Destination.HOME) state.preferences.rotateOnUnlockHome
+                                else state.preferences.rotateOnUnlockLock
+            FlagRow("Change on each unlock", unlockEnabled,
+                "Opt-in per screen. Runs from a visible ongoing Unlock rotation service; stops when disabled. Respects paused state, Battery Saver and manual overrides.",
+                enabled = !state.busy) { vm.setUnlockRotation(it) }
+            if (state.destination == Destination.LOCK) {
+                Text("Lock wallpaper rotation is separate: it changes the next lock-screen image after you unlock. DEX never enables Lock writes from the Home setting.",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        } else {
+            Text("Choose Home or Lock at the top to configure each unlock trigger separately. Both-screen unlock updates are never implicit.",
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
         FlagRow("Favorites only", state.screen.favoritesOnly, "Images not marked favorite are excluded from this rotation.") { value -> vm.updateScreen { it.copy(favoritesOnly = value, pending = "") } }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
             OutlinedTextField(minutes, { minutes = it.filter(Char::isDigit).take(5) }, label = { Text("Interval / minutes") }, modifier = Modifier.widthIn(max = 220.dp), singleLine = true)
